@@ -1,18 +1,17 @@
-import os
 import subprocess
 import sys
 import time
 
 
 def print_header(message):
-    """Imprime cabeçalho formatado para melhor visualização"""
+    """Imprime cabeçalho formatado para melhor visualização."""
     print("\n" + "=" * 80)
     print(f"  {message}")
     print("=" * 80 + "\n")
 
 
 def check_docker_running():
-    """Verifica se o Docker está em execução"""
+    """Verifica se o Docker está em execução."""
     try:
         subprocess.run(
             ["docker", "info"],
@@ -26,7 +25,7 @@ def check_docker_running():
 
 
 def check_docker_compose_exists():
-    """Verifica se o Docker Compose está instalado"""
+    """Verifica se o Docker Compose está instalado."""
     try:
         subprocess.run(
             ["docker-compose", "--version"],
@@ -40,7 +39,7 @@ def check_docker_compose_exists():
 
 
 def start_docker_services():
-    """Inicia serviços Docker usando docker-compose"""
+    """Inicia serviços Docker usando docker-compose."""
     print_header("Iniciando serviços Docker (Neo4j e MongoDB)")
 
     try:
@@ -57,12 +56,12 @@ def start_docker_services():
 
 
 def load_neo4j_data():
-    """Carrega dados no Neo4j usando o script Python"""
+    """Carrega dados no Neo4j usando o script Python."""
     print_header("Carregando dados no Neo4j")
 
     try:
         # Executa o script para carregar dados no Neo4j
-        result = subprocess.run([sys.executable, "load_data.py"], check=True)
+        subprocess.run([sys.executable, "load_data.py"], check=True)
         print("Dados carregados no Neo4j com sucesso!")
         return True
     except subprocess.SubprocessError as e:
@@ -71,12 +70,12 @@ def load_neo4j_data():
 
 
 def load_mongodb_data():
-    """Carrega dados no MongoDB usando o script Python"""
+    """Carrega dados no MongoDB usando o script Python."""
     print_header("Carregando dados no MongoDB")
 
     try:
         # Executa o script para carregar dados no MongoDB
-        result = subprocess.run([sys.executable, "load_mongodb_data.py"], check=True)
+        subprocess.run([sys.executable, "load_mongodb_data.py"], check=True)
         print("Dados carregados no MongoDB com sucesso!")
         return True
     except subprocess.SubprocessError as e:
@@ -85,7 +84,7 @@ def load_mongodb_data():
 
 
 def main():
-    """Função principal que coordena o carregamento de dados"""
+    """Função principal que coordena o carregamento de dados."""
     print_header("SISTEMA DE ACOMPANHAMENTO DE DIETAS - CONFIGURAÇÃO DE BANCOS")
 
     # Verificar se o Docker está em execução

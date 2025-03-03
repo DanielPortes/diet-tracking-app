@@ -17,12 +17,16 @@ RETRY_INTERVAL = 5  # segundos
 
 
 def wait_for_mongodb():
-    """Espera até que o MongoDB esteja pronto para aceitar conexões"""
+    """Espera até que o MongoDB esteja pronto para aceitar conexões."""
     client = None
     for i in range(MAX_CONNECTION_RETRY):
         try:
             client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
             # Verificar se a conexão está funcionando
+            if client is None:
+                raise ConnectionFailure("Failed to create MongoDB client")
+
+            # Check if admin exists before trying to access it
             client.admin.command("ping")
             print("Conexão com MongoDB estabelecida com sucesso!")
             return client
@@ -39,14 +43,14 @@ def wait_for_mongodb():
 
 
 def clear_database(db):
-    """Limpa todas as collections do banco de dados"""
+    """Limpa todas as collections do banco de dados."""
     for collection in db.list_collection_names():
         db[collection].drop()
     print("Banco de dados limpo com sucesso!")
 
 
 def load_nutritionists(db):
-    """Carrega dados de nutricionistas no MongoDB"""
+    """Carrega dados de nutricionistas no MongoDB."""
     collection = db.nutritionists
 
     nutritionists = [
@@ -81,7 +85,7 @@ def load_nutritionists(db):
 
 
 def load_patients(db):
-    """Carrega dados de pacientes no MongoDB"""
+    """Carrega dados de pacientes no MongoDB."""
     collection = db.patients
 
     patients = [
@@ -162,7 +166,7 @@ def load_patients(db):
 
 
 def load_foods(db):
-    """Carrega dados de alimentos no MongoDB"""
+    """Carrega dados de alimentos no MongoDB."""
     collection = db.foods
 
     foods = [
@@ -283,7 +287,7 @@ def load_foods(db):
 
 
 def load_recipes(db):
-    """Carrega dados de receitas no MongoDB"""
+    """Carrega dados de receitas no MongoDB."""
     collection = db.recipes
 
     recipes = [
@@ -351,7 +355,7 @@ def load_recipes(db):
 
 
 def load_diet_plans(db):
-    """Carrega dados de planos alimentares no MongoDB"""
+    """Carrega dados de planos alimentares no MongoDB."""
     collection = db.dietPlans
 
     diet_plans = [
@@ -447,7 +451,7 @@ def load_diet_plans(db):
 
 
 def load_meals(db):
-    """Carrega dados de refeições no MongoDB"""
+    """Carrega dados de refeições no MongoDB."""
     collection = db.meals
 
     meals = [
@@ -554,7 +558,7 @@ def load_meals(db):
 
 
 def load_measurements(db):
-    """Carrega dados de medidas corporais no MongoDB"""
+    """Carrega dados de medidas corporais no MongoDB."""
     collection = db.measurements
 
     measurements = [
@@ -625,7 +629,7 @@ def load_measurements(db):
 
 
 def load_messages(db):
-    """Carrega dados de mensagens no MongoDB"""
+    """Carrega dados de mensagens no MongoDB."""
     collection = db.messages
 
     messages = [
@@ -702,7 +706,7 @@ def load_messages(db):
 
 
 def load_appointments(db):
-    """Carrega dados de consultas no MongoDB"""
+    """Carrega dados de consultas no MongoDB."""
     collection = db.appointments
 
     appointments = [
@@ -785,7 +789,7 @@ def load_appointments(db):
 
 
 def create_mongodb_dump():
-    """Cria um dump do banco de dados MongoDB"""
+    """Cria um dump do banco de dados MongoDB."""
     try:
         import datetime
         import subprocess
@@ -795,7 +799,7 @@ def create_mongodb_dump():
 
         # Este comando assume que o MongoDB está em um container chamado diet_app_mongodb
         command = f"docker exec diet_app_mongodb mongodump --username admin --password senha123 --authenticationDatabase admin --db {MONGO_DB} --out /data/db/{directory}"
-        result = subprocess.run(
+        subprocess.run(
             command,
             shell=True,
             check=True,
@@ -814,7 +818,7 @@ def create_mongodb_dump():
 
 
 def load_all_data():
-    """Carrega todos os dados no MongoDB"""
+    """Carrega todos os dados no MongoDB."""
     client = wait_for_mongodb()
     if not client:
         return False

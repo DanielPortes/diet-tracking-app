@@ -3,6 +3,7 @@ import sys
 import time
 import unittest
 from pathlib import Path
+from typing import ClassVar
 
 from neo4j import GraphDatabase
 from pymongo import MongoClient
@@ -10,6 +11,13 @@ from pymongo import MongoClient
 
 class DatabaseSetupTests(unittest.TestCase):
     """Test the setup and connectivity of Neo4j and MongoDB databases."""
+
+    # Define class variables to help mypy understand these are class attributes
+    neo4j_uri: ClassVar[str]
+    neo4j_user: ClassVar[str]
+    neo4j_password: ClassVar[str]
+    mongo_uri: ClassVar[str]
+    mongo_db: ClassVar[str]
 
     @classmethod
     def setUpClass(cls):
@@ -38,7 +46,10 @@ class DatabaseSetupTests(unittest.TestCase):
             with driver.session() as session:
                 result = session.run("RETURN 1 AS num")
                 record = result.single()
-                self.assertEqual(record["num"], 1, "Neo4j connection test failed")
+                # Add null check to handle potential None value
+                self.assertIsNotNone(record, "Neo4j connection returned no record")
+                if record:  # This check helps mypy understand record is not None
+                    self.assertEqual(record["num"], 1, "Neo4j connection test failed")
         except Exception as e:
             self.fail(f"Neo4j connection raised exception: {e}")
         finally:
@@ -51,8 +62,10 @@ class DatabaseSetupTests(unittest.TestCase):
         try:
             client = MongoClient(self.mongo_uri, serverSelectionTimeoutMS=5000)
             # Test connection with simple command
-            result = client.admin.command("ping")
-            self.assertEqual(result["ok"], 1.0, "MongoDB connection test failed")
+            self.assertIsNotNone(client, "MongoDB client is None")
+            if client:  # This check helps mypy understand client is not None
+                result = client.admin.command("ping")
+                self.assertEqual(result["ok"], 1.0, "MongoDB connection test failed")
         except Exception as e:
             self.fail(f"MongoDB connection raised exception: {e}")
         finally:
@@ -77,6 +90,13 @@ class DatabaseSetupTests(unittest.TestCase):
 class DataLoadingTests(unittest.TestCase):
     """Test data loading and basic queries for both databases."""
 
+    # Define class variables to help mypy understand these are class attributes
+    neo4j_uri: ClassVar[str]
+    neo4j_user: ClassVar[str]
+    neo4j_password: ClassVar[str]
+    mongo_uri: ClassVar[str]
+    mongo_db: ClassVar[str]
+
     @classmethod
     def setUpClass(cls):
         """Set up test environment and load data."""
@@ -93,7 +113,7 @@ class DataLoadingTests(unittest.TestCase):
         if not os.getenv("CI"):
             try:
                 # Import and run scripts directly
-                sys.path.append(".github/workflows")
+                sys.path.append(".")  # Ensure current directory is in path
                 import load_data
                 import load_mongodb_data
 
@@ -113,17 +133,24 @@ class DataLoadingTests(unittest.TestCase):
             with driver.session() as session:
                 # Check nutricionistas
                 result = session.run("MATCH (n:Nutricionista) RETURN count(n) AS count")
-                self.assertEqual(
-                    result.single()["count"], 3, "Expected 3 nutricionistas"
-                )
+                record = result.single()
+                self.assertIsNotNone(record, "Neo4j query returned no record")
+                if record:
+                    self.assertEqual(record["count"], 3, "Expected 3 nutricionistas")
 
                 # Check pacientes
                 result = session.run("MATCH (p:Paciente) RETURN count(p) AS count")
-                self.assertEqual(result.single()["count"], 5, "Expected 5 pacientes")
+                record = result.single()
+                self.assertIsNotNone(record, "Neo4j query returned no record")
+                if record:
+                    self.assertEqual(record["count"], 5, "Expected 5 pacientes")
 
                 # Check alimentos
                 result = session.run("MATCH (a:Alimento) RETURN count(a) AS count")
-                self.assertEqual(result.single()["count"], 10, "Expected 10 alimentos")
+                record = result.single()
+                self.assertIsNotNone(record, "Neo4j query returned no record")
+                if record:
+                    self.assertEqual(record["count"], 10, "Expected 10 alimentos")
 
                 # Test a relationship
                 result = session.run(
@@ -132,10 +159,13 @@ class DataLoadingTests(unittest.TestCase):
                     RETURN count(p) AS count
                 """
                 )
-                self.assertTrue(
-                    result.single()["count"] > 0,
-                    "Expected at least one ATENDE relationship",
-                )
+                record = result.single()
+                self.assertIsNotNone(record, "Neo4j query returned no record")
+                if record:
+                    self.assertTrue(
+                        record["count"] > 0,
+                        "Expected at least one ATENDE relationship",
+                    )
         finally:
             if driver:
                 driver.close()
@@ -145,37 +175,41 @@ class DataLoadingTests(unittest.TestCase):
         client = None
         try:
             client = MongoClient(self.mongo_uri)
-            db = client[self.mongo_db]
+            self.assertIsNotNone(client, "MongoDB client is None")
+            if client:
+                db = client[self.mongo_db]
 
-            # Check collections
-            self.assertEqual(
-                db.nutritionists.count_documents({}), 3, "Expected 3 nutritionists"
-            )
-            self.assertEqual(db.patients.count_documents({}), 5, "Expected 5 patients")
-            self.assertEqual(db.foods.count_documents({}), 10, "Expected 10 foods")
+                # Check collections
+                self.assertEqual(
+                    db.nutritionists.count_documents({}), 3, "Expected 3 nutritionists"
+                )
+                self.assertEqual(
+                    db.patients.count_documents({}), 5, "Expected 5 patients"
+                )
+                self.assertEqual(db.foods.count_documents({}), 10, "Expected 10 foods")
 
-            # Test more complex query
-            result = db.dietPlans.aggregate(
-                [
-                    {
-                        "$lookup": {
-                            "from": "patients",
-                            "localField": "paciente_id",
-                            "foreignField": "_id",
-                            "as": "paciente",
-                        }
-                    },
-                    {"$match": {"paciente.0": {"$exists": True}}},
-                    {"$count": "planos_com_pacientes"},
-                ]
-            )
+                # Test more complex query
+                result = db.dietPlans.aggregate(
+                    [
+                        {
+                            "$lookup": {
+                                "from": "patients",
+                                "localField": "paciente_id",
+                                "foreignField": "_id",
+                                "as": "paciente",
+                            }
+                        },
+                        {"$match": {"paciente.0": {"$exists": True}}},
+                        {"$count": "planos_com_pacientes"},
+                    ]
+                )
 
-            result_list = list(result)
-            self.assertTrue(len(result_list) > 0, "Expected at least one result")
-            self.assertTrue(
-                result_list[0]["planos_com_pacientes"] > 0,
-                "Expected at least one diet plan with patient",
-            )
+                result_list = list(result)
+                self.assertTrue(len(result_list) > 0, "Expected at least one result")
+                self.assertTrue(
+                    result_list[0]["planos_com_pacientes"] > 0,
+                    "Expected at least one diet plan with patient",
+                )
         finally:
             if client:
                 client.close()

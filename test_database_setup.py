@@ -1,10 +1,11 @@
-import unittest
-import time
 import os
 import sys
+import time
+import unittest
 from pathlib import Path
-from pymongo import MongoClient
+
 from neo4j import GraphDatabase
+from pymongo import MongoClient
 
 
 class DatabaseSetupTests(unittest.TestCase):
@@ -17,7 +18,9 @@ class DatabaseSetupTests(unittest.TestCase):
         cls.neo4j_user = os.getenv("NEO4J_USER", "neo4j")
         cls.neo4j_password = os.getenv("NEO4J_PASSWORD", "senha123")
 
-        cls.mongo_uri = os.getenv("MONGO_URI", "mongodb://admin:senha123@localhost:27017/")
+        cls.mongo_uri = os.getenv(
+            "MONGO_URI", "mongodb://admin:senha123@localhost:27017/"
+        )
         cls.mongo_db = os.getenv("MONGO_DB", "diet_app")
 
         # Wait for databases to be ready (in CI environment)
@@ -30,8 +33,7 @@ class DatabaseSetupTests(unittest.TestCase):
         driver = None
         try:
             driver = GraphDatabase.driver(
-                self.neo4j_uri,
-                auth=(self.neo4j_user, self.neo4j_password)
+                self.neo4j_uri, auth=(self.neo4j_user, self.neo4j_password)
             )
             with driver.session() as session:
                 result = session.run("RETURN 1 AS num")
@@ -49,8 +51,8 @@ class DatabaseSetupTests(unittest.TestCase):
         try:
             client = MongoClient(self.mongo_uri, serverSelectionTimeoutMS=5000)
             # Test connection with simple command
-            result = client.admin.command('ping')
-            self.assertEqual(result['ok'], 1.0, "MongoDB connection test failed")
+            result = client.admin.command("ping")
+            self.assertEqual(result["ok"], 1.0, "MongoDB connection test failed")
         except Exception as e:
             self.fail(f"MongoDB connection raised exception: {e}")
         finally:
@@ -60,19 +62,16 @@ class DatabaseSetupTests(unittest.TestCase):
     def test_project_files_exist(self):
         """Test if all required project files exist."""
         required_files = [
-            'docker-compose.yml',
-            'load_data.py',
-            'load_mongodb_data.py',
-            'load_all_databases.py',
-            'requirements.txt',
-            'README.md'
+            "docker-compose.yml",
+            "load_data.py",
+            "load_mongodb_data.py",
+            "load_all_databases.py",
+            "requirements.txt",
+            "README.md",
         ]
 
         for file in required_files:
-            self.assertTrue(
-                Path(file).exists(),
-                f"Required file {file} does not exist"
-            )
+            self.assertTrue(Path(file).exists(), f"Required file {file} does not exist")
 
 
 class DataLoadingTests(unittest.TestCase):
@@ -85,14 +84,16 @@ class DataLoadingTests(unittest.TestCase):
         cls.neo4j_user = os.getenv("NEO4J_USER", "neo4j")
         cls.neo4j_password = os.getenv("NEO4J_PASSWORD", "senha123")
 
-        cls.mongo_uri = os.getenv("MONGO_URI", "mongodb://admin:senha123@localhost:27017/")
+        cls.mongo_uri = os.getenv(
+            "MONGO_URI", "mongodb://admin:senha123@localhost:27017/"
+        )
         cls.mongo_db = os.getenv("MONGO_DB", "diet_app")
 
         # Skip data loading in CI environment as it will be done in workflow
         if not os.getenv("CI"):
             try:
                 # Import and run scripts directly
-                sys.path.append('.')
+                sys.path.append(".github/workflows")
                 import load_data
                 import load_mongodb_data
 
@@ -107,13 +108,14 @@ class DataLoadingTests(unittest.TestCase):
         driver = None
         try:
             driver = GraphDatabase.driver(
-                self.neo4j_uri,
-                auth=(self.neo4j_user, self.neo4j_password)
+                self.neo4j_uri, auth=(self.neo4j_user, self.neo4j_password)
             )
             with driver.session() as session:
                 # Check nutricionistas
                 result = session.run("MATCH (n:Nutricionista) RETURN count(n) AS count")
-                self.assertEqual(result.single()["count"], 3, "Expected 3 nutricionistas")
+                self.assertEqual(
+                    result.single()["count"], 3, "Expected 3 nutricionistas"
+                )
 
                 # Check pacientes
                 result = session.run("MATCH (p:Paciente) RETURN count(p) AS count")
@@ -124,12 +126,16 @@ class DataLoadingTests(unittest.TestCase):
                 self.assertEqual(result.single()["count"], 10, "Expected 10 alimentos")
 
                 # Test a relationship
-                result = session.run("""
+                result = session.run(
+                    """
                     MATCH (n:Nutricionista)-[:ATENDE]->(p:Paciente)
                     RETURN count(p) AS count
-                """)
-                self.assertTrue(result.single()["count"] > 0,
-                                "Expected at least one ATENDE relationship")
+                """
+                )
+                self.assertTrue(
+                    result.single()["count"] > 0,
+                    "Expected at least one ATENDE relationship",
+                )
         finally:
             if driver:
                 driver.close()
@@ -142,33 +148,38 @@ class DataLoadingTests(unittest.TestCase):
             db = client[self.mongo_db]
 
             # Check collections
-            self.assertEqual(db.nutritionists.count_documents({}), 3,
-                             "Expected 3 nutritionists")
-            self.assertEqual(db.patients.count_documents({}), 5,
-                             "Expected 5 patients")
-            self.assertEqual(db.foods.count_documents({}), 10,
-                             "Expected 10 foods")
+            self.assertEqual(
+                db.nutritionists.count_documents({}), 3, "Expected 3 nutritionists"
+            )
+            self.assertEqual(db.patients.count_documents({}), 5, "Expected 5 patients")
+            self.assertEqual(db.foods.count_documents({}), 10, "Expected 10 foods")
 
             # Test more complex query
-            result = db.dietPlans.aggregate([
-                {"$lookup": {
-                    "from": "patients",
-                    "localField": "paciente_id",
-                    "foreignField": "_id",
-                    "as": "paciente"
-                }},
-                {"$match": {"paciente.0": {"$exists": True}}},
-                {"$count": "planos_com_pacientes"}
-            ])
+            result = db.dietPlans.aggregate(
+                [
+                    {
+                        "$lookup": {
+                            "from": "patients",
+                            "localField": "paciente_id",
+                            "foreignField": "_id",
+                            "as": "paciente",
+                        }
+                    },
+                    {"$match": {"paciente.0": {"$exists": True}}},
+                    {"$count": "planos_com_pacientes"},
+                ]
+            )
 
             result_list = list(result)
             self.assertTrue(len(result_list) > 0, "Expected at least one result")
-            self.assertTrue(result_list[0]["planos_com_pacientes"] > 0,
-                            "Expected at least one diet plan with patient")
+            self.assertTrue(
+                result_list[0]["planos_com_pacientes"] > 0,
+                "Expected at least one diet plan with patient",
+            )
         finally:
             if client:
                 client.close()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

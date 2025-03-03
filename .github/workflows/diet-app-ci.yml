@@ -2,16 +2,90 @@ name: Diet App CI/CD
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, development ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
+  auto-format:
+    name: Auto-format Code
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort mypy
+          pip install -r requirements.txt
+
+      - name: Auto-fix imports with isort
+        id: isort
+        run: |
+          isort --profile black .
+          echo "ISORT_CHANGED=$(git status --porcelain | grep -q . && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@github.com'
+          git add -A
+          git diff --staged --quiet || git commit -m "🤖 Auto-fix imports with isort"
+
+      - name: Auto-format with black
+        id: black
+        run: |
+          black .
+          echo "BLACK_CHANGED=$(git status --porcelain | grep -q . && echo 'true' || echo 'false')" >> $GITHUB_ENV
+          git add -A
+          git diff --staged --quiet || git commit -m "🤖 Auto-format with black"
+
+      # Auto-fix simples com flake8-fixme para problemas comuns (quando disponível)
+      - name: Auto-fix common issues with flake8-fixme
+        run: |
+          pip install flake8-fixme
+          # Lista de arquivos Python
+          python_files=$(find . -name "*.py" -not -path "*/\.*" -not -path "*/venv/*")
+          for file in $python_files; do
+            # Corrige problemas comuns como linhas muito longas, espaços extras, etc.
+            python -m flake8_fixme $file || true
+          done
+          git add -A
+          git diff --staged --quiet || git commit -m "🤖 Auto-fix common issues with flake8-fixme"
+
+      - name: Push changes
+        if: env.ISORT_CHANGED == 'true' || env.BLACK_CHANGED == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "🤖 Auto-format and fix code style issues"
+          commit_options: "--no-verify"
+          file_pattern: "*.py"
+          commit_user_name: "GitHub Actions"
+          commit_user_email: "github-actions@github.com"
+          commit_author: "GitHub Actions <github-actions@github.com>"
+          push_options: "--force"
+          skip_dirty_check: true
+          branch: ${{ github.head_ref || github.ref_name }}
+
   code-quality:
     name: Code Quality
     runs-on: ubuntu-latest
+    needs: auto-format
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref || github.ref }}
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -30,11 +104,11 @@ jobs:
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
 
-      - name: Check imports with isort
+      - name: Verify imports with isort
         run: |
           isort --check-only --profile black .
 
-      - name: Check formatting with black
+      - name: Verify formatting with black
         run: |
           black --check .
 
@@ -48,6 +122,8 @@ jobs:
     needs: code-quality
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref || github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -83,7 +159,7 @@ jobs:
               print('Neo4j connection successful!')
           driver.close()
           "
-          
+
           # Test MongoDB connection
           echo "Testing MongoDB connection..."
           python -c "
@@ -101,7 +177,7 @@ jobs:
           # Load test data into Neo4j and MongoDB
           python load_data.py
           python load_mongodb_data.py
-          
+
           # Verify data in Neo4j
           python -c "
           from neo4j import GraphDatabase
@@ -113,7 +189,7 @@ jobs:
               print('Neo4j data verified!')
           driver.close()
           "
-          
+
           # Verify data in MongoDB
           python -c "
           from pymongo import MongoClient
@@ -124,6 +200,10 @@ jobs:
           print('MongoDB data verified!')
           client.close()
           "
+
+      - name: Run unit tests
+        run: |
+          pytest test_database_setup.py -v
 
       - name: Stop test databases
         run: docker-compose down
@@ -136,6 +216,8 @@ jobs:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref || github.ref }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
@@ -173,6 +255,8 @@ jobs:
     needs: code-quality
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref || github.ref }}
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -202,31 +286,31 @@ jobs:
             - Setup Guide: setup.md
             - API Reference: api/
           " > mkdocs.yml
-          
+
           # Create index.md
           mkdir -p docs
           cp README.md docs/index.md
-          
+
           # Create setup guide
           echo "# Setup Guide
-          
+
           ## Prerequisites
-          
+
           - Docker and Docker Compose
           - Python 3.7+
-          
+
           ## Installation
-          
+
           1. Clone the repository
           2. Run \`pip install -r requirements.txt\`
           3. Run \`python load_all_databases.py\`
-          
+
           ## Database Access
-          
+
           - Neo4j: http://localhost:7474
           - MongoDB: http://localhost:8081
           " > docs/setup.md
-          
+
           # Build documentation site
           mkdocs build
 

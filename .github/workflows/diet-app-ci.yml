@@ -29,54 +29,61 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8 black isort mypy
+          pip install flake8 black isort mypy flake8-fixme
           pip install -r requirements.txt
 
-      - name: Auto-fix imports with isort
-        id: isort
+      - name: Configure Git
         run: |
-          isort --profile black .
-          echo "ISORT_CHANGED=$(git status --porcelain | grep -q . && echo 'true' || echo 'false')" >> $GITHUB_ENV
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'github-actions@github.com'
-          git add -A
-          git diff --staged --quiet || git commit -m "🤖 Auto-fix imports with isort"
+
+      - name: Auto-fix imports with isort
+        run: |
+          isort --profile black .
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            echo "Changes detected after isort"
+            git add -A
+            git commit -m "🤖 Auto-fix imports with isort"
+            echo "CHANGES_MADE=true" >> $GITHUB_ENV
+          else
+            echo "No changes detected after isort"
+          fi
 
       - name: Auto-format with black
-        id: black
         run: |
           black .
-          echo "BLACK_CHANGED=$(git status --porcelain | grep -q . && echo 'true' || echo 'false')" >> $GITHUB_ENV
-          git add -A
-          git diff --staged --quiet || git commit -m "🤖 Auto-format with black"
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            echo "Changes detected after black"
+            git add -A
+            git commit -m "🤖 Auto-format with black"
+            echo "CHANGES_MADE=true" >> $GITHUB_ENV
+          else
+            echo "No changes detected after black"
+          fi
 
-      # Auto-fix simples com flake8-fixme para problemas comuns (quando disponível)
       - name: Auto-fix common issues with flake8-fixme
         run: |
-          pip install flake8-fixme
           # Lista de arquivos Python
           python_files=$(find . -name "*.py" -not -path "*/\.*" -not -path "*/venv/*")
           for file in $python_files; do
             # Corrige problemas comuns como linhas muito longas, espaços extras, etc.
             python -m flake8_fixme $file || true
           done
-          git add -A
-          git diff --staged --quiet || git commit -m "🤖 Auto-fix common issues with flake8-fixme"
 
-      - name: Push changes
-        if: env.ISORT_CHANGED == 'true' || env.BLACK_CHANGED == 'true'
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: "🤖 Auto-format and fix code style issues"
-          commit_options: "--no-verify"
-          file_pattern: "*.py"
-          commit_user_name: "GitHub Actions"
-          commit_user_email: "github-actions@github.com"
-          commit_author: "GitHub Actions <github-actions@github.com>"
-          push_options: "--force"
-          skip_dirty_check: true
-          skip_fetch: true
-          branch: ${{ github.head_ref || github.ref_name }}
+          if [[ "$(git status --porcelain)" != "" ]]; then
+            echo "Changes detected after flake8-fixme"
+            git add -A
+            git commit -m "🤖 Auto-fix common issues with flake8-fixme"
+            echo "CHANGES_MADE=true" >> $GITHUB_ENV
+          else
+            echo "No changes detected after flake8-fixme"
+          fi
+
+      - name: Push changes if any were made
+        if: env.CHANGES_MADE == 'true'
+        run: |
+          echo "Pushing changes to branch ${{ github.head_ref || github.ref_name }}"
+          git push origin ${{ github.head_ref || github.ref_name }}
 
   code-quality:
     name: Code Quality

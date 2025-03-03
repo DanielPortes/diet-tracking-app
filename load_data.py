@@ -1,7 +1,8 @@
-import time
 import os
-from neo4j import GraphDatabase
+import time
+
 from dotenv import load_dotenv
+from neo4j import GraphDatabase
 
 # Carregar variáveis de ambiente (opcional)
 load_dotenv()
@@ -679,8 +680,8 @@ def load_all_data():
 def create_database_dump():
     """Cria um dump do banco de dados"""
     try:
-        import subprocess
         import datetime
+        import subprocess
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = f"neo4j_dump_{timestamp}.dump"

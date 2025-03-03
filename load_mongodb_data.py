@@ -1,9 +1,10 @@
-import time
 import os
+import time
+from datetime import datetime
+
+from dotenv import load_dotenv
 from pymongo import MongoClient
 from pymongo.errors import ConnectionFailure, OperationFailure
-from datetime import datetime
-from dotenv import load_dotenv
 
 # Carregar variáveis de ambiente (opcional)
 load_dotenv()
@@ -806,8 +807,8 @@ def load_appointments(db):
 def create_mongodb_dump():
     """Cria um dump do banco de dados MongoDB"""
     try:
-        import subprocess
         import datetime
+        import subprocess
 
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         directory = f"mongodb_dump_{timestamp}"

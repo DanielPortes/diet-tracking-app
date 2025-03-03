@@ -1,0 +1,911 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
+<title>load_data API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>load_data</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="load_data.create_database_dump"><code class="name flex">
+<span>def <span class="ident">create_database_dump</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_database_dump():
+    &#34;&#34;&#34;Cria um dump do banco de dados&#34;&#34;&#34;
+    try:
+        import datetime
+        import subprocess
+
+        timestamp = datetime.datetime.now().strftime(&#34;%Y%m%d_%H%M%S&#34;)
+        filename = f&#34;neo4j_dump_{timestamp}.dump&#34;
+
+        # Este comando assume que o Neo4j está em um container chamado diet_app_neo4j
+        command = f&#34;docker exec diet_app_neo4j neo4j-admin dump --database=neo4j --to=/var/lib/neo4j/import/{filename}&#34;
+        result = subprocess.run(
+            command,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        print(f&#34;Dump criado com sucesso: {filename}&#34;)
+        print(&#34;Para copiar o arquivo para o seu computador, use:&#34;)
+        print(f&#34;docker cp diet_app_neo4j:/var/lib/neo4j/import/{filename} ./{filename}&#34;)
+
+        return True
+    except Exception as e:
+        print(f&#34;Erro ao criar dump: {str(e)}&#34;)
+        return False</code></pre>
+</details>
+<div class="desc"><p>Cria um dump do banco de dados</p></div>
+</dd>
+<dt id="load_data.create_relationships"><code class="name flex">
+<span>def <span class="ident">create_relationships</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_relationships(tx):
+    &#34;&#34;&#34;Cria os relacionamentos entre entidades - versão corrigida com statements individuais&#34;&#34;&#34;
+
+    # --- Nutricionistas atendem Pacientes ---
+    rel_queries = [
+        &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (p:Paciente {id: 1})
+        CREATE (n)-[:ATENDE]-&gt;(p)
+        &#34;&#34;&#34;,
+        &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (p:Paciente {id: 3})
+        CREATE (n)-[:ATENDE]-&gt;(p)
+        &#34;&#34;&#34;,
+        &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 2}), (p:Paciente {id: 2})
+        CREATE (n)-[:ATENDE]-&gt;(p)
+        &#34;&#34;&#34;,
+        &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 3}), (p:Paciente {id: 4})
+        CREATE (n)-[:ATENDE]-&gt;(p)
+        &#34;&#34;&#34;,
+        &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 3}), (p:Paciente {id: 5})
+        CREATE (n)-[:ATENDE]-&gt;(p)
+        &#34;&#34;&#34;,
+    ]
+
+    # --- Nutricionistas criam Planos Alimentares ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (pa:PlanoAlimentar {id: 1})
+        CREATE (n)-[:CRIA]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (pa:PlanoAlimentar {id: 2})
+        CREATE (n)-[:CRIA]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 2}), (pa:PlanoAlimentar {id: 4})
+        CREATE (n)-[:CRIA]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 3}), (pa:PlanoAlimentar {id: 3})
+        CREATE (n)-[:CRIA]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 3}), (pa:PlanoAlimentar {id: 5})
+        CREATE (n)-[:CRIA]-&gt;(pa)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Pacientes seguem Planos Alimentares ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (pa:PlanoAlimentar {id: 1})
+        CREATE (p)-[:SEGUE]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (pa:PlanoAlimentar {id: 4})
+        CREATE (p)-[:SEGUE]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 3}), (pa:PlanoAlimentar {id: 2})
+        CREATE (p)-[:SEGUE]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 4}), (pa:PlanoAlimentar {id: 3})
+        CREATE (p)-[:SEGUE]-&gt;(pa)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 5}), (pa:PlanoAlimentar {id: 5})
+        CREATE (p)-[:SEGUE]-&gt;(pa)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Planos Alimentares incluem Alimentos ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 1}), (a:Alimento {id: 2})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 1}), (a:Alimento {id: 3})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 1}), (a:Alimento {id: 4})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 2}), (a:Alimento {id: 2})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 2}), (a:Alimento {id: 5})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 2}), (a:Alimento {id: 8})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 3}), (a:Alimento {id: 4})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 3}), (a:Alimento {id: 6})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 4}), (a:Alimento {id: 5})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 4}), (a:Alimento {id: 6})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 5}), (a:Alimento {id: 5})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 5}), (a:Alimento {id: 9})
+        CREATE (pa)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Planos Alimentares recomendam Receitas ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 1}), (r:Receita {id: 1})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 1}), (r:Receita {id: 5})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 2}), (r:Receita {id: 3})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 2}), (r:Receita {id: 4})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 3}), (r:Receita {id: 5})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 4}), (r:Receita {id: 3})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 5}), (r:Receita {id: 1})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (pa:PlanoAlimentar {id: 5}), (r:Receita {id: 3})
+        CREATE (pa)-[:RECOMENDA]-&gt;(r)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Receitas contêm Alimentos ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 1}), (a:Alimento {id: 2})
+        CREATE (r)-[:CONTEM {quantidade: &#34;100g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 1}), (a:Alimento {id: 4})
+        CREATE (r)-[:CONTEM {quantidade: &#34;50g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 1}), (a:Alimento {id: 9})
+        CREATE (r)-[:CONTEM {quantidade: &#34;5ml&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 2}), (a:Alimento {id: 10})
+        CREATE (r)-[:CONTEM {quantidade: &#34;1 unidade&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 3}), (a:Alimento {id: 5})
+        CREATE (r)-[:CONTEM {quantidade: &#34;150g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 3}), (a:Alimento {id: 4})
+        CREATE (r)-[:CONTEM {quantidade: &#34;100g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 3}), (a:Alimento {id: 3})
+        CREATE (r)-[:CONTEM {quantidade: &#34;100g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 4}), (a:Alimento {id: 7})
+        CREATE (r)-[:CONTEM {quantidade: &#34;200g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 4}), (a:Alimento {id: 10})
+        CREATE (r)-[:CONTEM {quantidade: &#34;1 unidade&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 4}), (a:Alimento {id: 8})
+        CREATE (r)-[:CONTEM {quantidade: &#34;30g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (r:Receita {id: 5}), (a:Alimento {id: 4})
+        CREATE (r)-[:CONTEM {quantidade: &#34;50g&#34;}]-&gt;(a)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Pacientes consomem Refeições ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 1})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 2})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 3})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 4})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 5})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 6})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 7})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 8})
+        CREATE (p)-[:CONSOME]-&gt;(r)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Refeições incluem Alimentos/Receitas ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 1}), (r:Receita {id: 4})
+        CREATE (ref)-[:INCLUI]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 2}), (r:Receita {id: 1})
+        CREATE (ref)-[:INCLUI]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 3}), (a:Alimento {id: 1})
+        CREATE (ref)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 3}), (a:Alimento {id: 7})
+        CREATE (ref)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 4}), (r:Receita {id: 3})
+        CREATE (ref)-[:INCLUI]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 5}), (r:Receita {id: 2})
+        CREATE (ref)-[:INCLUI]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 6}), (r:Receita {id: 3})
+        CREATE (ref)-[:INCLUI]-&gt;(r)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 7}), (a:Alimento {id: 1})
+        CREATE (ref)-[:INCLUI]-&gt;(a)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (ref:Refeicao {id: 8}), (r:Receita {id: 5})
+        CREATE (ref)-[:INCLUI]-&gt;(r)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Pacientes possuem Medidas Corporais ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (m:MedidaCorporal {id: 1})
+        CREATE (p)-[:POSSUI]-&gt;(m)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (m:MedidaCorporal {id: 2})
+        CREATE (p)-[:POSSUI]-&gt;(m)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (m:MedidaCorporal {id: 3})
+        CREATE (p)-[:POSSUI]-&gt;(m)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (m:MedidaCorporal {id: 4})
+        CREATE (p)-[:POSSUI]-&gt;(m)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (m:MedidaCorporal {id: 5})
+        CREATE (p)-[:POSSUI]-&gt;(m)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (m:MedidaCorporal {id: 6})
+        CREATE (p)-[:POSSUI]-&gt;(m)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Mensagens entre Pacientes e Nutricionistas ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (msg:Mensagem {id: 1}), (p:Paciente {id: 1})
+        CREATE (n)-[:ENVIA]-&gt;(msg)-[:PARA]-&gt;(p)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (msg:Mensagem {id: 2}), (n:Nutricionista {id: 1})
+        CREATE (p)-[:ENVIA]-&gt;(msg)-[:PARA]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (msg:Mensagem {id: 3}), (p:Paciente {id: 1})
+        CREATE (n)-[:ENVIA]-&gt;(msg)-[:PARA]-&gt;(p)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 1}), (msg:Mensagem {id: 4}), (p:Paciente {id: 1})
+        CREATE (n)-[:ENVIA]-&gt;(msg)-[:PARA]-&gt;(p)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (msg:Mensagem {id: 5}), (n:Nutricionista {id: 1})
+        CREATE (p)-[:ENVIA]-&gt;(msg)-[:PARA]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (n:Nutricionista {id: 2}), (msg:Mensagem {id: 6}), (p:Paciente {id: 2})
+        CREATE (n)-[:ENVIA]-&gt;(msg)-[:PARA]-&gt;(p)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # --- Consultas entre Pacientes e Nutricionistas ---
+    rel_queries.extend(
+        [
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (c:Consulta {id: 1}), (n:Nutricionista {id: 1})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (c:Consulta {id: 2}), (n:Nutricionista {id: 1})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (c:Consulta {id: 3}), (n:Nutricionista {id: 1})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 1}), (c:Consulta {id: 4}), (n:Nutricionista {id: 1})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (c:Consulta {id: 5}), (n:Nutricionista {id: 2})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (c:Consulta {id: 6}), (n:Nutricionista {id: 2})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (c:Consulta {id: 7}), (n:Nutricionista {id: 2})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+            &#34;&#34;&#34;
+        MATCH (p:Paciente {id: 2}), (c:Consulta {id: 8}), (n:Nutricionista {id: 2})
+        CREATE (p)-[:AGENDA]-&gt;(c)-[:COM]-&gt;(n)
+        &#34;&#34;&#34;,
+        ]
+    )
+
+    # Executar cada query individualmente
+    for i, query in enumerate(rel_queries):
+        try:
+            tx.run(query)
+            # Imprimir progresso a cada 10 relacionamentos
+            if (i + 1) % 10 == 0:
+                print(f&#34;Criados {i + 1} de {len(rel_queries)} relacionamentos...&#34;)
+        except Exception as e:
+            print(f&#34;Erro ao criar relacionamento #{i + 1}: {str(e)}&#34;)
+            print(f&#34;Query problemática: {query}&#34;)
+
+    print(f&#34;Total de {len(rel_queries)} relacionamentos criados com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Cria os relacionamentos entre entidades - versão corrigida com statements individuais</p></div>
+</dd>
+<dt id="load_data.load_all_data"><code class="name flex">
+<span>def <span class="ident">load_all_data</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_all_data():
+    &#34;&#34;&#34;Carrega todos os dados no banco Neo4j&#34;&#34;&#34;
+    if not wait_for_neo4j():
+        return False
+
+    driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+
+    try:
+        with driver.session() as session:
+            # Limpar o banco antes de carregar novos dados
+            session.run(&#34;MATCH (n) DETACH DELETE n&#34;)
+            print(&#34;Banco de dados limpo com sucesso!&#34;)
+
+            # Carregar todos os nós
+            session.execute_write(load_nutritionists)
+            session.execute_write(load_patients)
+            session.execute_write(load_foods)
+            session.execute_write(load_recipes)
+            session.execute_write(load_diet_plans)
+            session.execute_write(load_meals)
+            session.execute_write(load_measurements)
+            session.execute_write(load_messages)
+            session.execute_write(load_appointments)
+
+            # Criar todos os relacionamentos
+            session.execute_write(create_relationships)
+
+        print(&#34;Todos os dados foram carregados com sucesso!&#34;)
+        return True
+    except Exception as e:
+        print(f&#34;Erro ao carregar dados: {str(e)}&#34;)
+        return False
+    finally:
+        driver.close()</code></pre>
+</details>
+<div class="desc"><p>Carrega todos os dados no banco Neo4j</p></div>
+</dd>
+<dt id="load_data.load_appointments"><code class="name flex">
+<span>def <span class="ident">load_appointments</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_appointments(tx):
+    query = &#34;&#34;&#34;
+    // Criar Consultas
+    CREATE (c1:Consulta {id: 1, data: &#34;2023-09-15&#34;, hora: &#34;14:00&#34;, 
+            status: &#34;Realizada&#34;, notas: &#34;Avaliação inicial e definição de plano alimentar&#34;})
+    CREATE (c2:Consulta {id: 2, data: &#34;2023-10-01&#34;, hora: &#34;15:30&#34;, 
+            status: &#34;Realizada&#34;, notas: &#34;Ajustes no plano devido à fome relatada&#34;})
+    CREATE (c3:Consulta {id: 3, data: &#34;2023-10-17&#34;, hora: &#34;14:00&#34;, 
+            status: &#34;Realizada&#34;, notas: &#34;Progresso acima do esperado, reforço positivo&#34;})
+    CREATE (c4:Consulta {id: 4, data: &#34;2023-11-01&#34;, hora: &#34;16:00&#34;, 
+            status: &#34;Agendada&#34;, notas: &#34;&#34;})
+    CREATE (c5:Consulta {id: 5, data: &#34;2023-09-10&#34;, hora: &#34;09:30&#34;, 
+            status: &#34;Realizada&#34;, notas: &#34;Avaliação inicial, paciente com colesterol alto&#34;})
+    CREATE (c6:Consulta {id: 6, data: &#34;2023-09-25&#34;, hora: &#34;10:00&#34;, 
+            status: &#34;Realizada&#34;, notas: &#34;Melhora nos exames laboratoriais&#34;})
+    CREATE (c7:Consulta {id: 7, data: &#34;2023-10-10&#34;, hora: &#34;11:00&#34;, 
+            status: &#34;Realizada&#34;, notas: &#34;Exames demonstrando normalização do colesterol&#34;})
+    CREATE (c8:Consulta {id: 8, data: &#34;2023-10-25&#34;, hora: &#34;09:30&#34;, 
+            status: &#34;Cancelada&#34;, notas: &#34;Paciente não pôde comparecer&#34;})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Consultas criadas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_diet_plans"><code class="name flex">
+<span>def <span class="ident">load_diet_plans</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_diet_plans(tx):
+    query = &#34;&#34;&#34;
+    // Criar Planos Alimentares
+    CREATE (pa1:PlanoAlimentar {id: 1, nome: &#34;Emagrecimento Saudável&#34;, 
+            descricao: &#34;Plano focado em déficit calórico moderado com alimentos nutritivos&#34;, 
+            objetivo: &#34;Perda de peso&#34;, duracao: 90, calorias_diarias: 1800, 
+            proteinas: &#34;30%&#34;, carboidratos: &#34;40%&#34;, gorduras: &#34;30%&#34;})
+    CREATE (pa2:PlanoAlimentar {id: 2, nome: &#34;Ganho de Massa&#34;, 
+            descricao: &#34;Plano focado em superávit calórico com alta proteína&#34;, 
+            objetivo: &#34;Hipertrofia&#34;, duracao: 120, calorias_diarias: 2800, 
+            proteinas: &#34;35%&#34;, carboidratos: &#34;45%&#34;, gorduras: &#34;20%&#34;})
+    CREATE (pa3:PlanoAlimentar {id: 3, nome: &#34;Controle Glicêmico&#34;, 
+            descricao: &#34;Plano para controle de diabetes com baixo índice glicêmico&#34;, 
+            objetivo: &#34;Controle de glicemia&#34;, duracao: 180, calorias_diarias: 1600, 
+            proteinas: &#34;25%&#34;, carboidratos: &#34;35%&#34;, gorduras: &#34;40%&#34;})
+    CREATE (pa4:PlanoAlimentar {id: 4, nome: &#34;Controle de Colesterol&#34;, 
+            descricao: &#34;Plano para redução de colesterol LDL e aumento de HDL&#34;, 
+            objetivo: &#34;Saúde cardiovascular&#34;, duracao: 90, calorias_diarias: 2000, 
+            proteinas: &#34;25%&#34;, carboidratos: &#34;50%&#34;, gorduras: &#34;25%&#34;})
+    CREATE (pa5:PlanoAlimentar {id: 5, nome: &#34;Dieta Anti-inflamatória&#34;, 
+            descricao: &#34;Plano rico em antioxidantes e ômega-3&#34;, 
+            objetivo: &#34;Redução de inflamação&#34;, duracao: 60, calorias_diarias: 2200, 
+            proteinas: &#34;20%&#34;, carboidratos: &#34;55%&#34;, gorduras: &#34;25%&#34;})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Planos alimentares criados com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_foods"><code class="name flex">
+<span>def <span class="ident">load_foods</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_foods(tx):
+    query = &#34;&#34;&#34;
+    // Criar Alimentos
+    CREATE (a1:Alimento {id: 1, nome: &#34;Maçã&#34;, porcao: &#34;1 unidade (150g)&#34;, calorias: 95, 
+            proteinas: 0.5, carboidratos: 25, gorduras: 0.3, fibras: 4.4, grupo: &#34;Frutas&#34;})
+    CREATE (a2:Alimento {id: 2, nome: &#34;Peito de Frango&#34;, porcao: &#34;100g&#34;, calorias: 165, 
+            proteinas: 31, carboidratos: 0, gorduras: 3.6, fibras: 0, grupo: &#34;Carnes&#34;})
+    CREATE (a3:Alimento {id: 3, nome: &#34;Arroz Integral&#34;, porcao: &#34;100g cozido&#34;, calorias: 112, 
+            proteinas: 2.6, carboidratos: 23.5, gorduras: 0.9, fibras: 1.8, grupo: &#34;Cereais&#34;})
+    CREATE (a4:Alimento {id: 4, nome: &#34;Brócolis&#34;, porcao: &#34;100g&#34;, calorias: 34, 
+            proteinas: 2.8, carboidratos: 6.6, gorduras: 0.4, fibras: 2.6, grupo: &#34;Vegetais&#34;})
+    CREATE (a5:Alimento {id: 5, nome: &#34;Salmão&#34;, porcao: &#34;100g&#34;, calorias: 206, 
+            proteinas: 22, carboidratos: 0, gorduras: 13, fibras: 0, grupo: &#34;Peixes&#34;})
+    CREATE (a6:Alimento {id: 6, nome: &#34;Lentilha&#34;, porcao: &#34;100g cozida&#34;, calorias: 116, 
+            proteinas: 9, carboidratos: 20, gorduras: 0.4, fibras: 7.9, grupo: &#34;Leguminosas&#34;})
+    CREATE (a7:Alimento {id: 7, nome: &#34;Iogurte Natural&#34;, porcao: &#34;100g&#34;, calorias: 59, 
+            proteinas: 3.5, carboidratos: 4.7, gorduras: 3.3, fibras: 0, grupo: &#34;Laticínios&#34;})
+    CREATE (a8:Alimento {id: 8, nome: &#34;Aveia&#34;, porcao: &#34;30g&#34;, calorias: 117, 
+            proteinas: 4, carboidratos: 21, gorduras: 2, fibras: 3, grupo: &#34;Cereais&#34;})
+    CREATE (a9:Alimento {id: 9, nome: &#34;Azeite&#34;, porcao: &#34;1 colher (10ml)&#34;, calorias: 90, 
+            proteinas: 0, carboidratos: 0, gorduras: 10, fibras: 0, grupo: &#34;Óleos&#34;})
+    CREATE (a10:Alimento {id: 10, nome: &#34;Banana&#34;, porcao: &#34;1 unidade (120g)&#34;, calorias: 105, 
+            proteinas: 1.3, carboidratos: 27, gorduras: 0.4, fibras: 3.1, grupo: &#34;Frutas&#34;})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Alimentos criados com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_meals"><code class="name flex">
+<span>def <span class="ident">load_meals</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_meals(tx):
+    query = &#34;&#34;&#34;
+    // Criar Refeições
+    CREATE (ref1:Refeicao {id: 1, tipo: &#34;Café da manhã&#34;, data: &#34;2023-10-18&#34;, 
+            hora: &#34;08:00&#34;, calorias: 320, adesao: &#34;Completa&#34;, registro_foto: true})
+    CREATE (ref2:Refeicao {id: 2, tipo: &#34;Almoço&#34;, data: &#34;2023-10-18&#34;, 
+            hora: &#34;12:30&#34;, calorias: 580, adesao: &#34;Parcial&#34;, registro_foto: true})
+    CREATE (ref3:Refeicao {id: 3, tipo: &#34;Lanche&#34;, data: &#34;2023-10-18&#34;, 
+            hora: &#34;16:00&#34;, calorias: 180, adesao: &#34;Completa&#34;, registro_foto: false})
+    CREATE (ref4:Refeicao {id: 4, tipo: &#34;Jantar&#34;, data: &#34;2023-10-18&#34;, 
+            hora: &#34;20:00&#34;, calorias: 450, adesao: &#34;Completa&#34;, registro_foto: true})
+    CREATE (ref5:Refeicao {id: 5, tipo: &#34;Café da manhã&#34;, data: &#34;2023-10-19&#34;, 
+            hora: &#34;07:45&#34;, calorias: 340, adesao: &#34;Completa&#34;, registro_foto: true})
+    CREATE (ref6:Refeicao {id: 6, tipo: &#34;Almoço&#34;, data: &#34;2023-10-19&#34;, 
+            hora: &#34;13:00&#34;, calorias: 620, adesao: &#34;Completa&#34;, registro_foto: true})
+    CREATE (ref7:Refeicao {id: 7, tipo: &#34;Lanche&#34;, data: &#34;2023-10-19&#34;, 
+            hora: &#34;15:30&#34;, calorias: 200, adesao: &#34;Parcial&#34;, registro_foto: false})
+    CREATE (ref8:Refeicao {id: 8, tipo: &#34;Jantar&#34;, data: &#34;2023-10-19&#34;, 
+            hora: &#34;19:30&#34;, calorias: 380, adesao: &#34;Não realizada&#34;, registro_foto: false})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Refeições criadas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_measurements"><code class="name flex">
+<span>def <span class="ident">load_measurements</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_measurements(tx):
+    query = &#34;&#34;&#34;
+    // Criar Medidas Corporais
+    CREATE (m1:MedidaCorporal {id: 1, data: &#34;2023-09-15&#34;, peso: 92, imc: 29.1, 
+            gordura_corporal: 28, cintura: 102, quadril: 106, pressao: &#34;130/85&#34;})
+    CREATE (m2:MedidaCorporal {id: 2, data: &#34;2023-10-01&#34;, peso: 89.5, imc: 28.2, 
+            gordura_corporal: 26.8, cintura: 99, quadril: 105, pressao: &#34;128/83&#34;})
+    CREATE (m3:MedidaCorporal {id: 3, data: &#34;2023-10-15&#34;, peso: 87.8, imc: 27.7, 
+            gordura_corporal: 25.5, cintura: 97, quadril: 104, pressao: &#34;125/82&#34;})
+    CREATE (m4:MedidaCorporal {id: 4, data: &#34;2023-09-10&#34;, peso: 78, imc: 28.7, 
+            gordura_corporal: 32, cintura: 91, quadril: 110, pressao: &#34;135/88&#34;})
+    CREATE (m5:MedidaCorporal {id: 5, data: &#34;2023-09-25&#34;, peso: 77.2, imc: 28.4, 
+            gordura_corporal: 31.5, cintura: 90, quadril: 109, pressao: &#34;132/86&#34;})
+    CREATE (m6:MedidaCorporal {id: 6, data: &#34;2023-10-10&#34;, peso: 76.5, imc: 28.1, 
+            gordura_corporal: 30.8, cintura: 88, quadril: 108, pressao: &#34;130/85&#34;})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Medidas corporais criadas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_messages"><code class="name flex">
+<span>def <span class="ident">load_messages</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_messages(tx):
+    query = &#34;&#34;&#34;
+    // Criar Mensagens
+    CREATE (msg1:Mensagem {id: 1, conteudo: &#34;Como está se sentindo com a nova dieta?&#34;, 
+            data: &#34;2023-10-15&#34;, hora: &#34;14:30&#34;, lida: true})
+    CREATE (msg2:Mensagem {id: 2, conteudo: &#34;Estou me adaptando bem, mas sinto fome à tarde&#34;, 
+            data: &#34;2023-10-15&#34;, hora: &#34;15:45&#34;, lida: true})
+    CREATE (msg3:Mensagem {id: 3, conteudo: &#34;Vamos ajustar seu lanche da tarde para resolver isso&#34;, 
+            data: &#34;2023-10-15&#34;, hora: &#34;16:20&#34;, lida: true})
+    CREATE (msg4:Mensagem {id: 4, conteudo: &#34;Lembrete: sua consulta é amanhã às 14h&#34;, 
+            data: &#34;2023-10-16&#34;, hora: &#34;09:00&#34;, lida: true})
+    CREATE (msg5:Mensagem {id: 5, conteudo: &#34;Confirmado, estarei lá&#34;, 
+            data: &#34;2023-10-16&#34;, hora: &#34;09:15&#34;, lida: true})
+    CREATE (msg6:Mensagem {id: 6, conteudo: &#34;Como está se sentindo após a última consulta?&#34;, 
+            data: &#34;2023-10-20&#34;, hora: &#34;11:00&#34;, lida: false})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Mensagens criadas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_nutritionists"><code class="name flex">
+<span>def <span class="ident">load_nutritionists</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_nutritionists(tx):
+    query = &#34;&#34;&#34;
+    // Criar Nutricionistas
+    CREATE (n1:Nutricionista {id: 1, nome: &#34;Ana Silva&#34;, especialidade: &#34;Nutrição Esportiva&#34;, 
+            experiencia: 8, email: &#34;ana@nutri.com&#34;, telefone: &#34;21-99999-1111&#34;})
+    CREATE (n2:Nutricionista {id: 2, nome: &#34;Carlos Mendes&#34;, especialidade: &#34;Nutrição Clínica&#34;, 
+            experiencia: 5, email: &#34;carlos@nutri.com&#34;, telefone: &#34;21-99999-2222&#34;})
+    CREATE (n3:Nutricionista {id: 3, nome: &#34;Mariana Costa&#34;, especialidade: &#34;Nutrição Funcional&#34;, 
+            experiencia: 12, email: &#34;mariana@nutri.com&#34;, telefone: &#34;21-99999-3333&#34;})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Nutricionistas criados com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_patients"><code class="name flex">
+<span>def <span class="ident">load_patients</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_patients(tx):
+    query = &#34;&#34;&#34;
+    // Criar Pacientes
+    CREATE (p1:Paciente {id: 1, nome: &#34;João Pereira&#34;, idade: 35, genero: &#34;M&#34;, altura: 178, 
+            peso_inicial: 92, email: &#34;joao@email.com&#34;, telefone: &#34;21-88888-1111&#34;, 
+            restricoes: [&#34;Glúten&#34;], alergias: [&#34;Amendoim&#34;], 
+            objetivo: &#34;Emagrecimento&#34;})
+    CREATE (p2:Paciente {id: 2, nome: &#34;Maria Santos&#34;, idade: 42, genero: &#34;F&#34;, altura: 165, 
+            peso_inicial: 78, email: &#34;maria@email.com&#34;, telefone: &#34;21-88888-2222&#34;, 
+            restricoes: [&#34;Lactose&#34;], alergias: [], 
+            objetivo: &#34;Controle de colesterol&#34;})
+    CREATE (p3:Paciente {id: 3, nome: &#34;Pedro Alves&#34;, idade: 28, genero: &#34;M&#34;, altura: 182, 
+            peso_inicial: 75, email: &#34;pedro@email.com&#34;, telefone: &#34;21-88888-3333&#34;, 
+            restricoes: [], alergias: [], 
+            objetivo: &#34;Ganho de massa muscular&#34;})
+    CREATE (p4:Paciente {id: 4, nome: &#34;Lúcia Ferreira&#34;, idade: 55, genero: &#34;F&#34;, altura: 160, 
+            peso_inicial: 85, email: &#34;lucia@email.com&#34;, telefone: &#34;21-88888-4444&#34;, 
+            restricoes: [&#34;Sódio&#34;], alergias: [&#34;Frutos do mar&#34;], 
+            objetivo: &#34;Controle de diabetes&#34;})
+    CREATE (p5:Paciente {id: 5, nome: &#34;Ricardo Gomes&#34;, idade: 30, genero: &#34;M&#34;, altura: 175, 
+            peso_inicial: 88, email: &#34;ricardo@email.com&#34;, telefone: &#34;21-88888-5555&#34;, 
+            restricoes: [], alergias: [&#34;Nozes&#34;], 
+            objetivo: &#34;Emagrecimento&#34;})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Pacientes criados com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.load_recipes"><code class="name flex">
+<span>def <span class="ident">load_recipes</span></span>(<span>tx)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_recipes(tx):
+    query = &#34;&#34;&#34;
+    // Criar Receitas
+    CREATE (r1:Receita {id: 1, nome: &#34;Salada de Frango com Abacate&#34;, 
+            instrucoes: &#34;Corte o peito de frango em cubos e grelhe. Misture com abacate, tomate e folhas verdes. Tempere com azeite, limão e sal.&#34;, 
+            tempo_preparo: 20, dificuldade: &#34;Fácil&#34;, calorias: 320})
+    CREATE (r2:Receita {id: 2, nome: &#34;Bowl de Açaí com Frutas&#34;, 
+            instrucoes: &#34;Misture açaí congelado batido com banana. Adicione granola, frutas frescas e mel.&#34;, 
+            tempo_preparo: 10, dificuldade: &#34;Fácil&#34;, calorias: 450})
+    CREATE (r3:Receita {id: 3, nome: &#34;Salmão Grelhado com Legumes&#34;, 
+            instrucoes: &#34;Grelhe o filé de salmão. Refogue brócolis, cenoura e abobrinha. Sirva com arroz integral.&#34;, 
+            tempo_preparo: 30, dificuldade: &#34;Médio&#34;, calorias: 480})
+    CREATE (r4:Receita {id: 4, nome: &#34;Smoothie Proteico&#34;, 
+            instrucoes: &#34;Bata no liquidificador iogurte, banana, aveia, pasta de amendoim e mel.&#34;, 
+            tempo_preparo: 5, dificuldade: &#34;Fácil&#34;, calorias: 350})
+    CREATE (r5:Receita {id: 5, nome: &#34;Omelete de Legumes&#34;, 
+            instrucoes: &#34;Bata 2 ovos, adicione espinafre, tomate e queijo. Cozinhe em frigideira antiaderente.&#34;, 
+            tempo_preparo: 15, dificuldade: &#34;Fácil&#34;, calorias: 280})
+    &#34;&#34;&#34;
+    tx.run(query)
+    print(&#34;Receitas criadas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"></div>
+</dd>
+<dt id="load_data.wait_for_neo4j"><code class="name flex">
+<span>def <span class="ident">wait_for_neo4j</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wait_for_neo4j():
+    &#34;&#34;&#34;Espera até que o Neo4j esteja pronto para aceitar conexões&#34;&#34;&#34;
+    driver = None
+    for i in range(MAX_CONNECTION_RETRY):
+        try:
+            driver = GraphDatabase.driver(NEO4J_URI, auth=(NEO4J_USER, NEO4J_PASSWORD))
+            # Verificar se a conexão está funcionando
+            with driver.session() as session:
+                result = session.run(&#34;RETURN 1 AS num&#34;)
+                record = result.single()
+                if record and record[&#34;num&#34;] == 1:
+                    print(&#34;Conexão com Neo4j estabelecida com sucesso!&#34;)
+                    driver.close()
+                    return True
+        except Exception as e:
+            print(
+                f&#34;Tentativa {i + 1}/{MAX_CONNECTION_RETRY}: Neo4j ainda não está pronto: {str(e)}&#34;
+            )
+            if driver:
+                driver.close()
+            time.sleep(RETRY_INTERVAL)
+
+    print(&#34;Não foi possível conectar ao Neo4j após várias tentativas.&#34;)
+    return False</code></pre>
+</details>
+<div class="desc"><p>Espera até que o Neo4j esteja pronto para aceitar conexões</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="load_data.create_database_dump" href="#load_data.create_database_dump">create_database_dump</a></code></li>
+<li><code><a title="load_data.create_relationships" href="#load_data.create_relationships">create_relationships</a></code></li>
+<li><code><a title="load_data.load_all_data" href="#load_data.load_all_data">load_all_data</a></code></li>
+<li><code><a title="load_data.load_appointments" href="#load_data.load_appointments">load_appointments</a></code></li>
+<li><code><a title="load_data.load_diet_plans" href="#load_data.load_diet_plans">load_diet_plans</a></code></li>
+<li><code><a title="load_data.load_foods" href="#load_data.load_foods">load_foods</a></code></li>
+<li><code><a title="load_data.load_meals" href="#load_data.load_meals">load_meals</a></code></li>
+<li><code><a title="load_data.load_measurements" href="#load_data.load_measurements">load_measurements</a></code></li>
+<li><code><a title="load_data.load_messages" href="#load_data.load_messages">load_messages</a></code></li>
+<li><code><a title="load_data.load_nutritionists" href="#load_data.load_nutritionists">load_nutritionists</a></code></li>
+<li><code><a title="load_data.load_patients" href="#load_data.load_patients">load_patients</a></code></li>
+<li><code><a title="load_data.load_recipes" href="#load_data.load_recipes">load_recipes</a></code></li>
+<li><code><a title="load_data.wait_for_neo4j" href="#load_data.wait_for_neo4j">wait_for_neo4j</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
+</footer>
+</body>
+</html>

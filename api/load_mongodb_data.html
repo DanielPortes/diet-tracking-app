@@ -1,0 +1,1032 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+<meta name="generator" content="pdoc3 0.11.5">
+<title>load_mongodb_data API documentation</title>
+<meta name="description" content="">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/sanitize.min.css" integrity="sha512-y1dtMcuvtTMJc1yPgEqF0ZjQbhnc/bFhyvIyVNb9Zk5mIGtqVaAB1Ttl28su8AvFMOY0EwRbAe+HCLqj6W7/KA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/13.0.0/typography.min.css" integrity="sha512-Y1DYSb995BAfxobCkKepB1BqJJTPrOp3zPL74AWFugHHmmdcvO+C48WLrUOlhGMc0QG7AE3f7gmvvcrmX2fDoA==" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:1.5em;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:2em 0 .50em 0}h3{font-size:1.4em;margin:1.6em 0 .7em 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .2s ease-in-out}a:visited{color:#503}a:hover{color:#b62}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900;font-weight:bold}pre code{font-size:.8em;line-height:1.4em;padding:1em;display:block}code{background:#f3f3f3;font-family:"DejaVu Sans Mono",monospace;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source > summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible;min-width:max-content}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em 1em;margin:1em 0}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul ul{padding-left:1em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => {
+hljs.configure({languages: ['bash', 'css', 'diff', 'graphql', 'ini', 'javascript', 'json', 'plaintext', 'python', 'python-repl', 'rust', 'shell', 'sql', 'typescript', 'xml', 'yaml']});
+hljs.highlightAll();
+/* Collapse source docstrings */
+setTimeout(() => {
+[...document.querySelectorAll('.hljs.language-python > .hljs-string')]
+.filter(el => el.innerHTML.length > 200 && ['"""', "'''"].includes(el.innerHTML.substring(0, 3)))
+.forEach(el => {
+let d = document.createElement('details');
+d.classList.add('hljs-string');
+d.innerHTML = '<summary>"""</summary>' + el.innerHTML.substring(3);
+el.replaceWith(d);
+});
+}, 100);
+})</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>load_mongodb_data</code></h1>
+</header>
+<section id="section-intro">
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="load_mongodb_data.clear_database"><code class="name flex">
+<span>def <span class="ident">clear_database</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def clear_database(db):
+    &#34;&#34;&#34;Limpa todas as collections do banco de dados.&#34;&#34;&#34;
+    for collection in db.list_collection_names():
+        db[collection].drop()
+    print(&#34;Banco de dados limpo com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Limpa todas as collections do banco de dados.</p></div>
+</dd>
+<dt id="load_mongodb_data.create_mongodb_dump"><code class="name flex">
+<span>def <span class="ident">create_mongodb_dump</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def create_mongodb_dump():
+    &#34;&#34;&#34;Cria um dump do banco de dados MongoDB.&#34;&#34;&#34;
+    try:
+        import datetime
+        import subprocess
+
+        timestamp = datetime.datetime.now().strftime(&#34;%Y%m%d_%H%M%S&#34;)
+        directory = f&#34;mongodb_dump_{timestamp}&#34;
+
+        # Este comando assume que o MongoDB está em um container chamado diet_app_mongodb
+        command = f&#34;docker exec diet_app_mongodb mongodump --username admin --password senha123 --authenticationDatabase admin --db {MONGO_DB} --out /data/db/{directory}&#34;
+        subprocess.run(
+            command,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
+
+        print(f&#34;Dump criado com sucesso: {directory}&#34;)
+        print(&#34;Para copiar o dump para o seu computador, use:&#34;)
+        print(f&#34;docker cp diet_app_mongodb:/data/db/{directory} ./{directory}&#34;)
+
+        return True
+    except Exception as e:
+        print(f&#34;Erro ao criar dump: {str(e)}&#34;)
+        return False</code></pre>
+</details>
+<div class="desc"><p>Cria um dump do banco de dados MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_all_data"><code class="name flex">
+<span>def <span class="ident">load_all_data</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_all_data():
+    &#34;&#34;&#34;Carrega todos os dados no MongoDB.&#34;&#34;&#34;
+    client = wait_for_mongodb()
+    if not client:
+        return False
+
+    try:
+        db = client[MONGO_DB]
+
+        # Limpar o banco antes de carregar novos dados
+        clear_database(db)
+
+        # Carregar todos os dados
+        load_nutritionists(db)
+        load_patients(db)
+        load_foods(db)
+        load_recipes(db)
+        load_diet_plans(db)
+        load_meals(db)
+        load_measurements(db)
+        load_messages(db)
+        load_appointments(db)
+
+        print(&#34;\nTodos os dados foram carregados com sucesso no MongoDB!&#34;)
+        return True
+    except Exception as e:
+        print(f&#34;Erro ao carregar dados: {str(e)}&#34;)
+        return False
+    finally:
+        if client:
+            client.close()</code></pre>
+</details>
+<div class="desc"><p>Carrega todos os dados no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_appointments"><code class="name flex">
+<span>def <span class="ident">load_appointments</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_appointments(db):
+    &#34;&#34;&#34;Carrega dados de consultas no MongoDB.&#34;&#34;&#34;
+    collection = db.appointments
+
+    appointments = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;nutricionista_id&#34;: 1,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 9, 15),
+            &#34;hora&#34;: &#34;14:00&#34;,
+            &#34;status&#34;: &#34;Realizada&#34;,
+            &#34;notas&#34;: &#34;Avaliação inicial e definição de plano alimentar&#34;,
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;nutricionista_id&#34;: 1,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 10, 1),
+            &#34;hora&#34;: &#34;15:30&#34;,
+            &#34;status&#34;: &#34;Realizada&#34;,
+            &#34;notas&#34;: &#34;Ajustes no plano devido à fome relatada&#34;,
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;nutricionista_id&#34;: 1,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 10, 17),
+            &#34;hora&#34;: &#34;14:00&#34;,
+            &#34;status&#34;: &#34;Realizada&#34;,
+            &#34;notas&#34;: &#34;Progresso acima do esperado, reforço positivo&#34;,
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;nutricionista_id&#34;: 1,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 11, 1),
+            &#34;hora&#34;: &#34;16:00&#34;,
+            &#34;status&#34;: &#34;Agendada&#34;,
+            &#34;notas&#34;: &#34;&#34;,
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;nutricionista_id&#34;: 2,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 9, 10),
+            &#34;hora&#34;: &#34;09:30&#34;,
+            &#34;status&#34;: &#34;Realizada&#34;,
+            &#34;notas&#34;: &#34;Avaliação inicial, paciente com colesterol alto&#34;,
+        },
+        {
+            &#34;_id&#34;: 6,
+            &#34;nutricionista_id&#34;: 2,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 9, 25),
+            &#34;hora&#34;: &#34;10:00&#34;,
+            &#34;status&#34;: &#34;Realizada&#34;,
+            &#34;notas&#34;: &#34;Melhora nos exames laboratoriais&#34;,
+        },
+        {
+            &#34;_id&#34;: 7,
+            &#34;nutricionista_id&#34;: 2,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 10, 10),
+            &#34;hora&#34;: &#34;11:00&#34;,
+            &#34;status&#34;: &#34;Realizada&#34;,
+            &#34;notas&#34;: &#34;Exames demonstrando normalização do colesterol&#34;,
+        },
+        {
+            &#34;_id&#34;: 8,
+            &#34;nutricionista_id&#34;: 2,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 10, 25),
+            &#34;hora&#34;: &#34;09:30&#34;,
+            &#34;status&#34;: &#34;Cancelada&#34;,
+            &#34;notas&#34;: &#34;Paciente não pôde comparecer&#34;,
+        },
+    ]
+
+    collection.insert_many(appointments)
+    print(f&#34;Inseridas {len(appointments)} consultas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de consultas no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_diet_plans"><code class="name flex">
+<span>def <span class="ident">load_diet_plans</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_diet_plans(db):
+    &#34;&#34;&#34;Carrega dados de planos alimentares no MongoDB.&#34;&#34;&#34;
+    collection = db.dietPlans
+
+    diet_plans = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;nome&#34;: &#34;Emagrecimento Saudável&#34;,
+            &#34;descricao&#34;: &#34;Plano focado em déficit calórico moderado com alimentos nutritivos&#34;,
+            &#34;objetivo&#34;: &#34;Perda de peso&#34;,
+            &#34;duracao&#34;: 90,
+            &#34;calorias_diarias&#34;: 1800,
+            &#34;macronutrientes&#34;: {
+                &#34;proteinas&#34;: &#34;30%&#34;,
+                &#34;carboidratos&#34;: &#34;40%&#34;,
+                &#34;gorduras&#34;: &#34;30%&#34;,
+            },
+            &#34;nutricionista_id&#34;: 1,
+            &#34;paciente_id&#34;: 1,
+            &#34;alimentos_recomendados&#34;: [2, 3, 4],
+            &#34;receitas_recomendadas&#34;: [1, 5],
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;nome&#34;: &#34;Ganho de Massa&#34;,
+            &#34;descricao&#34;: &#34;Plano focado em superávit calórico com alta proteína&#34;,
+            &#34;objetivo&#34;: &#34;Hipertrofia&#34;,
+            &#34;duracao&#34;: 120,
+            &#34;calorias_diarias&#34;: 2800,
+            &#34;macronutrientes&#34;: {
+                &#34;proteinas&#34;: &#34;35%&#34;,
+                &#34;carboidratos&#34;: &#34;45%&#34;,
+                &#34;gorduras&#34;: &#34;20%&#34;,
+            },
+            &#34;nutricionista_id&#34;: 1,
+            &#34;paciente_id&#34;: 3,
+            &#34;alimentos_recomendados&#34;: [2, 5, 8],
+            &#34;receitas_recomendadas&#34;: [3, 4],
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;nome&#34;: &#34;Controle Glicêmico&#34;,
+            &#34;descricao&#34;: &#34;Plano para controle de diabetes com baixo índice glicêmico&#34;,
+            &#34;objetivo&#34;: &#34;Controle de glicemia&#34;,
+            &#34;duracao&#34;: 180,
+            &#34;calorias_diarias&#34;: 1600,
+            &#34;macronutrientes&#34;: {
+                &#34;proteinas&#34;: &#34;25%&#34;,
+                &#34;carboidratos&#34;: &#34;35%&#34;,
+                &#34;gorduras&#34;: &#34;40%&#34;,
+            },
+            &#34;nutricionista_id&#34;: 3,
+            &#34;paciente_id&#34;: 4,
+            &#34;alimentos_recomendados&#34;: [4, 6],
+            &#34;receitas_recomendadas&#34;: [5],
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;nome&#34;: &#34;Controle de Colesterol&#34;,
+            &#34;descricao&#34;: &#34;Plano para redução de colesterol LDL e aumento de HDL&#34;,
+            &#34;objetivo&#34;: &#34;Saúde cardiovascular&#34;,
+            &#34;duracao&#34;: 90,
+            &#34;calorias_diarias&#34;: 2000,
+            &#34;macronutrientes&#34;: {
+                &#34;proteinas&#34;: &#34;25%&#34;,
+                &#34;carboidratos&#34;: &#34;50%&#34;,
+                &#34;gorduras&#34;: &#34;25%&#34;,
+            },
+            &#34;nutricionista_id&#34;: 2,
+            &#34;paciente_id&#34;: 2,
+            &#34;alimentos_recomendados&#34;: [5, 6],
+            &#34;receitas_recomendadas&#34;: [3],
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;nome&#34;: &#34;Dieta Anti-inflamatória&#34;,
+            &#34;descricao&#34;: &#34;Plano rico em antioxidantes e ômega-3&#34;,
+            &#34;objetivo&#34;: &#34;Redução de inflamação&#34;,
+            &#34;duracao&#34;: 60,
+            &#34;calorias_diarias&#34;: 2200,
+            &#34;macronutrientes&#34;: {
+                &#34;proteinas&#34;: &#34;20%&#34;,
+                &#34;carboidratos&#34;: &#34;55%&#34;,
+                &#34;gorduras&#34;: &#34;25%&#34;,
+            },
+            &#34;nutricionista_id&#34;: 3,
+            &#34;paciente_id&#34;: 5,
+            &#34;alimentos_recomendados&#34;: [5, 9],
+            &#34;receitas_recomendadas&#34;: [1, 3],
+        },
+    ]
+
+    collection.insert_many(diet_plans)
+    print(f&#34;Inseridos {len(diet_plans)} planos alimentares com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de planos alimentares no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_foods"><code class="name flex">
+<span>def <span class="ident">load_foods</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_foods(db):
+    &#34;&#34;&#34;Carrega dados de alimentos no MongoDB.&#34;&#34;&#34;
+    collection = db.foods
+
+    foods = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;nome&#34;: &#34;Maçã&#34;,
+            &#34;porcao&#34;: &#34;1 unidade (150g)&#34;,
+            &#34;calorias&#34;: 95,
+            &#34;proteinas&#34;: 0.5,
+            &#34;carboidratos&#34;: 25,
+            &#34;gorduras&#34;: 0.3,
+            &#34;fibras&#34;: 4.4,
+            &#34;grupo&#34;: &#34;Frutas&#34;,
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;nome&#34;: &#34;Peito de Frango&#34;,
+            &#34;porcao&#34;: &#34;100g&#34;,
+            &#34;calorias&#34;: 165,
+            &#34;proteinas&#34;: 31,
+            &#34;carboidratos&#34;: 0,
+            &#34;gorduras&#34;: 3.6,
+            &#34;fibras&#34;: 0,
+            &#34;grupo&#34;: &#34;Carnes&#34;,
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;nome&#34;: &#34;Arroz Integral&#34;,
+            &#34;porcao&#34;: &#34;100g cozido&#34;,
+            &#34;calorias&#34;: 112,
+            &#34;proteinas&#34;: 2.6,
+            &#34;carboidratos&#34;: 23.5,
+            &#34;gorduras&#34;: 0.9,
+            &#34;fibras&#34;: 1.8,
+            &#34;grupo&#34;: &#34;Cereais&#34;,
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;nome&#34;: &#34;Brócolis&#34;,
+            &#34;porcao&#34;: &#34;100g&#34;,
+            &#34;calorias&#34;: 34,
+            &#34;proteinas&#34;: 2.8,
+            &#34;carboidratos&#34;: 6.6,
+            &#34;gorduras&#34;: 0.4,
+            &#34;fibras&#34;: 2.6,
+            &#34;grupo&#34;: &#34;Vegetais&#34;,
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;nome&#34;: &#34;Salmão&#34;,
+            &#34;porcao&#34;: &#34;100g&#34;,
+            &#34;calorias&#34;: 206,
+            &#34;proteinas&#34;: 22,
+            &#34;carboidratos&#34;: 0,
+            &#34;gorduras&#34;: 13,
+            &#34;fibras&#34;: 0,
+            &#34;grupo&#34;: &#34;Peixes&#34;,
+        },
+        {
+            &#34;_id&#34;: 6,
+            &#34;nome&#34;: &#34;Lentilha&#34;,
+            &#34;porcao&#34;: &#34;100g cozida&#34;,
+            &#34;calorias&#34;: 116,
+            &#34;proteinas&#34;: 9,
+            &#34;carboidratos&#34;: 20,
+            &#34;gorduras&#34;: 0.4,
+            &#34;fibras&#34;: 7.9,
+            &#34;grupo&#34;: &#34;Leguminosas&#34;,
+        },
+        {
+            &#34;_id&#34;: 7,
+            &#34;nome&#34;: &#34;Iogurte Natural&#34;,
+            &#34;porcao&#34;: &#34;100g&#34;,
+            &#34;calorias&#34;: 59,
+            &#34;proteinas&#34;: 3.5,
+            &#34;carboidratos&#34;: 4.7,
+            &#34;gorduras&#34;: 3.3,
+            &#34;fibras&#34;: 0,
+            &#34;grupo&#34;: &#34;Laticínios&#34;,
+        },
+        {
+            &#34;_id&#34;: 8,
+            &#34;nome&#34;: &#34;Aveia&#34;,
+            &#34;porcao&#34;: &#34;30g&#34;,
+            &#34;calorias&#34;: 117,
+            &#34;proteinas&#34;: 4,
+            &#34;carboidratos&#34;: 21,
+            &#34;gorduras&#34;: 2,
+            &#34;fibras&#34;: 3,
+            &#34;grupo&#34;: &#34;Cereais&#34;,
+        },
+        {
+            &#34;_id&#34;: 9,
+            &#34;nome&#34;: &#34;Azeite&#34;,
+            &#34;porcao&#34;: &#34;1 colher (10ml)&#34;,
+            &#34;calorias&#34;: 90,
+            &#34;proteinas&#34;: 0,
+            &#34;carboidratos&#34;: 0,
+            &#34;gorduras&#34;: 10,
+            &#34;fibras&#34;: 0,
+            &#34;grupo&#34;: &#34;Óleos&#34;,
+        },
+        {
+            &#34;_id&#34;: 10,
+            &#34;nome&#34;: &#34;Banana&#34;,
+            &#34;porcao&#34;: &#34;1 unidade (120g)&#34;,
+            &#34;calorias&#34;: 105,
+            &#34;proteinas&#34;: 1.3,
+            &#34;carboidratos&#34;: 27,
+            &#34;gorduras&#34;: 0.4,
+            &#34;fibras&#34;: 3.1,
+            &#34;grupo&#34;: &#34;Frutas&#34;,
+        },
+    ]
+
+    collection.insert_many(foods)
+    print(f&#34;Inseridos {len(foods)} alimentos com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de alimentos no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_meals"><code class="name flex">
+<span>def <span class="ident">load_meals</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_meals(db):
+    &#34;&#34;&#34;Carrega dados de refeições no MongoDB.&#34;&#34;&#34;
+    collection = db.meals
+
+    meals = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;tipo&#34;: &#34;Café da manhã&#34;,
+            &#34;data&#34;: datetime(2023, 10, 18),
+            &#34;hora&#34;: &#34;08:00&#34;,
+            &#34;paciente_id&#34;: 1,
+            &#34;calorias&#34;: 320,
+            &#34;adesao&#34;: &#34;Completa&#34;,
+            &#34;registro_foto&#34;: True,
+            &#34;alimentos&#34;: [],
+            &#34;receitas&#34;: [4],
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;tipo&#34;: &#34;Almoço&#34;,
+            &#34;data&#34;: datetime(2023, 10, 18),
+            &#34;hora&#34;: &#34;12:30&#34;,
+            &#34;paciente_id&#34;: 1,
+            &#34;calorias&#34;: 580,
+            &#34;adesao&#34;: &#34;Parcial&#34;,
+            &#34;registro_foto&#34;: True,
+            &#34;alimentos&#34;: [],
+            &#34;receitas&#34;: [1],
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;tipo&#34;: &#34;Lanche&#34;,
+            &#34;data&#34;: datetime(2023, 10, 18),
+            &#34;hora&#34;: &#34;16:00&#34;,
+            &#34;paciente_id&#34;: 1,
+            &#34;calorias&#34;: 180,
+            &#34;adesao&#34;: &#34;Completa&#34;,
+            &#34;registro_foto&#34;: False,
+            &#34;alimentos&#34;: [1, 7],
+            &#34;receitas&#34;: [],
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;tipo&#34;: &#34;Jantar&#34;,
+            &#34;data&#34;: datetime(2023, 10, 18),
+            &#34;hora&#34;: &#34;20:00&#34;,
+            &#34;paciente_id&#34;: 1,
+            &#34;calorias&#34;: 450,
+            &#34;adesao&#34;: &#34;Completa&#34;,
+            &#34;registro_foto&#34;: True,
+            &#34;alimentos&#34;: [],
+            &#34;receitas&#34;: [3],
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;tipo&#34;: &#34;Café da manhã&#34;,
+            &#34;data&#34;: datetime(2023, 10, 19),
+            &#34;hora&#34;: &#34;07:45&#34;,
+            &#34;paciente_id&#34;: 2,
+            &#34;calorias&#34;: 340,
+            &#34;adesao&#34;: &#34;Completa&#34;,
+            &#34;registro_foto&#34;: True,
+            &#34;alimentos&#34;: [],
+            &#34;receitas&#34;: [2],
+        },
+        {
+            &#34;_id&#34;: 6,
+            &#34;tipo&#34;: &#34;Almoço&#34;,
+            &#34;data&#34;: datetime(2023, 10, 19),
+            &#34;hora&#34;: &#34;13:00&#34;,
+            &#34;paciente_id&#34;: 2,
+            &#34;calorias&#34;: 620,
+            &#34;adesao&#34;: &#34;Completa&#34;,
+            &#34;registro_foto&#34;: True,
+            &#34;alimentos&#34;: [],
+            &#34;receitas&#34;: [3],
+        },
+        {
+            &#34;_id&#34;: 7,
+            &#34;tipo&#34;: &#34;Lanche&#34;,
+            &#34;data&#34;: datetime(2023, 10, 19),
+            &#34;hora&#34;: &#34;15:30&#34;,
+            &#34;paciente_id&#34;: 2,
+            &#34;calorias&#34;: 200,
+            &#34;adesao&#34;: &#34;Parcial&#34;,
+            &#34;registro_foto&#34;: False,
+            &#34;alimentos&#34;: [1],
+            &#34;receitas&#34;: [],
+        },
+        {
+            &#34;_id&#34;: 8,
+            &#34;tipo&#34;: &#34;Jantar&#34;,
+            &#34;data&#34;: datetime(2023, 10, 19),
+            &#34;hora&#34;: &#34;19:30&#34;,
+            &#34;paciente_id&#34;: 2,
+            &#34;calorias&#34;: 380,
+            &#34;adesao&#34;: &#34;Não realizada&#34;,
+            &#34;registro_foto&#34;: False,
+            &#34;alimentos&#34;: [],
+            &#34;receitas&#34;: [5],
+        },
+    ]
+
+    collection.insert_many(meals)
+    print(f&#34;Inseridas {len(meals)} refeições com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de refeições no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_measurements"><code class="name flex">
+<span>def <span class="ident">load_measurements</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_measurements(db):
+    &#34;&#34;&#34;Carrega dados de medidas corporais no MongoDB.&#34;&#34;&#34;
+    collection = db.measurements
+
+    measurements = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 9, 15),
+            &#34;peso&#34;: 92,
+            &#34;imc&#34;: 29.1,
+            &#34;gordura_corporal&#34;: 28,
+            &#34;medidas&#34;: {&#34;cintura&#34;: 102, &#34;quadril&#34;: 106},
+            &#34;pressao&#34;: &#34;130/85&#34;,
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 10, 1),
+            &#34;peso&#34;: 89.5,
+            &#34;imc&#34;: 28.2,
+            &#34;gordura_corporal&#34;: 26.8,
+            &#34;medidas&#34;: {&#34;cintura&#34;: 99, &#34;quadril&#34;: 105},
+            &#34;pressao&#34;: &#34;128/83&#34;,
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;paciente_id&#34;: 1,
+            &#34;data&#34;: datetime(2023, 10, 15),
+            &#34;peso&#34;: 87.8,
+            &#34;imc&#34;: 27.7,
+            &#34;gordura_corporal&#34;: 25.5,
+            &#34;medidas&#34;: {&#34;cintura&#34;: 97, &#34;quadril&#34;: 104},
+            &#34;pressao&#34;: &#34;125/82&#34;,
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 9, 10),
+            &#34;peso&#34;: 78,
+            &#34;imc&#34;: 28.7,
+            &#34;gordura_corporal&#34;: 32,
+            &#34;medidas&#34;: {&#34;cintura&#34;: 91, &#34;quadril&#34;: 110},
+            &#34;pressao&#34;: &#34;135/88&#34;,
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 9, 25),
+            &#34;peso&#34;: 77.2,
+            &#34;imc&#34;: 28.4,
+            &#34;gordura_corporal&#34;: 31.5,
+            &#34;medidas&#34;: {&#34;cintura&#34;: 90, &#34;quadril&#34;: 109},
+            &#34;pressao&#34;: &#34;132/86&#34;,
+        },
+        {
+            &#34;_id&#34;: 6,
+            &#34;paciente_id&#34;: 2,
+            &#34;data&#34;: datetime(2023, 10, 10),
+            &#34;peso&#34;: 76.5,
+            &#34;imc&#34;: 28.1,
+            &#34;gordura_corporal&#34;: 30.8,
+            &#34;medidas&#34;: {&#34;cintura&#34;: 88, &#34;quadril&#34;: 108},
+            &#34;pressao&#34;: &#34;130/85&#34;,
+        },
+    ]
+
+    collection.insert_many(measurements)
+    print(f&#34;Inseridas {len(measurements)} medidas corporais com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de medidas corporais no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_messages"><code class="name flex">
+<span>def <span class="ident">load_messages</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_messages(db):
+    &#34;&#34;&#34;Carrega dados de mensagens no MongoDB.&#34;&#34;&#34;
+    collection = db.messages
+
+    messages = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;de_id&#34;: 1,
+            &#34;de_tipo&#34;: &#34;nutricionista&#34;,
+            &#34;para_id&#34;: 1,
+            &#34;para_tipo&#34;: &#34;paciente&#34;,
+            &#34;conteudo&#34;: &#34;Como está se sentindo com a nova dieta?&#34;,
+            &#34;data&#34;: datetime(2023, 10, 15),
+            &#34;hora&#34;: &#34;14:30&#34;,
+            &#34;lida&#34;: True,
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;de_id&#34;: 1,
+            &#34;de_tipo&#34;: &#34;paciente&#34;,
+            &#34;para_id&#34;: 1,
+            &#34;para_tipo&#34;: &#34;nutricionista&#34;,
+            &#34;conteudo&#34;: &#34;Estou me adaptando bem, mas sinto fome à tarde&#34;,
+            &#34;data&#34;: datetime(2023, 10, 15),
+            &#34;hora&#34;: &#34;15:45&#34;,
+            &#34;lida&#34;: True,
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;de_id&#34;: 1,
+            &#34;de_tipo&#34;: &#34;nutricionista&#34;,
+            &#34;para_id&#34;: 1,
+            &#34;para_tipo&#34;: &#34;paciente&#34;,
+            &#34;conteudo&#34;: &#34;Vamos ajustar seu lanche da tarde para resolver isso&#34;,
+            &#34;data&#34;: datetime(2023, 10, 15),
+            &#34;hora&#34;: &#34;16:20&#34;,
+            &#34;lida&#34;: True,
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;de_id&#34;: 1,
+            &#34;de_tipo&#34;: &#34;nutricionista&#34;,
+            &#34;para_id&#34;: 1,
+            &#34;para_tipo&#34;: &#34;paciente&#34;,
+            &#34;conteudo&#34;: &#34;Lembrete: sua consulta é amanhã às 14h&#34;,
+            &#34;data&#34;: datetime(2023, 10, 16),
+            &#34;hora&#34;: &#34;09:00&#34;,
+            &#34;lida&#34;: True,
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;de_id&#34;: 1,
+            &#34;de_tipo&#34;: &#34;paciente&#34;,
+            &#34;para_id&#34;: 1,
+            &#34;para_tipo&#34;: &#34;nutricionista&#34;,
+            &#34;conteudo&#34;: &#34;Confirmado, estarei lá&#34;,
+            &#34;data&#34;: datetime(2023, 10, 16),
+            &#34;hora&#34;: &#34;09:15&#34;,
+            &#34;lida&#34;: True,
+        },
+        {
+            &#34;_id&#34;: 6,
+            &#34;de_id&#34;: 2,
+            &#34;de_tipo&#34;: &#34;nutricionista&#34;,
+            &#34;para_id&#34;: 2,
+            &#34;para_tipo&#34;: &#34;paciente&#34;,
+            &#34;conteudo&#34;: &#34;Como está se sentindo após a última consulta?&#34;,
+            &#34;data&#34;: datetime(2023, 10, 20),
+            &#34;hora&#34;: &#34;11:00&#34;,
+            &#34;lida&#34;: False,
+        },
+    ]
+
+    collection.insert_many(messages)
+    print(f&#34;Inseridas {len(messages)} mensagens com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de mensagens no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_nutritionists"><code class="name flex">
+<span>def <span class="ident">load_nutritionists</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_nutritionists(db):
+    &#34;&#34;&#34;Carrega dados de nutricionistas no MongoDB.&#34;&#34;&#34;
+    collection = db.nutritionists
+
+    nutritionists = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;nome&#34;: &#34;Ana Silva&#34;,
+            &#34;especialidade&#34;: &#34;Nutrição Esportiva&#34;,
+            &#34;experiencia&#34;: 8,
+            &#34;email&#34;: &#34;ana@nutri.com&#34;,
+            &#34;telefone&#34;: &#34;21-99999-1111&#34;,
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;nome&#34;: &#34;Carlos Mendes&#34;,
+            &#34;especialidade&#34;: &#34;Nutrição Clínica&#34;,
+            &#34;experiencia&#34;: 5,
+            &#34;email&#34;: &#34;carlos@nutri.com&#34;,
+            &#34;telefone&#34;: &#34;21-99999-2222&#34;,
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;nome&#34;: &#34;Mariana Costa&#34;,
+            &#34;especialidade&#34;: &#34;Nutrição Funcional&#34;,
+            &#34;experiencia&#34;: 12,
+            &#34;email&#34;: &#34;mariana@nutri.com&#34;,
+            &#34;telefone&#34;: &#34;21-99999-3333&#34;,
+        },
+    ]
+
+    collection.insert_many(nutritionists)
+    print(f&#34;Inseridos {len(nutritionists)} nutricionistas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de nutricionistas no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_patients"><code class="name flex">
+<span>def <span class="ident">load_patients</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_patients(db):
+    &#34;&#34;&#34;Carrega dados de pacientes no MongoDB.&#34;&#34;&#34;
+    collection = db.patients
+
+    patients = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;nome&#34;: &#34;João Pereira&#34;,
+            &#34;idade&#34;: 35,
+            &#34;genero&#34;: &#34;M&#34;,
+            &#34;altura&#34;: 178,
+            &#34;peso_inicial&#34;: 92,
+            &#34;email&#34;: &#34;joao@email.com&#34;,
+            &#34;telefone&#34;: &#34;21-88888-1111&#34;,
+            &#34;restricoes&#34;: [&#34;Glúten&#34;],
+            &#34;alergias&#34;: [&#34;Amendoim&#34;],
+            &#34;objetivo&#34;: &#34;Emagrecimento&#34;,
+            &#34;nutricionista_id&#34;: 1,
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;nome&#34;: &#34;Maria Santos&#34;,
+            &#34;idade&#34;: 42,
+            &#34;genero&#34;: &#34;F&#34;,
+            &#34;altura&#34;: 165,
+            &#34;peso_inicial&#34;: 78,
+            &#34;email&#34;: &#34;maria@email.com&#34;,
+            &#34;telefone&#34;: &#34;21-88888-2222&#34;,
+            &#34;restricoes&#34;: [&#34;Lactose&#34;],
+            &#34;alergias&#34;: [],
+            &#34;objetivo&#34;: &#34;Controle de colesterol&#34;,
+            &#34;nutricionista_id&#34;: 2,
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;nome&#34;: &#34;Pedro Alves&#34;,
+            &#34;idade&#34;: 28,
+            &#34;genero&#34;: &#34;M&#34;,
+            &#34;altura&#34;: 182,
+            &#34;peso_inicial&#34;: 75,
+            &#34;email&#34;: &#34;pedro@email.com&#34;,
+            &#34;telefone&#34;: &#34;21-88888-3333&#34;,
+            &#34;restricoes&#34;: [],
+            &#34;alergias&#34;: [],
+            &#34;objetivo&#34;: &#34;Ganho de massa muscular&#34;,
+            &#34;nutricionista_id&#34;: 1,
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;nome&#34;: &#34;Lúcia Ferreira&#34;,
+            &#34;idade&#34;: 55,
+            &#34;genero&#34;: &#34;F&#34;,
+            &#34;altura&#34;: 160,
+            &#34;peso_inicial&#34;: 85,
+            &#34;email&#34;: &#34;lucia@email.com&#34;,
+            &#34;telefone&#34;: &#34;21-88888-4444&#34;,
+            &#34;restricoes&#34;: [&#34;Sódio&#34;],
+            &#34;alergias&#34;: [&#34;Frutos do mar&#34;],
+            &#34;objetivo&#34;: &#34;Controle de diabetes&#34;,
+            &#34;nutricionista_id&#34;: 3,
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;nome&#34;: &#34;Ricardo Gomes&#34;,
+            &#34;idade&#34;: 30,
+            &#34;genero&#34;: &#34;M&#34;,
+            &#34;altura&#34;: 175,
+            &#34;peso_inicial&#34;: 88,
+            &#34;email&#34;: &#34;ricardo@email.com&#34;,
+            &#34;telefone&#34;: &#34;21-88888-5555&#34;,
+            &#34;restricoes&#34;: [],
+            &#34;alergias&#34;: [&#34;Nozes&#34;],
+            &#34;objetivo&#34;: &#34;Emagrecimento&#34;,
+            &#34;nutricionista_id&#34;: 3,
+        },
+    ]
+
+    collection.insert_many(patients)
+    print(f&#34;Inseridos {len(patients)} pacientes com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de pacientes no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.load_recipes"><code class="name flex">
+<span>def <span class="ident">load_recipes</span></span>(<span>db)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def load_recipes(db):
+    &#34;&#34;&#34;Carrega dados de receitas no MongoDB.&#34;&#34;&#34;
+    collection = db.recipes
+
+    recipes = [
+        {
+            &#34;_id&#34;: 1,
+            &#34;nome&#34;: &#34;Salada de Frango com Abacate&#34;,
+            &#34;instrucoes&#34;: &#34;Corte o peito de frango em cubos e grelhe. Misture com abacate, tomate e folhas verdes. Tempere com azeite, limão e sal.&#34;,
+            &#34;tempo_preparo&#34;: 20,
+            &#34;dificuldade&#34;: &#34;Fácil&#34;,
+            &#34;calorias&#34;: 320,
+            &#34;ingredientes&#34;: [
+                {&#34;food_id&#34;: 2, &#34;quantidade&#34;: &#34;100g&#34;},
+                {&#34;food_id&#34;: 4, &#34;quantidade&#34;: &#34;50g&#34;},
+                {&#34;food_id&#34;: 9, &#34;quantidade&#34;: &#34;5ml&#34;},
+            ],
+        },
+        {
+            &#34;_id&#34;: 2,
+            &#34;nome&#34;: &#34;Bowl de Açaí com Frutas&#34;,
+            &#34;instrucoes&#34;: &#34;Misture açaí congelado batido com banana. Adicione granola, frutas frescas e mel.&#34;,
+            &#34;tempo_preparo&#34;: 10,
+            &#34;dificuldade&#34;: &#34;Fácil&#34;,
+            &#34;calorias&#34;: 450,
+            &#34;ingredientes&#34;: [{&#34;food_id&#34;: 10, &#34;quantidade&#34;: &#34;1 unidade&#34;}],
+        },
+        {
+            &#34;_id&#34;: 3,
+            &#34;nome&#34;: &#34;Salmão Grelhado com Legumes&#34;,
+            &#34;instrucoes&#34;: &#34;Grelhe o filé de salmão. Refogue brócolis, cenoura e abobrinha. Sirva com arroz integral.&#34;,
+            &#34;tempo_preparo&#34;: 30,
+            &#34;dificuldade&#34;: &#34;Médio&#34;,
+            &#34;calorias&#34;: 480,
+            &#34;ingredientes&#34;: [
+                {&#34;food_id&#34;: 5, &#34;quantidade&#34;: &#34;150g&#34;},
+                {&#34;food_id&#34;: 4, &#34;quantidade&#34;: &#34;100g&#34;},
+                {&#34;food_id&#34;: 3, &#34;quantidade&#34;: &#34;100g&#34;},
+            ],
+        },
+        {
+            &#34;_id&#34;: 4,
+            &#34;nome&#34;: &#34;Smoothie Proteico&#34;,
+            &#34;instrucoes&#34;: &#34;Bata no liquidificador iogurte, banana, aveia, pasta de amendoim e mel.&#34;,
+            &#34;tempo_preparo&#34;: 5,
+            &#34;dificuldade&#34;: &#34;Fácil&#34;,
+            &#34;calorias&#34;: 350,
+            &#34;ingredientes&#34;: [
+                {&#34;food_id&#34;: 7, &#34;quantidade&#34;: &#34;200g&#34;},
+                {&#34;food_id&#34;: 10, &#34;quantidade&#34;: &#34;1 unidade&#34;},
+                {&#34;food_id&#34;: 8, &#34;quantidade&#34;: &#34;30g&#34;},
+            ],
+        },
+        {
+            &#34;_id&#34;: 5,
+            &#34;nome&#34;: &#34;Omelete de Legumes&#34;,
+            &#34;instrucoes&#34;: &#34;Bata 2 ovos, adicione espinafre, tomate e queijo. Cozinhe em frigideira antiaderente.&#34;,
+            &#34;tempo_preparo&#34;: 15,
+            &#34;dificuldade&#34;: &#34;Fácil&#34;,
+            &#34;calorias&#34;: 280,
+            &#34;ingredientes&#34;: [{&#34;food_id&#34;: 4, &#34;quantidade&#34;: &#34;50g&#34;}],
+        },
+    ]
+
+    collection.insert_many(recipes)
+    print(f&#34;Inseridas {len(recipes)} receitas com sucesso!&#34;)</code></pre>
+</details>
+<div class="desc"><p>Carrega dados de receitas no MongoDB.</p></div>
+</dd>
+<dt id="load_mongodb_data.wait_for_mongodb"><code class="name flex">
+<span>def <span class="ident">wait_for_mongodb</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def wait_for_mongodb():
+    &#34;&#34;&#34;Espera até que o MongoDB esteja pronto para aceitar conexões.&#34;&#34;&#34;
+    client = None
+    for i in range(MAX_CONNECTION_RETRY):
+        try:
+            client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
+            # Verificar se a conexão está funcionando
+            if client is None:
+                raise ConnectionFailure(&#34;Failed to create MongoDB client&#34;)
+
+            # Check if admin exists before trying to access it
+            client.admin.command(&#34;ping&#34;)
+            print(&#34;Conexão com MongoDB estabelecida com sucesso!&#34;)
+            return client
+        except (ConnectionFailure, OperationFailure) as e:
+            print(
+                f&#34;Tentativa {i + 1}/{MAX_CONNECTION_RETRY}: MongoDB ainda não está pronto: {str(e)}&#34;
+            )
+            if client:
+                client.close()
+            time.sleep(RETRY_INTERVAL)
+
+    print(&#34;Não foi possível conectar ao MongoDB após várias tentativas.&#34;)
+    return None</code></pre>
+</details>
+<div class="desc"><p>Espera até que o MongoDB esteja pronto para aceitar conexões.</p></div>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="two-column">
+<li><code><a title="load_mongodb_data.clear_database" href="#load_mongodb_data.clear_database">clear_database</a></code></li>
+<li><code><a title="load_mongodb_data.create_mongodb_dump" href="#load_mongodb_data.create_mongodb_dump">create_mongodb_dump</a></code></li>
+<li><code><a title="load_mongodb_data.load_all_data" href="#load_mongodb_data.load_all_data">load_all_data</a></code></li>
+<li><code><a title="load_mongodb_data.load_appointments" href="#load_mongodb_data.load_appointments">load_appointments</a></code></li>
+<li><code><a title="load_mongodb_data.load_diet_plans" href="#load_mongodb_data.load_diet_plans">load_diet_plans</a></code></li>
+<li><code><a title="load_mongodb_data.load_foods" href="#load_mongodb_data.load_foods">load_foods</a></code></li>
+<li><code><a title="load_mongodb_data.load_meals" href="#load_mongodb_data.load_meals">load_meals</a></code></li>
+<li><code><a title="load_mongodb_data.load_measurements" href="#load_mongodb_data.load_measurements">load_measurements</a></code></li>
+<li><code><a title="load_mongodb_data.load_messages" href="#load_mongodb_data.load_messages">load_messages</a></code></li>
+<li><code><a title="load_mongodb_data.load_nutritionists" href="#load_mongodb_data.load_nutritionists">load_nutritionists</a></code></li>
+<li><code><a title="load_mongodb_data.load_patients" href="#load_mongodb_data.load_patients">load_patients</a></code></li>
+<li><code><a title="load_mongodb_data.load_recipes" href="#load_mongodb_data.load_recipes">load_recipes</a></code></li>
+<li><code><a title="load_mongodb_data.wait_for_mongodb" href="#load_mongodb_data.wait_for_mongodb">wait_for_mongodb</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.11.5</a>.</p>
+</footer>
+</body>
+</html>

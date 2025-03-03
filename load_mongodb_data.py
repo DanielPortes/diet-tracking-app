@@ -23,11 +23,13 @@ def wait_for_mongodb():
         try:
             client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
             # Verificar se a conexão está funcionando
-            client.admin.command('ping')
+            client.admin.command("ping")
             print("Conexão com MongoDB estabelecida com sucesso!")
             return client
         except (ConnectionFailure, OperationFailure) as e:
-            print(f"Tentativa {i + 1}/{MAX_CONNECTION_RETRY}: MongoDB ainda não está pronto: {str(e)}")
+            print(
+                f"Tentativa {i + 1}/{MAX_CONNECTION_RETRY}: MongoDB ainda não está pronto: {str(e)}"
+            )
             if client:
                 client.close()
             time.sleep(RETRY_INTERVAL)
@@ -54,7 +56,7 @@ def load_nutritionists(db):
             "especialidade": "Nutrição Esportiva",
             "experiencia": 8,
             "email": "ana@nutri.com",
-            "telefone": "21-99999-1111"
+            "telefone": "21-99999-1111",
         },
         {
             "_id": 2,
@@ -62,7 +64,7 @@ def load_nutritionists(db):
             "especialidade": "Nutrição Clínica",
             "experiencia": 5,
             "email": "carlos@nutri.com",
-            "telefone": "21-99999-2222"
+            "telefone": "21-99999-2222",
         },
         {
             "_id": 3,
@@ -70,8 +72,8 @@ def load_nutritionists(db):
             "especialidade": "Nutrição Funcional",
             "experiencia": 12,
             "email": "mariana@nutri.com",
-            "telefone": "21-99999-3333"
-        }
+            "telefone": "21-99999-3333",
+        },
     ]
 
     collection.insert_many(nutritionists)
@@ -95,7 +97,7 @@ def load_patients(db):
             "restricoes": ["Glúten"],
             "alergias": ["Amendoim"],
             "objetivo": "Emagrecimento",
-            "nutricionista_id": 1
+            "nutricionista_id": 1,
         },
         {
             "_id": 2,
@@ -109,7 +111,7 @@ def load_patients(db):
             "restricoes": ["Lactose"],
             "alergias": [],
             "objetivo": "Controle de colesterol",
-            "nutricionista_id": 2
+            "nutricionista_id": 2,
         },
         {
             "_id": 3,
@@ -123,7 +125,7 @@ def load_patients(db):
             "restricoes": [],
             "alergias": [],
             "objetivo": "Ganho de massa muscular",
-            "nutricionista_id": 1
+            "nutricionista_id": 1,
         },
         {
             "_id": 4,
@@ -137,7 +139,7 @@ def load_patients(db):
             "restricoes": ["Sódio"],
             "alergias": ["Frutos do mar"],
             "objetivo": "Controle de diabetes",
-            "nutricionista_id": 3
+            "nutricionista_id": 3,
         },
         {
             "_id": 5,
@@ -151,8 +153,8 @@ def load_patients(db):
             "restricoes": [],
             "alergias": ["Nozes"],
             "objetivo": "Emagrecimento",
-            "nutricionista_id": 3
-        }
+            "nutricionista_id": 3,
+        },
     ]
 
     collection.insert_many(patients)
@@ -173,7 +175,7 @@ def load_foods(db):
             "carboidratos": 25,
             "gorduras": 0.3,
             "fibras": 4.4,
-            "grupo": "Frutas"
+            "grupo": "Frutas",
         },
         {
             "_id": 2,
@@ -184,7 +186,7 @@ def load_foods(db):
             "carboidratos": 0,
             "gorduras": 3.6,
             "fibras": 0,
-            "grupo": "Carnes"
+            "grupo": "Carnes",
         },
         {
             "_id": 3,
@@ -195,7 +197,7 @@ def load_foods(db):
             "carboidratos": 23.5,
             "gorduras": 0.9,
             "fibras": 1.8,
-            "grupo": "Cereais"
+            "grupo": "Cereais",
         },
         {
             "_id": 4,
@@ -206,7 +208,7 @@ def load_foods(db):
             "carboidratos": 6.6,
             "gorduras": 0.4,
             "fibras": 2.6,
-            "grupo": "Vegetais"
+            "grupo": "Vegetais",
         },
         {
             "_id": 5,
@@ -217,7 +219,7 @@ def load_foods(db):
             "carboidratos": 0,
             "gorduras": 13,
             "fibras": 0,
-            "grupo": "Peixes"
+            "grupo": "Peixes",
         },
         {
             "_id": 6,
@@ -228,7 +230,7 @@ def load_foods(db):
             "carboidratos": 20,
             "gorduras": 0.4,
             "fibras": 7.9,
-            "grupo": "Leguminosas"
+            "grupo": "Leguminosas",
         },
         {
             "_id": 7,
@@ -239,7 +241,7 @@ def load_foods(db):
             "carboidratos": 4.7,
             "gorduras": 3.3,
             "fibras": 0,
-            "grupo": "Laticínios"
+            "grupo": "Laticínios",
         },
         {
             "_id": 8,
@@ -250,7 +252,7 @@ def load_foods(db):
             "carboidratos": 21,
             "gorduras": 2,
             "fibras": 3,
-            "grupo": "Cereais"
+            "grupo": "Cereais",
         },
         {
             "_id": 9,
@@ -261,7 +263,7 @@ def load_foods(db):
             "carboidratos": 0,
             "gorduras": 10,
             "fibras": 0,
-            "grupo": "Óleos"
+            "grupo": "Óleos",
         },
         {
             "_id": 10,
@@ -272,8 +274,8 @@ def load_foods(db):
             "carboidratos": 27,
             "gorduras": 0.4,
             "fibras": 3.1,
-            "grupo": "Frutas"
-        }
+            "grupo": "Frutas",
+        },
     ]
 
     collection.insert_many(foods)
@@ -295,8 +297,8 @@ def load_recipes(db):
             "ingredientes": [
                 {"food_id": 2, "quantidade": "100g"},
                 {"food_id": 4, "quantidade": "50g"},
-                {"food_id": 9, "quantidade": "5ml"}
-            ]
+                {"food_id": 9, "quantidade": "5ml"},
+            ],
         },
         {
             "_id": 2,
@@ -305,9 +307,7 @@ def load_recipes(db):
             "tempo_preparo": 10,
             "dificuldade": "Fácil",
             "calorias": 450,
-            "ingredientes": [
-                {"food_id": 10, "quantidade": "1 unidade"}
-            ]
+            "ingredientes": [{"food_id": 10, "quantidade": "1 unidade"}],
         },
         {
             "_id": 3,
@@ -319,8 +319,8 @@ def load_recipes(db):
             "ingredientes": [
                 {"food_id": 5, "quantidade": "150g"},
                 {"food_id": 4, "quantidade": "100g"},
-                {"food_id": 3, "quantidade": "100g"}
-            ]
+                {"food_id": 3, "quantidade": "100g"},
+            ],
         },
         {
             "_id": 4,
@@ -332,8 +332,8 @@ def load_recipes(db):
             "ingredientes": [
                 {"food_id": 7, "quantidade": "200g"},
                 {"food_id": 10, "quantidade": "1 unidade"},
-                {"food_id": 8, "quantidade": "30g"}
-            ]
+                {"food_id": 8, "quantidade": "30g"},
+            ],
         },
         {
             "_id": 5,
@@ -342,10 +342,8 @@ def load_recipes(db):
             "tempo_preparo": 15,
             "dificuldade": "Fácil",
             "calorias": 280,
-            "ingredientes": [
-                {"food_id": 4, "quantidade": "50g"}
-            ]
-        }
+            "ingredientes": [{"food_id": 4, "quantidade": "50g"}],
+        },
     ]
 
     collection.insert_many(recipes)
@@ -367,12 +365,12 @@ def load_diet_plans(db):
             "macronutrientes": {
                 "proteinas": "30%",
                 "carboidratos": "40%",
-                "gorduras": "30%"
+                "gorduras": "30%",
             },
             "nutricionista_id": 1,
             "paciente_id": 1,
             "alimentos_recomendados": [2, 3, 4],
-            "receitas_recomendadas": [1, 5]
+            "receitas_recomendadas": [1, 5],
         },
         {
             "_id": 2,
@@ -384,12 +382,12 @@ def load_diet_plans(db):
             "macronutrientes": {
                 "proteinas": "35%",
                 "carboidratos": "45%",
-                "gorduras": "20%"
+                "gorduras": "20%",
             },
             "nutricionista_id": 1,
             "paciente_id": 3,
             "alimentos_recomendados": [2, 5, 8],
-            "receitas_recomendadas": [3, 4]
+            "receitas_recomendadas": [3, 4],
         },
         {
             "_id": 3,
@@ -401,12 +399,12 @@ def load_diet_plans(db):
             "macronutrientes": {
                 "proteinas": "25%",
                 "carboidratos": "35%",
-                "gorduras": "40%"
+                "gorduras": "40%",
             },
             "nutricionista_id": 3,
             "paciente_id": 4,
             "alimentos_recomendados": [4, 6],
-            "receitas_recomendadas": [5]
+            "receitas_recomendadas": [5],
         },
         {
             "_id": 4,
@@ -418,12 +416,12 @@ def load_diet_plans(db):
             "macronutrientes": {
                 "proteinas": "25%",
                 "carboidratos": "50%",
-                "gorduras": "25%"
+                "gorduras": "25%",
             },
             "nutricionista_id": 2,
             "paciente_id": 2,
             "alimentos_recomendados": [5, 6],
-            "receitas_recomendadas": [3]
+            "receitas_recomendadas": [3],
         },
         {
             "_id": 5,
@@ -435,13 +433,13 @@ def load_diet_plans(db):
             "macronutrientes": {
                 "proteinas": "20%",
                 "carboidratos": "55%",
-                "gorduras": "25%"
+                "gorduras": "25%",
             },
             "nutricionista_id": 3,
             "paciente_id": 5,
             "alimentos_recomendados": [5, 9],
-            "receitas_recomendadas": [1, 3]
-        }
+            "receitas_recomendadas": [1, 3],
+        },
     ]
 
     collection.insert_many(diet_plans)
@@ -463,7 +461,7 @@ def load_meals(db):
             "adesao": "Completa",
             "registro_foto": True,
             "alimentos": [],
-            "receitas": [4]
+            "receitas": [4],
         },
         {
             "_id": 2,
@@ -475,7 +473,7 @@ def load_meals(db):
             "adesao": "Parcial",
             "registro_foto": True,
             "alimentos": [],
-            "receitas": [1]
+            "receitas": [1],
         },
         {
             "_id": 3,
@@ -487,7 +485,7 @@ def load_meals(db):
             "adesao": "Completa",
             "registro_foto": False,
             "alimentos": [1, 7],
-            "receitas": []
+            "receitas": [],
         },
         {
             "_id": 4,
@@ -499,7 +497,7 @@ def load_meals(db):
             "adesao": "Completa",
             "registro_foto": True,
             "alimentos": [],
-            "receitas": [3]
+            "receitas": [3],
         },
         {
             "_id": 5,
@@ -511,7 +509,7 @@ def load_meals(db):
             "adesao": "Completa",
             "registro_foto": True,
             "alimentos": [],
-            "receitas": [2]
+            "receitas": [2],
         },
         {
             "_id": 6,
@@ -523,7 +521,7 @@ def load_meals(db):
             "adesao": "Completa",
             "registro_foto": True,
             "alimentos": [],
-            "receitas": [3]
+            "receitas": [3],
         },
         {
             "_id": 7,
@@ -535,7 +533,7 @@ def load_meals(db):
             "adesao": "Parcial",
             "registro_foto": False,
             "alimentos": [1],
-            "receitas": []
+            "receitas": [],
         },
         {
             "_id": 8,
@@ -547,8 +545,8 @@ def load_meals(db):
             "adesao": "Não realizada",
             "registro_foto": False,
             "alimentos": [],
-            "receitas": [5]
-        }
+            "receitas": [5],
+        },
     ]
 
     collection.insert_many(meals)
@@ -567,11 +565,8 @@ def load_measurements(db):
             "peso": 92,
             "imc": 29.1,
             "gordura_corporal": 28,
-            "medidas": {
-                "cintura": 102,
-                "quadril": 106
-            },
-            "pressao": "130/85"
+            "medidas": {"cintura": 102, "quadril": 106},
+            "pressao": "130/85",
         },
         {
             "_id": 2,
@@ -580,11 +575,8 @@ def load_measurements(db):
             "peso": 89.5,
             "imc": 28.2,
             "gordura_corporal": 26.8,
-            "medidas": {
-                "cintura": 99,
-                "quadril": 105
-            },
-            "pressao": "128/83"
+            "medidas": {"cintura": 99, "quadril": 105},
+            "pressao": "128/83",
         },
         {
             "_id": 3,
@@ -593,11 +585,8 @@ def load_measurements(db):
             "peso": 87.8,
             "imc": 27.7,
             "gordura_corporal": 25.5,
-            "medidas": {
-                "cintura": 97,
-                "quadril": 104
-            },
-            "pressao": "125/82"
+            "medidas": {"cintura": 97, "quadril": 104},
+            "pressao": "125/82",
         },
         {
             "_id": 4,
@@ -606,11 +595,8 @@ def load_measurements(db):
             "peso": 78,
             "imc": 28.7,
             "gordura_corporal": 32,
-            "medidas": {
-                "cintura": 91,
-                "quadril": 110
-            },
-            "pressao": "135/88"
+            "medidas": {"cintura": 91, "quadril": 110},
+            "pressao": "135/88",
         },
         {
             "_id": 5,
@@ -619,11 +605,8 @@ def load_measurements(db):
             "peso": 77.2,
             "imc": 28.4,
             "gordura_corporal": 31.5,
-            "medidas": {
-                "cintura": 90,
-                "quadril": 109
-            },
-            "pressao": "132/86"
+            "medidas": {"cintura": 90, "quadril": 109},
+            "pressao": "132/86",
         },
         {
             "_id": 6,
@@ -632,12 +615,9 @@ def load_measurements(db):
             "peso": 76.5,
             "imc": 28.1,
             "gordura_corporal": 30.8,
-            "medidas": {
-                "cintura": 88,
-                "quadril": 108
-            },
-            "pressao": "130/85"
-        }
+            "medidas": {"cintura": 88, "quadril": 108},
+            "pressao": "130/85",
+        },
     ]
 
     collection.insert_many(measurements)
@@ -658,7 +638,7 @@ def load_messages(db):
             "conteudo": "Como está se sentindo com a nova dieta?",
             "data": datetime(2023, 10, 15),
             "hora": "14:30",
-            "lida": True
+            "lida": True,
         },
         {
             "_id": 2,
@@ -669,7 +649,7 @@ def load_messages(db):
             "conteudo": "Estou me adaptando bem, mas sinto fome à tarde",
             "data": datetime(2023, 10, 15),
             "hora": "15:45",
-            "lida": True
+            "lida": True,
         },
         {
             "_id": 3,
@@ -680,7 +660,7 @@ def load_messages(db):
             "conteudo": "Vamos ajustar seu lanche da tarde para resolver isso",
             "data": datetime(2023, 10, 15),
             "hora": "16:20",
-            "lida": True
+            "lida": True,
         },
         {
             "_id": 4,
@@ -691,7 +671,7 @@ def load_messages(db):
             "conteudo": "Lembrete: sua consulta é amanhã às 14h",
             "data": datetime(2023, 10, 16),
             "hora": "09:00",
-            "lida": True
+            "lida": True,
         },
         {
             "_id": 5,
@@ -702,7 +682,7 @@ def load_messages(db):
             "conteudo": "Confirmado, estarei lá",
             "data": datetime(2023, 10, 16),
             "hora": "09:15",
-            "lida": True
+            "lida": True,
         },
         {
             "_id": 6,
@@ -713,8 +693,8 @@ def load_messages(db):
             "conteudo": "Como está se sentindo após a última consulta?",
             "data": datetime(2023, 10, 20),
             "hora": "11:00",
-            "lida": False
-        }
+            "lida": False,
+        },
     ]
 
     collection.insert_many(messages)
@@ -733,7 +713,7 @@ def load_appointments(db):
             "data": datetime(2023, 9, 15),
             "hora": "14:00",
             "status": "Realizada",
-            "notas": "Avaliação inicial e definição de plano alimentar"
+            "notas": "Avaliação inicial e definição de plano alimentar",
         },
         {
             "_id": 2,
@@ -742,7 +722,7 @@ def load_appointments(db):
             "data": datetime(2023, 10, 1),
             "hora": "15:30",
             "status": "Realizada",
-            "notas": "Ajustes no plano devido à fome relatada"
+            "notas": "Ajustes no plano devido à fome relatada",
         },
         {
             "_id": 3,
@@ -751,7 +731,7 @@ def load_appointments(db):
             "data": datetime(2023, 10, 17),
             "hora": "14:00",
             "status": "Realizada",
-            "notas": "Progresso acima do esperado, reforço positivo"
+            "notas": "Progresso acima do esperado, reforço positivo",
         },
         {
             "_id": 4,
@@ -760,7 +740,7 @@ def load_appointments(db):
             "data": datetime(2023, 11, 1),
             "hora": "16:00",
             "status": "Agendada",
-            "notas": ""
+            "notas": "",
         },
         {
             "_id": 5,
@@ -769,7 +749,7 @@ def load_appointments(db):
             "data": datetime(2023, 9, 10),
             "hora": "09:30",
             "status": "Realizada",
-            "notas": "Avaliação inicial, paciente com colesterol alto"
+            "notas": "Avaliação inicial, paciente com colesterol alto",
         },
         {
             "_id": 6,
@@ -778,7 +758,7 @@ def load_appointments(db):
             "data": datetime(2023, 9, 25),
             "hora": "10:00",
             "status": "Realizada",
-            "notas": "Melhora nos exames laboratoriais"
+            "notas": "Melhora nos exames laboratoriais",
         },
         {
             "_id": 7,
@@ -787,7 +767,7 @@ def load_appointments(db):
             "data": datetime(2023, 10, 10),
             "hora": "11:00",
             "status": "Realizada",
-            "notas": "Exames demonstrando normalização do colesterol"
+            "notas": "Exames demonstrando normalização do colesterol",
         },
         {
             "_id": 8,
@@ -796,8 +776,8 @@ def load_appointments(db):
             "data": datetime(2023, 10, 25),
             "hora": "09:30",
             "status": "Cancelada",
-            "notas": "Paciente não pôde comparecer"
-        }
+            "notas": "Paciente não pôde comparecer",
+        },
     ]
 
     collection.insert_many(appointments)
@@ -815,7 +795,13 @@ def create_mongodb_dump():
 
         # Este comando assume que o MongoDB está em um container chamado diet_app_mongodb
         command = f"docker exec diet_app_mongodb mongodump --username admin --password senha123 --authenticationDatabase admin --db {MONGO_DB} --out /data/db/{directory}"
-        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = subprocess.run(
+            command,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
 
         print(f"Dump criado com sucesso: {directory}")
         print("Para copiar o dump para o seu computador, use:")

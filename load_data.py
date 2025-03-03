@@ -30,7 +30,9 @@ def wait_for_neo4j():
                     driver.close()
                     return True
         except Exception as e:
-            print(f"Tentativa {i + 1}/{MAX_CONNECTION_RETRY}: Neo4j ainda não está pronto: {str(e)}")
+            print(
+                f"Tentativa {i + 1}/{MAX_CONNECTION_RETRY}: Neo4j ainda não está pronto: {str(e)}"
+            )
             if driver:
                 driver.close()
             time.sleep(RETRY_INTERVAL)
@@ -272,360 +274,380 @@ def create_relationships(tx):
         """
         MATCH (n:Nutricionista {id: 3}), (p:Paciente {id: 5})
         CREATE (n)-[:ATENDE]->(p)
-        """
+        """,
     ]
 
     # --- Nutricionistas criam Planos Alimentares ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (n:Nutricionista {id: 1}), (pa:PlanoAlimentar {id: 1})
         CREATE (n)-[:CRIA]->(pa)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 1}), (pa:PlanoAlimentar {id: 2})
         CREATE (n)-[:CRIA]->(pa)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 2}), (pa:PlanoAlimentar {id: 4})
         CREATE (n)-[:CRIA]->(pa)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 3}), (pa:PlanoAlimentar {id: 3})
         CREATE (n)-[:CRIA]->(pa)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 3}), (pa:PlanoAlimentar {id: 5})
         CREATE (n)-[:CRIA]->(pa)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Pacientes seguem Planos Alimentares ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (p:Paciente {id: 1}), (pa:PlanoAlimentar {id: 1})
         CREATE (p)-[:SEGUE]->(pa)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (pa:PlanoAlimentar {id: 4})
         CREATE (p)-[:SEGUE]->(pa)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 3}), (pa:PlanoAlimentar {id: 2})
         CREATE (p)-[:SEGUE]->(pa)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 4}), (pa:PlanoAlimentar {id: 3})
         CREATE (p)-[:SEGUE]->(pa)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 5}), (pa:PlanoAlimentar {id: 5})
         CREATE (p)-[:SEGUE]->(pa)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Planos Alimentares incluem Alimentos ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (pa:PlanoAlimentar {id: 1}), (a:Alimento {id: 2})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 1}), (a:Alimento {id: 3})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 1}), (a:Alimento {id: 4})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 2}), (a:Alimento {id: 2})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 2}), (a:Alimento {id: 5})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 2}), (a:Alimento {id: 8})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 3}), (a:Alimento {id: 4})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 3}), (a:Alimento {id: 6})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 4}), (a:Alimento {id: 5})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 4}), (a:Alimento {id: 6})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 5}), (a:Alimento {id: 5})
         CREATE (pa)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 5}), (a:Alimento {id: 9})
         CREATE (pa)-[:INCLUI]->(a)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Planos Alimentares recomendam Receitas ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (pa:PlanoAlimentar {id: 1}), (r:Receita {id: 1})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 1}), (r:Receita {id: 5})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 2}), (r:Receita {id: 3})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 2}), (r:Receita {id: 4})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 3}), (r:Receita {id: 5})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 4}), (r:Receita {id: 3})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 5}), (r:Receita {id: 1})
         CREATE (pa)-[:RECOMENDA]->(r)
         """,
-        """
+            """
         MATCH (pa:PlanoAlimentar {id: 5}), (r:Receita {id: 3})
         CREATE (pa)-[:RECOMENDA]->(r)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Receitas contêm Alimentos ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (r:Receita {id: 1}), (a:Alimento {id: 2})
         CREATE (r)-[:CONTEM {quantidade: "100g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 1}), (a:Alimento {id: 4})
         CREATE (r)-[:CONTEM {quantidade: "50g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 1}), (a:Alimento {id: 9})
         CREATE (r)-[:CONTEM {quantidade: "5ml"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 2}), (a:Alimento {id: 10})
         CREATE (r)-[:CONTEM {quantidade: "1 unidade"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 3}), (a:Alimento {id: 5})
         CREATE (r)-[:CONTEM {quantidade: "150g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 3}), (a:Alimento {id: 4})
         CREATE (r)-[:CONTEM {quantidade: "100g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 3}), (a:Alimento {id: 3})
         CREATE (r)-[:CONTEM {quantidade: "100g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 4}), (a:Alimento {id: 7})
         CREATE (r)-[:CONTEM {quantidade: "200g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 4}), (a:Alimento {id: 10})
         CREATE (r)-[:CONTEM {quantidade: "1 unidade"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 4}), (a:Alimento {id: 8})
         CREATE (r)-[:CONTEM {quantidade: "30g"}]->(a)
         """,
-        """
+            """
         MATCH (r:Receita {id: 5}), (a:Alimento {id: 4})
         CREATE (r)-[:CONTEM {quantidade: "50g"}]->(a)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Pacientes consomem Refeições ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 1})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 2})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 3})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (r:Refeicao {id: 4})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 5})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 6})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 7})
         CREATE (p)-[:CONSOME]->(r)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (r:Refeicao {id: 8})
         CREATE (p)-[:CONSOME]->(r)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Refeições incluem Alimentos/Receitas ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (ref:Refeicao {id: 1}), (r:Receita {id: 4})
         CREATE (ref)-[:INCLUI]->(r)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 2}), (r:Receita {id: 1})
         CREATE (ref)-[:INCLUI]->(r)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 3}), (a:Alimento {id: 1})
         CREATE (ref)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 3}), (a:Alimento {id: 7})
         CREATE (ref)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 4}), (r:Receita {id: 3})
         CREATE (ref)-[:INCLUI]->(r)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 5}), (r:Receita {id: 2})
         CREATE (ref)-[:INCLUI]->(r)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 6}), (r:Receita {id: 3})
         CREATE (ref)-[:INCLUI]->(r)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 7}), (a:Alimento {id: 1})
         CREATE (ref)-[:INCLUI]->(a)
         """,
-        """
+            """
         MATCH (ref:Refeicao {id: 8}), (r:Receita {id: 5})
         CREATE (ref)-[:INCLUI]->(r)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Pacientes possuem Medidas Corporais ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (p:Paciente {id: 1}), (m:MedidaCorporal {id: 1})
         CREATE (p)-[:POSSUI]->(m)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (m:MedidaCorporal {id: 2})
         CREATE (p)-[:POSSUI]->(m)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (m:MedidaCorporal {id: 3})
         CREATE (p)-[:POSSUI]->(m)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (m:MedidaCorporal {id: 4})
         CREATE (p)-[:POSSUI]->(m)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (m:MedidaCorporal {id: 5})
         CREATE (p)-[:POSSUI]->(m)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (m:MedidaCorporal {id: 6})
         CREATE (p)-[:POSSUI]->(m)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Mensagens entre Pacientes e Nutricionistas ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (n:Nutricionista {id: 1}), (msg:Mensagem {id: 1}), (p:Paciente {id: 1})
         CREATE (n)-[:ENVIA]->(msg)-[:PARA]->(p)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (msg:Mensagem {id: 2}), (n:Nutricionista {id: 1})
         CREATE (p)-[:ENVIA]->(msg)-[:PARA]->(n)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 1}), (msg:Mensagem {id: 3}), (p:Paciente {id: 1})
         CREATE (n)-[:ENVIA]->(msg)-[:PARA]->(p)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 1}), (msg:Mensagem {id: 4}), (p:Paciente {id: 1})
         CREATE (n)-[:ENVIA]->(msg)-[:PARA]->(p)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (msg:Mensagem {id: 5}), (n:Nutricionista {id: 1})
         CREATE (p)-[:ENVIA]->(msg)-[:PARA]->(n)
         """,
-        """
+            """
         MATCH (n:Nutricionista {id: 2}), (msg:Mensagem {id: 6}), (p:Paciente {id: 2})
         CREATE (n)-[:ENVIA]->(msg)-[:PARA]->(p)
-        """
-    ])
+        """,
+        ]
+    )
 
     # --- Consultas entre Pacientes e Nutricionistas ---
-    rel_queries.extend([
-        """
+    rel_queries.extend(
+        [
+            """
         MATCH (p:Paciente {id: 1}), (c:Consulta {id: 1}), (n:Nutricionista {id: 1})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (c:Consulta {id: 2}), (n:Nutricionista {id: 1})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (c:Consulta {id: 3}), (n:Nutricionista {id: 1})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 1}), (c:Consulta {id: 4}), (n:Nutricionista {id: 1})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (c:Consulta {id: 5}), (n:Nutricionista {id: 2})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (c:Consulta {id: 6}), (n:Nutricionista {id: 2})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (c:Consulta {id: 7}), (n:Nutricionista {id: 2})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
         """,
-        """
+            """
         MATCH (p:Paciente {id: 2}), (c:Consulta {id: 8}), (n:Nutricionista {id: 2})
         CREATE (p)-[:AGENDA]->(c)-[:COM]->(n)
-        """
-    ])
+        """,
+        ]
+    )
 
     # Executar cada query individualmente
     for i, query in enumerate(rel_queries):
@@ -688,7 +710,13 @@ def create_database_dump():
 
         # Este comando assume que o Neo4j está em um container chamado diet_app_neo4j
         command = f"docker exec diet_app_neo4j neo4j-admin dump --database=neo4j --to=/var/lib/neo4j/import/{filename}"
-        result = subprocess.run(command, shell=True, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        result = subprocess.run(
+            command,
+            shell=True,
+            check=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+        )
 
         print(f"Dump criado com sucesso: {filename}")
         print("Para copiar o arquivo para o seu computador, use:")

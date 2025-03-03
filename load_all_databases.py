@@ -14,10 +14,12 @@ def print_header(message):
 def check_docker_running():
     """Verifica se o Docker está em execução"""
     try:
-        subprocess.run(["docker", "info"],
-                       stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL,
-                       check=True)
+        subprocess.run(
+            ["docker", "info"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=True,
+        )
         return True
     except (subprocess.SubprocessError, FileNotFoundError):
         return False
@@ -26,10 +28,12 @@ def check_docker_running():
 def check_docker_compose_exists():
     """Verifica se o Docker Compose está instalado"""
     try:
-        subprocess.run(["docker-compose", "--version"],
-                       stdout=subprocess.DEVNULL,
-                       stderr=subprocess.DEVNULL,
-                       check=True)
+        subprocess.run(
+            ["docker-compose", "--version"],
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            check=True,
+        )
         return True
     except (subprocess.SubprocessError, FileNotFoundError):
         return False
@@ -112,8 +116,12 @@ def main():
     if neo4j_success and mongodb_success:
         print("\nTodos os bancos de dados foram configurados com sucesso!")
         print("\nAcesse:")
-        print("- Neo4j Browser: http://localhost:7474 (usuário: neo4j, senha: senha123)")
-        print("- MongoDB Express: http://localhost:8081 (usuário: admin, senha: senha123)")
+        print(
+            "- Neo4j Browser: http://localhost:7474 (usuário: neo4j, senha: senha123)"
+        )
+        print(
+            "- MongoDB Express: http://localhost:8081 (usuário: admin, senha: senha123)"
+        )
         return True
     else:
         print("\nHouve problemas na configuração de um ou mais bancos de dados.")

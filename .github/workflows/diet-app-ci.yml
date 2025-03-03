@@ -1,0 +1,238 @@
+name: Diet App CI/CD
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  code-quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort mypy
+          pip install -r requirements.txt
+
+      - name: Check code with flake8
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=120 --statistics
+
+      - name: Check imports with isort
+        run: |
+          isort --check-only --profile black .
+
+      - name: Check formatting with black
+        run: |
+          black --check .
+
+      - name: Type check with mypy
+        run: |
+          mypy --ignore-missing-imports .
+
+  test-integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: code-quality
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov
+          pip install -r requirements.txt
+
+      - name: Create test directory
+        run: mkdir -p test_data
+
+      - name: Start test databases
+        run: |
+          docker-compose -f docker-compose.yml up -d
+          sleep 30  # Wait for databases to initialize
+
+      - name: Run database connection tests
+        run: |
+          # Test Neo4j connection
+          echo "Testing Neo4j connection..."
+          python -c "
+          from neo4j import GraphDatabase
+          driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'senha123'))
+          with driver.session() as session:
+              result = session.run('RETURN 1 AS num')
+              record = result.single()
+              assert record['num'] == 1
+              print('Neo4j connection successful!')
+          driver.close()
+          "
+          
+          # Test MongoDB connection
+          echo "Testing MongoDB connection..."
+          python -c "
+          from pymongo import MongoClient
+          client = MongoClient('mongodb://admin:senha123@localhost:27017/')
+          db = client.admin
+          result = db.command('ping')
+          assert result['ok'] == 1
+          print('MongoDB connection successful!')
+          client.close()
+          "
+
+      - name: Run data loading tests
+        run: |
+          # Load test data into Neo4j and MongoDB
+          python load_data.py
+          python load_mongodb_data.py
+          
+          # Verify data in Neo4j
+          python -c "
+          from neo4j import GraphDatabase
+          driver = GraphDatabase.driver('bolt://localhost:7687', auth=('neo4j', 'senha123'))
+          with driver.session() as session:
+              result = session.run('MATCH (n:Nutricionista) RETURN count(n) AS count')
+              record = result.single()
+              assert record['count'] == 3
+              print('Neo4j data verified!')
+          driver.close()
+          "
+          
+          # Verify data in MongoDB
+          python -c "
+          from pymongo import MongoClient
+          client = MongoClient('mongodb://admin:senha123@localhost:27017/')
+          db = client.diet_app
+          count = db.nutritionists.count_documents({})
+          assert count == 3
+          print('MongoDB data verified!')
+          client.close()
+          "
+
+      - name: Stop test databases
+        run: docker-compose down
+        if: always()
+
+  build-images:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: test-integration
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ghcr.io/${{ github.repository }}/diet-app
+          tags: |
+            type=semver,pattern={{version}}
+            type=ref,event=branch
+            type=sha,format=short
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  generate-docs:
+    name: Generate Documentation
+    runs-on: ubuntu-latest
+    needs: code-quality
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mkdocs mkdocs-material pdoc3
+          pip install -r requirements.txt
+
+      - name: Generate API documentation
+        run: |
+          mkdir -p docs/api
+          pdoc --html --output-dir docs/api load_data.py load_mongodb_data.py load_all_databases.py
+
+      - name: Build MkDocs site
+        run: |
+          # Create mkdocs.yml
+          echo "site_name: Diet App Documentation
+          theme:
+            name: material
+          nav:
+            - Home: index.md
+            - Setup Guide: setup.md
+            - API Reference: api/
+          " > mkdocs.yml
+          
+          # Create index.md
+          mkdir -p docs
+          cp README.md docs/index.md
+          
+          # Create setup guide
+          echo "# Setup Guide
+          
+          ## Prerequisites
+          
+          - Docker and Docker Compose
+          - Python 3.7+
+          
+          ## Installation
+          
+          1. Clone the repository
+          2. Run \`pip install -r requirements.txt\`
+          3. Run \`python load_all_databases.py\`
+          
+          ## Database Access
+          
+          - Neo4j: http://localhost:7474
+          - MongoDB: http://localhost:8081
+          " > docs/setup.md
+          
+          # Build documentation site
+          mkdocs build
+
+      - name: Deploy documentation to GitHub Pages
+        if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site

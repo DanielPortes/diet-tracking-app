@@ -1,0 +1,59 @@
+services:
+  neo4j:
+    image: neo4j:5.11.0
+    container_name: diet_app_neo4j
+    ports:
+      - "7474:7474"  # HTTP
+      - "7687:7687"  # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/senha123
+      - NEO4J_apoc_export_file_enabled=true
+      - NEO4J_apoc_import_file_enabled=true
+      - NEO4J_apoc_import_file_use__neo4j__config=true
+      - NEO4JLABS_PLUGINS=["apoc"]
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+    networks:
+      - diet_app_network
+
+  mongodb:
+    image: mongo:6.0
+    container_name: diet_app_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=senha123
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - diet_app_network
+
+  # Interface de administração para MongoDB (opcional)
+  mongo-express:
+    image: mongo-express:1.0.0-alpha.4
+    container_name: diet_app_mongo_express
+    ports:
+      - "8081:8081"
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=senha123
+      - ME_CONFIG_MONGODB_URL=mongodb://admin:senha123@mongodb:27017/
+    depends_on:
+      - mongodb
+    networks:
+      - diet_app_network
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_import:
+  neo4j_plugins:
+  mongodb_data:
+
+networks:
+  diet_app_network:
+    driver: bridge

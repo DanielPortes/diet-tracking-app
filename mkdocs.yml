@@ -60,4 +60,4 @@ nav:
     - MongoDB: consultas/mongodb.md
   - Configuração:
     - Instalação: instalacao.md
-    - Dumps do Banco: dumps.md
+    - Dumps do Banco: modelagem/dumps.md

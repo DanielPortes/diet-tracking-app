@@ -1,1646 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Sistema de Acompanhamento de Dietas | Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Sistema de Acompanhamento de Dietas" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos)." />
+<meta property="og:description" content="Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos)." />
+<link rel="canonical" href="/sistema-acompanhamento-dietas/" />
+<meta property="og:url" content="/sistema-acompanhamento-dietas/" />
+<meta property="og:site_name" content="Sistema de Acompanhamento de Dietas" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Sistema de Acompanhamento de Dietas" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).","headline":"Sistema de Acompanhamento de Dietas","name":"Sistema de Acompanhamento de Dietas","url":"/sistema-acompanhamento-dietas/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/sistema-acompanhamento-dietas/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/sistema-acompanhamento-dietas/feed.xml" title="Sistema de Acompanhamento de Dietas" /></head>
+<body><header class="site-header" role="banner">
 
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-      
-      
-      
-      
-        <link rel="next" href="setup/">
-      
-      
-      <link rel="icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
-    
-    
-      
-        <title>Diet App Documentation</title>
-      
-    
-    
-      <link rel="stylesheet" href="assets/stylesheets/main.4af4bdda.min.css">
-      
-      
-
-
-    
-    
-      
-    
-    
-      
-        
-        
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
-        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
-      
-    
-    
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-    
-  </head>
-  
-  
-    <body dir="ltr">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#sistema-de-acompanhamento-de-dietas-nosql" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Diet App Documentation" class="md-header__button md-logo" aria-label="Diet App Documentation" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            Diet App Documentation
+  <div class="wrapper"><a class="site-title" rel="author" href="/sistema-acompanhamento-dietas/">Sistema de Acompanhamento de Dietas</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
           </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              Home
-            
-          </span>
-        </div>
-      </div>
-    </div>
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      <label class="md-header__button md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-      </label>
-      <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-    
-  </nav>
-  
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
-
-<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="." title="Diet App Documentation" class="md-nav__button md-logo" aria-label="Diet App Documentation" data-md-component="logo">
-      
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
-
-    </a>
-    Diet App Documentation
-  </label>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
         </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
-        
-  
-  <span class="md-ellipsis">
-    Home
-    
-  </span>
-  
 
-      </a>
-      
-        
+        <div class="trigger"><a class="page-link" href="/sistema-acompanhamento-dietas/modelagem/documentos.html">Modelo de Documentos (MongoDB)</a><a class="page-link" href="/sistema-acompanhamento-dietas/modelagem/grafos.html">Modelo de Grafos (Neo4j)</a><a class="page-link" href="/sistema-acompanhamento-dietas/">Sistema de Acompanhamento de Dietas</a><a class="page-link" href="/sistema-acompanhamento-dietas/consultas/mongodb.html">Consultas MongoDB</a><a class="page-link" href="/sistema-acompanhamento-dietas/consultas/neo4j.html">Consultas Neo4j (Cypher)</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <div class="home"><h1 class="page-heading">Sistema de Acompanhamento de Dietas</h1><h1 id="sistema-de-acompanhamento-de-dietas---nosql">Sistema de Acompanhamento de Dietas - NoSQL</h1>
 
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#indice" class="md-nav__link">
-    <span class="md-ellipsis">
-      Índice
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#visao-geral" class="md-nav__link">
-    <span class="md-ellipsis">
-      Visão Geral
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#estrutura-do-projeto" class="md-nav__link">
-    <span class="md-ellipsis">
-      Estrutura do Projeto
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuracao-e-execucao" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuração e Execução
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuração e Execução">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pre-requisitos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pré-requisitos
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#instalacao" class="md-nav__link">
-    <span class="md-ellipsis">
-      Instalação
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#modelo-de-dados" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelo de Dados
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelo de Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-grafos-neo4j" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelo de Grafos (Neo4j)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelo de Grafos (Neo4j)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nos-entidades" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nós (Entidades)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#relacionamentos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Relacionamentos
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-documentos-mongodb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelo de Documentos (MongoDB)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelo de Documentos (MongoDB)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#colecoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Coleções
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consultas" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consultas
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consultas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#consultas-neo4j-cypher" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consultas Neo4j (Cypher)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consultas Neo4j (Cypher)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-encontrar-todos-os-pacientes-de-um-nutricionista-especifico" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Encontrar todos os pacientes de um nutricionista específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-encontrar-todas-as-refeicoes-de-um-paciente-em-um-periodo-especifico" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Encontrar todas as refeições de um paciente em um período específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-calcular-a-soma-de-calorias-consumidas-por-um-paciente-em-um-dia" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Calcular a soma de calorias consumidas por um paciente em um dia
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-encontrar-receitas-adequadas-para-pacientes-com-restricoes-alimentares" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Encontrar receitas adequadas para pacientes com restrições alimentares
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-identificar-pacientes-com-baixa-adesao-ao-plano-alimentar" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Identificar pacientes com baixa adesão ao plano alimentar
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-rastrear-o-progresso-de-um-paciente-analisando-medidas-corporais" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Rastrear o progresso de um paciente analisando medidas corporais
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-encontrar-os-alimentos-mais-recomendados-nos-planos-alimentares" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Encontrar os alimentos mais recomendados nos planos alimentares
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#8-analisar-a-comunicacao-entre-nutricionistas-e-pacientes" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Analisar a comunicação entre nutricionistas e pacientes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#9-encontrar-receitas-que-contem-determinado-alimento" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Encontrar receitas que contêm determinado alimento
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#10-visualizar-proximas-consultas-agendadas" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Visualizar próximas consultas agendadas
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consultas-mongodb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consultas MongoDB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consultas MongoDB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-encontrar-todos-os-pacientes-de-um-nutricionista-especifico_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Encontrar todos os pacientes de um nutricionista específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-buscar-todas-as-refeicoes-de-um-paciente-em-um-periodo-especifico" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Buscar todas as refeições de um paciente em um período específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-calcular-total-de-calorias-consumidas-por-dia" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Calcular total de calorias consumidas por dia
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-encontrar-receitas-adequadas-para-pacientes-com-restricoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Encontrar receitas adequadas para pacientes com restrições
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-identificar-pacientes-com-baixa-adesao-ao-plano-alimentar_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Identificar pacientes com baixa adesão ao plano alimentar
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-rastrear-progresso-corporal-de-um-paciente" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Rastrear progresso corporal de um paciente
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-encontrar-alimentos-mais-recomendados-nos-planos-alimentares" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Encontrar alimentos mais recomendados nos planos alimentares
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#8-analisar-comunicacao-entre-nutricionistas-e-pacientes" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Analisar comunicação entre nutricionistas e pacientes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#9-encontrar-receitas-que-contem-determinado-ingrediente" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Encontrar receitas que contêm determinado ingrediente
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#10-visualizar-proximas-consultas-agendadas_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Visualizar próximas consultas agendadas
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dump-do-banco" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dump do Banco
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dump do Banco">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#neo4j" class="md-nav__link">
-    <span class="md-ellipsis">
-      Neo4j
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mongodb" class="md-nav__link">
-    <span class="md-ellipsis">
-      MongoDB
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="setup/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Setup Guide
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="api/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    API Reference
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-    
-  </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#indice" class="md-nav__link">
-    <span class="md-ellipsis">
-      Índice
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#visao-geral" class="md-nav__link">
-    <span class="md-ellipsis">
-      Visão Geral
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#estrutura-do-projeto" class="md-nav__link">
-    <span class="md-ellipsis">
-      Estrutura do Projeto
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#configuracao-e-execucao" class="md-nav__link">
-    <span class="md-ellipsis">
-      Configuração e Execução
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Configuração e Execução">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#pre-requisitos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Pré-requisitos
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#instalacao" class="md-nav__link">
-    <span class="md-ellipsis">
-      Instalação
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#modelo-de-dados" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelo de Dados
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelo de Dados">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-grafos-neo4j" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelo de Grafos (Neo4j)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelo de Grafos (Neo4j)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#nos-entidades" class="md-nav__link">
-    <span class="md-ellipsis">
-      Nós (Entidades)
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#relacionamentos" class="md-nav__link">
-    <span class="md-ellipsis">
-      Relacionamentos
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#modelo-de-documentos-mongodb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelo de Documentos (MongoDB)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Modelo de Documentos (MongoDB)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#colecoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      Coleções
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#consultas" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consultas
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consultas">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#consultas-neo4j-cypher" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consultas Neo4j (Cypher)
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consultas Neo4j (Cypher)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-encontrar-todos-os-pacientes-de-um-nutricionista-especifico" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Encontrar todos os pacientes de um nutricionista específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-encontrar-todas-as-refeicoes-de-um-paciente-em-um-periodo-especifico" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Encontrar todas as refeições de um paciente em um período específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-calcular-a-soma-de-calorias-consumidas-por-um-paciente-em-um-dia" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Calcular a soma de calorias consumidas por um paciente em um dia
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-encontrar-receitas-adequadas-para-pacientes-com-restricoes-alimentares" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Encontrar receitas adequadas para pacientes com restrições alimentares
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-identificar-pacientes-com-baixa-adesao-ao-plano-alimentar" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Identificar pacientes com baixa adesão ao plano alimentar
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-rastrear-o-progresso-de-um-paciente-analisando-medidas-corporais" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Rastrear o progresso de um paciente analisando medidas corporais
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-encontrar-os-alimentos-mais-recomendados-nos-planos-alimentares" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Encontrar os alimentos mais recomendados nos planos alimentares
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#8-analisar-a-comunicacao-entre-nutricionistas-e-pacientes" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Analisar a comunicação entre nutricionistas e pacientes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#9-encontrar-receitas-que-contem-determinado-alimento" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Encontrar receitas que contêm determinado alimento
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#10-visualizar-proximas-consultas-agendadas" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Visualizar próximas consultas agendadas
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#consultas-mongodb" class="md-nav__link">
-    <span class="md-ellipsis">
-      Consultas MongoDB
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Consultas MongoDB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-encontrar-todos-os-pacientes-de-um-nutricionista-especifico_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Encontrar todos os pacientes de um nutricionista específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-buscar-todas-as-refeicoes-de-um-paciente-em-um-periodo-especifico" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Buscar todas as refeições de um paciente em um período específico
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-calcular-total-de-calorias-consumidas-por-dia" class="md-nav__link">
-    <span class="md-ellipsis">
-      3. Calcular total de calorias consumidas por dia
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-encontrar-receitas-adequadas-para-pacientes-com-restricoes" class="md-nav__link">
-    <span class="md-ellipsis">
-      4. Encontrar receitas adequadas para pacientes com restrições
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#5-identificar-pacientes-com-baixa-adesao-ao-plano-alimentar_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      5. Identificar pacientes com baixa adesão ao plano alimentar
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#6-rastrear-progresso-corporal-de-um-paciente" class="md-nav__link">
-    <span class="md-ellipsis">
-      6. Rastrear progresso corporal de um paciente
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#7-encontrar-alimentos-mais-recomendados-nos-planos-alimentares" class="md-nav__link">
-    <span class="md-ellipsis">
-      7. Encontrar alimentos mais recomendados nos planos alimentares
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#8-analisar-comunicacao-entre-nutricionistas-e-pacientes" class="md-nav__link">
-    <span class="md-ellipsis">
-      8. Analisar comunicação entre nutricionistas e pacientes
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#9-encontrar-receitas-que-contem-determinado-ingrediente" class="md-nav__link">
-    <span class="md-ellipsis">
-      9. Encontrar receitas que contêm determinado ingrediente
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#10-visualizar-proximas-consultas-agendadas_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      10. Visualizar próximas consultas agendadas
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#dump-do-banco" class="md-nav__link">
-    <span class="md-ellipsis">
-      Dump do Banco
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Dump do Banco">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#neo4j" class="md-nav__link">
-    <span class="md-ellipsis">
-      Neo4j
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#mongodb" class="md-nav__link">
-    <span class="md-ellipsis">
-      MongoDB
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
-<h1 id="sistema-de-acompanhamento-de-dietas-nosql">Sistema de Acompanhamento de Dietas - NoSQL</h1>
 <p>Um sistema de banco de dados NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco
 de grafos) e MongoDB (banco de documentos).</p>
-<h2 id="indice">Índice</h2>
+
+<h2 id="índice">Índice</h2>
+
 <ul>
-<li><a href="#visão-geral">Visão Geral</a></li>
-<li><a href="#estrutura-do-projeto">Estrutura do Projeto</a></li>
-<li><a href="#configuração-e-execução">Configuração e Execução</a></li>
-<li><a href="#modelo-de-dados">Modelo de Dados</a><ul>
-<li><a href="#modelo-de-grafos-neo4j">Modelo de Grafos (Neo4j)</a></li>
-<li><a href="#modelo-de-documentos-mongodb">Modelo de Documentos (MongoDB)</a></li>
+  <li><a href="#visão-geral">Visão Geral</a></li>
+  <li><a href="#estrutura-do-projeto">Estrutura do Projeto</a></li>
+  <li><a href="#modelo-de-dados">Modelo de Dados</a>
+    <ul>
+      <li><a href="#modelo-de-grafos-neo4j">Modelo de Grafos (Neo4j)</a></li>
+      <li><a href="#modelo-de-documentos-mongodb">Modelo de Documentos (MongoDB)</a></li>
+    </ul>
+  </li>
+  <li><a href="#consultas">Consultas</a>
+    <ul>
+      <li><a href="#consultas-neo4j-cypher">Consultas Neo4j (Cypher)</a></li>
+      <li><a href="#consultas-mongodb">Consultas MongoDB</a></li>
+    </ul>
+  </li>
+  <li><a href="#configuração-e-execução">Configuração e Execução</a></li>
+  <li><a href="#dump-do-banco">Dump do Banco</a></li>
 </ul>
-</li>
-<li><a href="#consultas">Consultas</a><ul>
-<li><a href="#consultas-neo4j-cypher">Consultas Neo4j (Cypher)</a></li>
-<li><a href="#consultas-mongodb">Consultas MongoDB</a></li>
-</ul>
-</li>
-<li><a href="#dump-do-banco">Dump do Banco</a></li>
-</ul>
-<h2 id="visao-geral">Visão Geral</h2>
+
+<h2 id="visão-geral">Visão Geral</h2>
+
 <p>Este projeto implementa um sistema de acompanhamento de dietas que permite:</p>
+
 <ul>
-<li>Gerenciar pacientes e nutricionistas</li>
-<li>Registrar planos alimentares e refeições</li>
-<li>Acompanhar medidas corporais</li>
-<li>Monitorar a adesão às dietas</li>
-<li>Facilitar a comunicação entre paciente e nutricionista</li>
-<li>Sugerir receitas adequadas às restrições alimentares</li>
+  <li>Gerenciar pacientes e nutricionistas</li>
+  <li>Registrar planos alimentares e refeições</li>
+  <li>Acompanhar medidas corporais</li>
+  <li>Monitorar a adesão às dietas</li>
+  <li>Facilitar a comunicação entre paciente e nutricionista</li>
+  <li>Sugerir receitas adequadas às restrições alimentares</li>
 </ul>
+
 <p>O sistema utiliza dois tipos de SGBDs NoSQL:</p>
+
 <ul>
-<li><strong>Neo4j</strong>: banco de dados de grafos para modelar os relacionamentos complexos entre entidades</li>
-<li><strong>MongoDB</strong>: banco de documentos para armazenar informações complexas aninhadas</li>
+  <li><strong>Neo4j</strong>: banco de dados de grafos para modelar os relacionamentos complexos entre entidades</li>
+  <li><strong>MongoDB</strong>: banco de documentos para armazenar informações complexas aninhadas</li>
 </ul>
+
 <h2 id="estrutura-do-projeto">Estrutura do Projeto</h2>
-<pre><code>diet-tracking-app/
-├── docker-compose.yml       # Configuração dos containers Docker (Neo4j e MongoDB)
-├── load_data.py             # Script para carregar dados no Neo4j
-├── load_mongodb_data.py     # Script para carregar dados no MongoDB
-├── load_all_databases.py    # Script para configurar ambos os bancos
-├── requirements.txt         # Dependências Python
-└── README.md                # Este arquivo
-</code></pre>
-<h2 id="configuracao-e-execucao">Configuração e Execução</h2>
-<h3 id="pre-requisitos">Pré-requisitos</h3>
-<ul>
-<li>Docker e Docker Compose</li>
-<li>Python 3.7+</li>
-<li>pip (gerenciador de pacotes Python)</li>
-</ul>
-<h3 id="instalacao">Instalação</h3>
-<ol>
-<li>
-<p>Clone o repositório ou copie os arquivos para seu diretório de trabalho</p>
-</li>
-<li>
-<p>Crie um ambiente virtual Python (opcional, mas recomendado)
-   <code>bash
-   python -m venv .venv
-   source .venv/bin/activate  # Linux/Mac
-   # ou
-   .venv\Scripts\activate     # Windows</code></p>
-</li>
-<li>
-<p>Instale as dependências
-   <code>bash
-   pip install -r requirements.txt</code></p>
-</li>
-<li>
-<p>Execute o script de configuração completa (inicia os containers e carrega os dados)
-   <code>bash
-   python load_all_databases.py</code></p>
-</li>
-</ol>
-<p>Alternativamente, você pode executar cada etapa manualmente:</p>
-<p>```bash
-   # Inicie os containers Docker
-   docker-compose up -d</p>
-<p># Aguarde alguns segundos para os serviços iniciarem
-   sleep 30</p>
-<p># Carregue os dados no Neo4j
-   python load_data.py</p>
-<p># Carregue os dados no MongoDB
-   python load_mongodb_data.py
-   ```</p>
-<ol>
-<li>Acesse as interfaces web:<ul>
-<li>Neo4j Browser: http://localhost:7474<ul>
-<li>Login: neo4j</li>
-<li>Senha: senha123</li>
-</ul>
-</li>
-<li>MongoDB Express: http://localhost:8081<ul>
-<li>Login: admin</li>
-<li>Senha: senha123</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sistema-acompanhamento-dietas/
+├── .github/workflows/                 # Workflows CI/CD e GitHub Pages
+├── docs/                              # Documentação
+├── dumps/                             # Diretório para dumps
+├── scripts/                           # Scripts Python
+├── docker-compose.yml                 # Configuração Docker
+├── Makefile                           # Automação de tarefas
+├── requirements.txt                   # Dependências Python
+└── README.md                          # Documentação principal
+</code></pre></div></div>
+
 <h2 id="modelo-de-dados">Modelo de Dados</h2>
+
+<p>O sistema utiliza dois modelos de dados diferentes para explorar as capacidades de cada tipo de banco de dados NoSQL.</p>
+
 <h3 id="modelo-de-grafos-neo4j">Modelo de Grafos (Neo4j)</h3>
-<p>O modelo de grafos representa entidades como nós e relacionamentos como arestas.</p>
-<h4 id="nos-entidades">Nós (Entidades)</h4>
-<ul>
-<li><strong>Nutricionista</strong>: Profissionais que orientam os pacientes</li>
-<li><strong>Paciente</strong>: Pessoas que buscam orientação nutricional</li>
-<li><strong>PlanoAlimentar</strong>: Dietas elaboradas para os pacientes</li>
-<li><strong>Alimento</strong>: Itens alimentares básicos com informações nutricionais</li>
-<li><strong>Receita</strong>: Combinações de alimentos com instruções de preparo</li>
-<li><strong>Refeicao</strong>: Registros de alimentação dos pacientes</li>
-<li><strong>MedidaCorporal</strong>: Histórico de medições (peso, IMC, etc.)</li>
-<li><strong>Mensagem</strong>: Comunicações entre nutricionistas e pacientes</li>
-<li><strong>Consulta</strong>: Agendamentos de atendimentos</li>
-</ul>
-<h4 id="relacionamentos">Relacionamentos</h4>
-<ul>
-<li><strong>ATENDE</strong>: Nutricionista → Paciente</li>
-<li><strong>CRIA</strong>: Nutricionista → PlanoAlimentar</li>
-<li><strong>SEGUE</strong>: Paciente → PlanoAlimentar</li>
-<li><strong>INCLUI</strong>: PlanoAlimentar → Alimento</li>
-<li><strong>RECOMENDA</strong>: PlanoAlimentar → Receita</li>
-<li><strong>CONTEM</strong>: Receita → Alimento</li>
-<li><strong>CONSOME</strong>: Paciente → Refeicao</li>
-<li><strong>INCLUI</strong>: Refeicao → (Alimento | Receita)</li>
-<li><strong>POSSUI</strong>: Paciente → MedidaCorporal</li>
-<li><strong>ENVIA</strong>: (Nutricionista | Paciente) → Mensagem</li>
-<li><strong>PARA</strong>: Mensagem → (Nutricionista | Paciente)</li>
-<li><strong>AGENDA</strong>: Paciente → Consulta</li>
-<li><strong>COM</strong>: Consulta → Nutricionista</li>
-</ul>
+
+<p>O modelo de grafos representa entidades como nós e relacionamentos como arestas, permitindo modelar de forma natural as relações complexas entre nutricionistas, pacientes, planos alimentares, etc.</p>
+
+<p><a href="modelagem/grafos">Ver detalhes do Modelo de Grafos</a></p>
+
 <h3 id="modelo-de-documentos-mongodb">Modelo de Documentos (MongoDB)</h3>
-<p>O modelo de documentos organiza os dados em coleções de documentos JSON.</p>
-<h4 id="colecoes">Coleções</h4>
-<ol>
-<li><strong>nutritionists</strong>: Informações dos nutricionistas</li>
-<li><strong>patients</strong>: Dados dos pacientes, incluindo referência ao nutricionista</li>
-<li><strong>foods</strong>: Cadastro de alimentos com informações nutricionais</li>
-<li><strong>recipes</strong>: Receitas com ingredientes e instruções</li>
-<li><strong>dietPlans</strong>: Planos alimentares com referências a pacientes, nutricionistas e alimentos/receitas recomendados</li>
-<li><strong>meals</strong>: Refeições consumidas pelos pacientes</li>
-<li><strong>measurements</strong>: Histórico de medidas corporais dos pacientes</li>
-<li><strong>messages</strong>: Comunicações entre pacientes e nutricionistas</li>
-<li><strong>appointments</strong>: Consultas agendadas e realizadas</li>
-</ol>
+
+<p>O modelo de documentos organiza os dados em coleções de documentos JSON, permitindo armazenar estruturas aninhadas e flexíveis.</p>
+
+<p><a href="modelagem/documentos">Ver detalhes do Modelo de Documentos</a></p>
+
 <h2 id="consultas">Consultas</h2>
+
+<p>O sistema implementa diversas consultas para demonstrar as capacidades de cada banco de dados.</p>
+
 <h3 id="consultas-neo4j-cypher">Consultas Neo4j (Cypher)</h3>
-<h4 id="1-encontrar-todos-os-pacientes-de-um-nutricionista-especifico">1. Encontrar todos os pacientes de um nutricionista específico</h4>
-<pre><code class="language-cypher">MATCH (n:Nutricionista {nome: &quot;Ana Silva&quot;})-[:ATENDE]-&gt;(p:Paciente)
-RETURN n.nome AS Nutricionista, p.nome AS Paciente, p.objetivo AS Objetivo
-</code></pre>
-<h4 id="2-encontrar-todas-as-refeicoes-de-um-paciente-em-um-periodo-especifico">2. Encontrar todas as refeições de um paciente em um período específico</h4>
-<pre><code class="language-cypher">MATCH (p:Paciente {nome: &quot;João Pereira&quot;})-[:CONSOME]-&gt;(r:Refeicao)
-WHERE r.data &gt;= &quot;2023-10-18&quot; AND r.data &lt;= &quot;2023-10-19&quot;
-RETURN p.nome AS Paciente, r.tipo AS TipoRefeicao, r.data AS Data,
-       r.calorias AS Calorias, r.adesao AS Adesao
-ORDER BY r.data, r.hora
-</code></pre>
-<h4 id="3-calcular-a-soma-de-calorias-consumidas-por-um-paciente-em-um-dia">3. Calcular a soma de calorias consumidas por um paciente em um dia</h4>
-<pre><code class="language-cypher">MATCH (p:Paciente {nome: &quot;João Pereira&quot;})-[:CONSOME]-&gt;(r:Refeicao)
-WHERE r.data = &quot;2023-10-18&quot;
-RETURN p.nome AS Paciente, r.data AS Data, SUM(r.calorias) AS TotalCalorias
-</code></pre>
-<h4 id="4-encontrar-receitas-adequadas-para-pacientes-com-restricoes-alimentares">4. Encontrar receitas adequadas para pacientes com restrições alimentares</h4>
-<pre><code class="language-cypher">MATCH (p:Paciente)-[:SEGUE]-&gt;(pa:PlanoAlimentar)-[:RECOMENDA]-&gt;(r:Receita)
-WHERE &quot;Glúten&quot; IN p.restricoes
-RETURN p.nome AS Paciente, r.nome AS ReceitaAdequada, r.calorias AS Calorias
-</code></pre>
-<h4 id="5-identificar-pacientes-com-baixa-adesao-ao-plano-alimentar">5. Identificar pacientes com baixa adesão ao plano alimentar</h4>
-<pre><code class="language-cypher">MATCH (p:Paciente)-[:CONSOME]-&gt;(r:Refeicao)
-WITH p, COUNT(r) AS totalRefeicoes,
-     SUM(CASE WHEN r.adesao = &quot;Completa&quot; THEN 1 ELSE 0 END) AS refeicoesCompletas
-WHERE (refeicoesCompletas * 1.0 / totalRefeicoes) &lt; 0.8
-RETURN p.nome AS Paciente, totalRefeicoes, refeicoesCompletas,
-       (refeicoesCompletas * 1.0 / totalRefeicoes) AS TaxaAdesao
-ORDER BY TaxaAdesao
-</code></pre>
-<h4 id="6-rastrear-o-progresso-de-um-paciente-analisando-medidas-corporais">6. Rastrear o progresso de um paciente analisando medidas corporais</h4>
-<pre><code class="language-cypher">MATCH (p:Paciente {nome: &quot;João Pereira&quot;})-[:POSSUI]-&gt;(m:MedidaCorporal)
-RETURN p.nome AS Paciente, m.data AS Data, m.peso AS Peso, m.imc AS IMC,
-       m.gordura_corporal AS GorduraCorporal, m.cintura AS Cintura
-ORDER BY m.data
-</code></pre>
-<h4 id="7-encontrar-os-alimentos-mais-recomendados-nos-planos-alimentares">7. Encontrar os alimentos mais recomendados nos planos alimentares</h4>
-<pre><code class="language-cypher">MATCH (pa:PlanoAlimentar)-[:INCLUI]-&gt;(a:Alimento)
-RETURN a.nome AS Alimento, a.grupo AS Grupo, COUNT(pa) AS NumeroDeRecomendacoes
-ORDER BY NumeroDeRecomendacoes DESC
-</code></pre>
-<h4 id="8-analisar-a-comunicacao-entre-nutricionistas-e-pacientes">8. Analisar a comunicação entre nutricionistas e pacientes</h4>
-<pre><code class="language-cypher">MATCH (origem)-[:ENVIA]-&gt;(m:Mensagem)-[:PARA]-&gt;(destino)
-WHERE origem:Nutricionista OR destino:Nutricionista
-RETURN
-  CASE
-    WHEN origem:Nutricionista THEN origem.nome
-    ELSE origem.nome
-  END AS Remetente,
-  CASE
-    WHEN destino:Nutricionista THEN destino.nome
-    ELSE destino.nome
-  END AS Destinatario,
-  m.data AS Data, m.hora AS Hora, m.conteudo AS Mensagem
-ORDER BY m.data, m.hora
-</code></pre>
-<h4 id="9-encontrar-receitas-que-contem-determinado-alimento">9. Encontrar receitas que contêm determinado alimento</h4>
-<pre><code class="language-cypher">MATCH (r:Receita)-[:CONTEM]-&gt;(a:Alimento {nome: &quot;Brócolis&quot;})
-RETURN r.nome AS Receita, r.calorias AS Calorias, r.dificuldade AS Dificuldade,
-       r.tempo_preparo AS TempoPreparo
-</code></pre>
-<h4 id="10-visualizar-proximas-consultas-agendadas">10. Visualizar próximas consultas agendadas</h4>
-<pre><code class="language-cypher">MATCH (p:Paciente)-[:AGENDA]-&gt;(c:Consulta {status: &quot;Agendada&quot;})-[:COM]-&gt;(n:Nutricionista)
-RETURN p.nome AS Paciente, n.nome AS Nutricionista, c.data AS Data, c.hora AS Hora
-ORDER BY c.data, c.hora
-</code></pre>
+
+<p>Consultas em linguagem Cypher que exploram as capacidades do Neo4j para navegação em grafos e análise de relacionamentos.</p>
+
+<p><a href="consultas/neo4j">Ver detalhes das Consultas Neo4j</a></p>
+
 <h3 id="consultas-mongodb">Consultas MongoDB</h3>
-<h4 id="1-encontrar-todos-os-pacientes-de-um-nutricionista-especifico_1">1. Encontrar todos os pacientes de um nutricionista específico</h4>
-<pre><code class="language-javascript">db.patients.find(
-    {nutricionista_id: 1},
-    {nome: 1, idade: 1, objetivo: 1, _id: 0}
-)
-</code></pre>
-<h4 id="2-buscar-todas-as-refeicoes-de-um-paciente-em-um-periodo-especifico">2. Buscar todas as refeições de um paciente em um período específico</h4>
-<pre><code class="language-javascript">db.meals.find(
-    {
-        paciente_id: 1,
-        data: {
-            $gte: ISODate(&quot;2023-10-18&quot;),
-            $lte: ISODate(&quot;2023-10-19&quot;)
-        }
-    },
-    {tipo: 1, data: 1, hora: 1, calorias: 1, adesao: 1, _id: 0}
-).sort({data: 1, hora: 1})
-</code></pre>
-<h4 id="3-calcular-total-de-calorias-consumidas-por-dia">3. Calcular total de calorias consumidas por dia</h4>
-<pre><code class="language-javascript">db.meals.aggregate([
-    {$match: {paciente_id: 1}},
-    {
-        $group: {
-            _id: {$dateToString: {format: &quot;%Y-%m-%d&quot;, date: &quot;$data&quot;}},
-            totalCalorias: {$sum: &quot;$calorias&quot;}
-        }
-    },
-    {$sort: {_id: 1}}
-])
-</code></pre>
-<h4 id="4-encontrar-receitas-adequadas-para-pacientes-com-restricoes">4. Encontrar receitas adequadas para pacientes com restrições</h4>
-<pre><code class="language-javascript">db.patients.aggregate([
-    {$match: {restricoes: &quot;Glúten&quot;}},
-    {
-        $lookup: {
-            from: &quot;dietPlans&quot;,
-            localField: &quot;_id&quot;,
-            foreignField: &quot;paciente_id&quot;,
-            as: &quot;planos&quot;
-        }
-    },
-    {$unwind: &quot;$planos&quot;},
-    {
-        $lookup: {
-            from: &quot;recipes&quot;,
-            localField: &quot;planos.receitas_recomendadas&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;receitas&quot;
-        }
-    },
-    {$unwind: &quot;$receitas&quot;},
-    {
-        $project: {
-            paciente: &quot;$nome&quot;,
-            receita: &quot;$receitas.nome&quot;,
-            calorias: &quot;$receitas.calorias&quot;,
-            _id: 0
-        }
-    }
-])
-</code></pre>
-<h4 id="5-identificar-pacientes-com-baixa-adesao-ao-plano-alimentar_1">5. Identificar pacientes com baixa adesão ao plano alimentar</h4>
-<pre><code class="language-javascript">db.meals.aggregate([
-    {
-        $group: {
-            _id: &quot;$paciente_id&quot;,
-            totalRefeicoes: {$sum: 1},
-            refeicoesCompletas: {
-                $sum: {$cond: [{$eq: [&quot;$adesao&quot;, &quot;Completa&quot;]}, 1, 0]}
-            }
-        }
-    },
-    {
-        $project: {
-            paciente_id: &quot;$_id&quot;,
-            totalRefeicoes: 1,
-            refeicoesCompletas: 1,
-            taxaAdesao: {$divide: [&quot;$refeicoesCompletas&quot;, &quot;$totalRefeicoes&quot;]},
-            _id: 0
-        }
-    },
-    {$match: {taxaAdesao: {$lt: 0.8}}},
-    {
-        $lookup: {
-            from: &quot;patients&quot;,
-            localField: &quot;paciente_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;paciente&quot;
-        }
-    },
-    {$unwind: &quot;$paciente&quot;},
-    {
-        $project: {
-            nome: &quot;$paciente.nome&quot;,
-            totalRefeicoes: 1,
-            refeicoesCompletas: 1,
-            taxaAdesao: 1
-        }
-    },
-    {$sort: {taxaAdesao: 1}}
-])
-</code></pre>
-<h4 id="6-rastrear-progresso-corporal-de-um-paciente">6. Rastrear progresso corporal de um paciente</h4>
-<pre><code class="language-javascript">db.measurements.find(
-    {paciente_id: 1},
-    {data: 1, peso: 1, imc: 1, gordura_corporal: 1, &quot;medidas.cintura&quot;: 1, _id: 0}
-).sort({data: 1})
-</code></pre>
-<h4 id="7-encontrar-alimentos-mais-recomendados-nos-planos-alimentares">7. Encontrar alimentos mais recomendados nos planos alimentares</h4>
-<pre><code class="language-javascript">db.dietPlans.aggregate([
-    {$unwind: &quot;$alimentos_recomendados&quot;},
-    {
-        $group: {
-            _id: &quot;$alimentos_recomendados&quot;,
-            contagem: {$sum: 1}
-        }
-    },
-    {
-        $lookup: {
-            from: &quot;foods&quot;,
-            localField: &quot;_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;alimento&quot;
-        }
-    },
-    {$unwind: &quot;$alimento&quot;},
-    {
-        $project: {
-            nome: &quot;$alimento.nome&quot;,
-            grupo: &quot;$alimento.grupo&quot;,
-            recomendacoes: &quot;$contagem&quot;,
-            _id: 0
-        }
-    },
-    {$sort: {recomendacoes: -1}}
-])
-</code></pre>
-<h4 id="8-analisar-comunicacao-entre-nutricionistas-e-pacientes">8. Analisar comunicação entre nutricionistas e pacientes</h4>
-<pre><code class="language-javascript">db.messages.aggregate([
-    {
-        $lookup: {
-            from: &quot;nutritionists&quot;,
-            localField: &quot;de_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;nutricionista_de&quot;
-        }
-    },
-    {
-        $lookup: {
-            from: &quot;patients&quot;,
-            localField: &quot;de_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;paciente_de&quot;
-        }
-    },
-    {
-        $lookup: {
-            from: &quot;nutritionists&quot;,
-            localField: &quot;para_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;nutricionista_para&quot;
-        }
-    },
-    {
-        $lookup: {
-            from: &quot;patients&quot;,
-            localField: &quot;para_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;paciente_para&quot;
-        }
-    },
-    {
-        $project: {
-            remetente: {
-                $cond: {
-                    if: {$eq: [&quot;$de_tipo&quot;, &quot;nutricionista&quot;]},
-                    then: {$arrayElemAt: [&quot;$nutricionista_de.nome&quot;, 0]},
-                    else: {$arrayElemAt: [&quot;$paciente_de.nome&quot;, 0]}
-                }
-            },
-            destinatario: {
-                $cond: {
-                    if: {$eq: [&quot;$para_tipo&quot;, &quot;nutricionista&quot;]},
-                    then: {$arrayElemAt: [&quot;$nutricionista_para.nome&quot;, 0]},
-                    else: {$arrayElemAt: [&quot;$paciente_para.nome&quot;, 0]}
-                }
-            },
-            data: 1,
-            hora: 1,
-            conteudo: 1,
-            _id: 0
-        }
-    },
-    {$sort: {data: 1, hora: 1}}
-])
-</code></pre>
-<h4 id="9-encontrar-receitas-que-contem-determinado-ingrediente">9. Encontrar receitas que contêm determinado ingrediente</h4>
-<pre><code class="language-javascript">db.recipes.aggregate([
-    {$match: {&quot;ingredientes.food_id&quot;: 4}},
-    {
-        $lookup: {
-            from: &quot;foods&quot;,
-            localField: &quot;ingredientes.food_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;alimentos&quot;
-        }
-    },
-    {$match: {&quot;alimentos.nome&quot;: &quot;Brócolis&quot;}},
-    {
-        $project: {
-            nome: 1,
-            calorias: 1,
-            dificuldade: 1,
-            tempo_preparo: 1,
-            _id: 0
-        }
-    }
-])
-</code></pre>
-<h4 id="10-visualizar-proximas-consultas-agendadas_1">10. Visualizar próximas consultas agendadas</h4>
-<pre><code class="language-javascript">db.appointments.aggregate([
-    {$match: {status: &quot;Agendada&quot;}},
-    {
-        $lookup: {
-            from: &quot;patients&quot;,
-            localField: &quot;paciente_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;paciente&quot;
-        }
-    },
-    {
-        $lookup: {
-            from: &quot;nutritionists&quot;,
-            localField: &quot;nutricionista_id&quot;,
-            foreignField: &quot;_id&quot;,
-            as: &quot;nutricionista&quot;
-        }
-    },
-    {$unwind: &quot;$paciente&quot;},
-    {$unwind: &quot;$nutricionista&quot;},
-    {
-        $project: {
-            paciente: &quot;$paciente.nome&quot;,
-            nutricionista: &quot;$nutricionista.nome&quot;,
-            data: 1,
-            hora: 1,
-            _id: 0
-        }
-    },
-    {$sort: {data: 1, hora: 1}}
-])
-</code></pre>
+
+<p>Consultas utilizando a API de agregação e consultas do MongoDB que exploram as capacidades de armazenamento e recuperação de documentos.</p>
+
+<p><a href="consultas/mongodb">Ver detalhes das Consultas MongoDB</a></p>
+
+<h2 id="configuração-e-execução">Configuração e Execução</h2>
+
+<h3 id="pré-requisitos">Pré-requisitos</h3>
+
+<ul>
+  <li>Docker e Docker Compose</li>
+  <li>Python 3.7+</li>
+  <li>pip (gerenciador de pacotes Python)</li>
+</ul>
+
+<h3 id="instalação">Instalação</h3>
+
+<ol>
+  <li>
+    <p>Clone o repositório ou copie os arquivos para seu diretório de trabalho</p>
+  </li>
+  <li>Crie um ambiente virtual Python (opcional, mas recomendado)
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python <span class="nt">-m</span> venv .venv
+<span class="nb">source</span> .venv/bin/activate  <span class="c"># Linux/Mac</span>
+<span class="c"># ou</span>
+.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate     <span class="c"># Windows</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Instale as dependências
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install</span> <span class="nt">-r</span> requirements.txt
+</code></pre></div>    </div>
+  </li>
+  <li>Execute o script de configuração completa (inicia os containers e carrega os dados)
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make setup
+make load
+</code></pre></div>    </div>
+
+    <p>Alternativamente, você pode executar:</p>
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python load_all_databases.py
+</code></pre></div>    </div>
+  </li>
+  <li>Acesse as interfaces web:
+    <ul>
+      <li>Neo4j Browser: http://localhost:7474
+        <ul>
+          <li>Login: neo4j</li>
+          <li>Senha: senha123</li>
+        </ul>
+      </li>
+      <li>MongoDB Express: http://localhost:8081
+        <ul>
+          <li>Login: admin</li>
+          <li>Senha: senha123</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ol>
+
 <h2 id="dump-do-banco">Dump do Banco</h2>
-<h3 id="neo4j">Neo4j</h3>
-<p>Para criar um dump do banco Neo4j:</p>
-<pre><code class="language-bash">docker exec diet_app_neo4j neo4j-admin dump --database=neo4j --to=/var/lib/neo4j/import/neo4j_dump.dump
-docker cp diet_app_neo4j:/var/lib/neo4j/import/neo4j_dump.dump ./neo4j_dump.dump
-</code></pre>
-<h3 id="mongodb">MongoDB</h3>
-<p>Para MongoDB, você pode usar o comando mongodump:</p>
-<pre><code class="language-bash">docker exec diet_app_mongodb mongodump --username admin --password senha123 --authenticationDatabase admin --db diet_app --out /data/db/mongodb_dump
-docker cp diet_app_mongodb:/data/db/mongodb_dump ./mongodb_dump
-</code></pre>
-<p>Ou através do script Python:</p>
-<pre><code class="language-bash"># Descomente a linha create_mongodb_dump() no arquivo load_mongodb_data.py
-python load_mongodb_data.py
-</code></pre>
 
+<p>Para criar dumps dos bancos de dados, utilize o comando:</p>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make dump
+</code></pre></div></div>
 
+<p>Ou para cada banco individualmente:</p>
 
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>make dump-neo4j    <span class="c"># Apenas Neo4j</span>
+make dump-mongodb  <span class="c"># Apenas MongoDB</span>
+</code></pre></div></div>
 
-
-
-
-
-
-
-
-                
-              </article>
-            </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
+<p>Os dumps serão armazenados no diretório <code class="language-plaintext highlighter-rouge">dumps/</code>.</p>
 </div>
-      
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/sistema-acompanhamento-dietas/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sistema de Acompanhamento de Dietas</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Sistema de Acompanhamento de Dietas</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).</p>
+      </div>
     </div>
+
   </div>
+
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    
-    
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
-    
-    
-      <script src="assets/javascripts/bundle.c8b220af.min.js"></script>
-      
-    
-  </body>
+</body>
+
 </html>

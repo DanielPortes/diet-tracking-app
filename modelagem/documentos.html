@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Modelo de Documentos (MongoDB) | Sistema de Acompanhamento de Dietas</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Modelo de Documentos (MongoDB)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos)." />
+<meta property="og:description" content="Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos)." />
+<link rel="canonical" href="/sistema-acompanhamento-dietas/modelagem/documentos.html" />
+<meta property="og:url" content="/sistema-acompanhamento-dietas/modelagem/documentos.html" />
+<meta property="og:site_name" content="Sistema de Acompanhamento de Dietas" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Modelo de Documentos (MongoDB)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).","headline":"Modelo de Documentos (MongoDB)","url":"/sistema-acompanhamento-dietas/modelagem/documentos.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/sistema-acompanhamento-dietas/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/sistema-acompanhamento-dietas/feed.xml" title="Sistema de Acompanhamento de Dietas" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/sistema-acompanhamento-dietas/">Sistema de Acompanhamento de Dietas</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/sistema-acompanhamento-dietas/modelagem/documentos.html">Modelo de Documentos (MongoDB)</a><a class="page-link" href="/sistema-acompanhamento-dietas/modelagem/grafos.html">Modelo de Grafos (Neo4j)</a><a class="page-link" href="/sistema-acompanhamento-dietas/">Sistema de Acompanhamento de Dietas</a><a class="page-link" href="/sistema-acompanhamento-dietas/consultas/mongodb.html">Consultas MongoDB</a><a class="page-link" href="/sistema-acompanhamento-dietas/consultas/neo4j.html">Consultas Neo4j (Cypher)</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Modelo de Documentos (MongoDB)</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="modelo-de-documentos-mongodb">Modelo de Documentos (MongoDB)</h1>
+
+<p>O modelo de documentos para nosso Sistema de Acompanhamento de Dietas utiliza o MongoDB, um banco de dados NoSQL orientado a documentos que armazena dados em formato JSON-like (BSON). Esta abordagem é particularmente útil para representar estruturas aninhadas e quando a flexibilidade de esquema é importante.</p>
+
+<h2 id="diagrama-do-modelo">Diagrama do Modelo</h2>
+
+<p>O diagrama abaixo ilustra o modelo de dados em formato de documentos:</p>
+
+<pre><code class="language-mermaid">classDiagram
+    class nutritionists {
+        _id: ObjectId
+        nome: String
+        especialidade: String
+        experiencia: Number
+        email: String
+        telefone: String
+    }
+    
+    class patients {
+        _id: ObjectId
+        nome: String
+        idade: Number
+        genero: String
+        altura: Number
+        peso_inicial: Number
+        email: String
+        telefone: String
+        restricoes: Array
+        alergias: Array
+        objetivo: String
+        nutricionista_id: ObjectId
+    }
+    
+    class foods {
+        _id: ObjectId
+        nome: String
+        porcao: String
+        calorias: Number
+        proteinas: Number
+        carboidratos: Number
+        gorduras: Number
+        fibras: Number
+        grupo: String
+    }
+    
+    class recipes {
+        _id: ObjectId
+        nome: String
+        instrucoes: String
+        tempo_preparo: Number
+        dificuldade: String
+        calorias: Number
+        ingredientes: Array~IngredienteRef~
+    }
+    
+    class IngredienteRef {
+        food_id: ObjectId
+        quantidade: String
+    }
+    
+    class dietPlans {
+        _id: ObjectId
+        nome: String
+        descricao: String
+        objetivo: String
+        duracao: Number
+        calorias_diarias: Number
+        macronutrientes: Object
+        nutricionista_id: ObjectId
+        paciente_id: ObjectId
+        alimentos_recomendados: Array~ObjectId~
+        receitas_recomendadas: Array~ObjectId~
+    }
+    
+    class meals {
+        _id: ObjectId
+        tipo: String
+        data: Date
+        hora: String
+        paciente_id: ObjectId
+        calorias: Number
+        adesao: String
+        registro_foto: Boolean
+        alimentos: Array~ObjectId~
+        receitas: Array~ObjectId~
+    }
+    
+    class measurements {
+        _id: ObjectId
+        paciente_id: ObjectId
+        data: Date
+        peso: Number
+        imc: Number
+        gordura_corporal: Number
+        medidas: Object
+        pressao: String
+    }
+    
+    class MedidasObject {
+        cintura: Number
+        quadril: Number
+    }
+    
+    class messages {
+        _id: ObjectId
+        de_id: ObjectId
+        de_tipo: String
+        para_id: ObjectId
+        para_tipo: String
+        conteudo: String
+        data: Date
+        hora: String
+        lida: Boolean
+    }
+    
+    class appointments {
+        _id: ObjectId
+        nutricionista_id: ObjectId
+        paciente_id: ObjectId
+        data: Date
+        hora: String
+        status: String
+        notas: String
+    }
+    
+    %% Relacionamentos de Referência
+    recipes *-- IngredienteRef
+    measurements *-- MedidasObject
+    
+    patients --&gt; nutritionists : nutricionista_id
+    dietPlans --&gt; nutritionists : nutricionista_id
+    dietPlans --&gt; patients : paciente_id
+    dietPlans --&gt; foods : alimentos_recomendados
+    dietPlans --&gt; recipes : receitas_recomendadas
+    recipes --&gt; foods : ingredientes.food_id
+    meals --&gt; patients : paciente_id
+    meals --&gt; foods : alimentos
+    meals --&gt; recipes : receitas
+    measurements --&gt; patients : paciente_id
+    messages --&gt; nutritionists : de_id / para_id
+    messages --&gt; patients : de_id / para_id
+    appointments --&gt; nutritionists : nutricionista_id
+    appointments --&gt; patients : paciente_id
+</code></pre>
+
+<h2 id="coleções-e-documentos">Coleções e Documentos</h2>
+
+<p>O modelo utiliza as seguintes coleções:</p>
+
+<h3 id="nutritionists">nutritionists</h3>
+
+<p>Armazena informações sobre os nutricionistas.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nome</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Ana Silva</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">especialidade</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Nutrição Esportiva</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">experiencia</span><span class="dl">"</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">email</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">ana@nutri.com</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">telefone</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">21-99999-1111</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="patients">patients</h3>
+
+<p>Armazena informações sobre os pacientes, incluindo referência ao nutricionista que os atende.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nome</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">João Pereira</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">idade</span><span class="dl">"</span><span class="p">:</span> <span class="mi">35</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">genero</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">M</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">altura</span><span class="dl">"</span><span class="p">:</span> <span class="mi">178</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">peso_inicial</span><span class="dl">"</span><span class="p">:</span> <span class="mi">92</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">email</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">joao@email.com</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">telefone</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">21-88888-1111</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">restricoes</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Glúten</span><span class="dl">"</span><span class="p">],</span>
+  <span class="dl">"</span><span class="s2">alergias</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="dl">"</span><span class="s2">Amendoim</span><span class="dl">"</span><span class="p">],</span>
+  <span class="dl">"</span><span class="s2">objetivo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Emagrecimento</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nutricionista_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="foods">foods</h3>
+
+<p>Cadastro de alimentos com informações nutricionais.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nome</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Maçã</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">porcao</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">1 unidade (150g)</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">calorias</span><span class="dl">"</span><span class="p">:</span> <span class="mi">95</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">proteinas</span><span class="dl">"</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">carboidratos</span><span class="dl">"</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">gorduras</span><span class="dl">"</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">fibras</span><span class="dl">"</span><span class="p">:</span> <span class="mf">4.4</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">grupo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Frutas</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="recipes">recipes</h3>
+
+<p>Receitas com ingredientes e instruções.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nome</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Salada de Frango com Abacate</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">instrucoes</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Corte o peito de frango em cubos e grelhe. Misture com abacate, tomate e folhas verdes. Tempere com azeite, limão e sal.</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">tempo_preparo</span><span class="dl">"</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">dificuldade</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Fácil</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">calorias</span><span class="dl">"</span><span class="p">:</span> <span class="mi">320</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">ingredientes</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span>
+    <span class="p">{</span><span class="dl">"</span><span class="s2">food_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="dl">"</span><span class="s2">quantidade</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">100g</span><span class="dl">"</span><span class="p">},</span>
+    <span class="p">{</span><span class="dl">"</span><span class="s2">food_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="dl">"</span><span class="s2">quantidade</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">50g</span><span class="dl">"</span><span class="p">},</span>
+    <span class="p">{</span><span class="dl">"</span><span class="s2">food_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span> <span class="dl">"</span><span class="s2">quantidade</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">5ml</span><span class="dl">"</span><span class="p">}</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="dietplans">dietPlans</h3>
+
+<p>Planos alimentares com referências a pacientes, nutricionistas e alimentos/receitas recomendados.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="nx">a1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nome</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Emagrecimento Saudável</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">descricao</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Plano focado em déficit calórico moderado com alimentos nutritivos</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">objetivo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Perda de peso</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">duracao</span><span class="dl">"</span><span class="p">:</span> <span class="mi">90</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">calorias_diarias</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1800</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">macronutrientes</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">proteinas</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">30%</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">carboidratos</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">40%</span><span class="dl">"</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">gorduras</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">30%</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">nutricionista_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">paciente_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">alimentos_recomendados</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">],</span>
+  <span class="dl">"</span><span class="s2">receitas_recomendadas</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="meals">meals</h3>
+
+<p>Refeições consumidas pelos pacientes.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">tipo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Café da manhã</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="dl">"</span><span class="s2">2023-10-18T00:00:00Z</span><span class="dl">"</span><span class="p">),</span>
+  <span class="dl">"</span><span class="s2">hora</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">08:00</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">paciente_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">calorias</span><span class="dl">"</span><span class="p">:</span> <span class="mi">320</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">adesao</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Completa</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">registro_foto</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">alimentos</span><span class="dl">"</span><span class="p">:</span> <span class="p">[],</span>
+  <span class="dl">"</span><span class="s2">receitas</span><span class="dl">"</span><span class="p">:</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="measurements">measurements</h3>
+
+<p>Histórico de medidas corporais dos pacientes.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">paciente_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="dl">"</span><span class="s2">2023-09-15T00:00:00Z</span><span class="dl">"</span><span class="p">),</span>
+  <span class="dl">"</span><span class="s2">peso</span><span class="dl">"</span><span class="p">:</span> <span class="mi">92</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">imc</span><span class="dl">"</span><span class="p">:</span> <span class="mf">29.1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">gordura_corporal</span><span class="dl">"</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">medidas</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">cintura</span><span class="dl">"</span><span class="p">:</span> <span class="mi">102</span><span class="p">,</span>
+    <span class="dl">"</span><span class="s2">quadril</span><span class="dl">"</span><span class="p">:</span> <span class="mi">106</span>
+  <span class="p">},</span>
+  <span class="dl">"</span><span class="s2">pressao</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">130/85</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="messages">messages</h3>
+
+<p>Comunicações entre pacientes e nutricionistas.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">de_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">de_tipo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">nutricionista</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">para_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">para_tipo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">paciente</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">conteudo</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Como está se sentindo com a nova dieta?</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="dl">"</span><span class="s2">2023-10-15T00:00:00Z</span><span class="dl">"</span><span class="p">),</span>
+  <span class="dl">"</span><span class="s2">hora</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">14:30</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">lida</span><span class="dl">"</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="appointments">appointments</h3>
+
+<p>Consultas agendadas e realizadas.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span>
+  <span class="dl">"</span><span class="s2">_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">nutricionista_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">paciente_id</span><span class="dl">"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">data</span><span class="dl">"</span><span class="p">:</span> <span class="nx">ISODate</span><span class="p">(</span><span class="dl">"</span><span class="s2">2023-09-15T00:00:00Z</span><span class="dl">"</span><span class="p">),</span>
+  <span class="dl">"</span><span class="s2">hora</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">14:00</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">status</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Realizada</span><span class="dl">"</span><span class="p">,</span>
+  <span class="dl">"</span><span class="s2">notas</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Avaliação inicial e definição de plano alimentar</span><span class="dl">"</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="estratégias-de-modelagem">Estratégias de Modelagem</h2>
+
+<p>No modelo MongoDB, utilizamos algumas estratégias específicas:</p>
+
+<h3 id="1-referências-vs-embutimento">1. Referências vs. Embutimento</h3>
+
+<ul>
+  <li><strong>Referências</strong>: Utilizamos IDs para relacionar documentos entre coleções (ex: <code class="language-plaintext highlighter-rouge">nutricionista_id</code> em <code class="language-plaintext highlighter-rouge">patients</code>).</li>
+  <li><strong>Embutimento</strong>: Utilizamos documentos embutidos para dados que são acessados em conjunto frequentemente (ex: <code class="language-plaintext highlighter-rouge">medidas</code> em <code class="language-plaintext highlighter-rouge">measurements</code>).</li>
+</ul>
+
+<h3 id="2-arrays-de-referências">2. Arrays de Referências</h3>
+
+<p>Para relações de muitos-para-muitos, utilizamos arrays de IDs:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">alimentos_recomendados</code> e <code class="language-plaintext highlighter-rouge">receitas_recomendadas</code> em <code class="language-plaintext highlighter-rouge">dietPlans</code></li>
+  <li><code class="language-plaintext highlighter-rouge">alimentos</code> e <code class="language-plaintext highlighter-rouge">receitas</code> em <code class="language-plaintext highlighter-rouge">meals</code></li>
+</ul>
+
+<h3 id="3-objetos-para-dados-complexos">3. Objetos para Dados Complexos</h3>
+
+<p>Para dados estruturados que pertencem logicamente a um único documento:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">macronutrientes</code> em <code class="language-plaintext highlighter-rouge">dietPlans</code></li>
+  <li><code class="language-plaintext highlighter-rouge">medidas</code> em <code class="language-plaintext highlighter-rouge">measurements</code></li>
+</ul>
+
+<h3 id="4-tipos-discriminados">4. Tipos Discriminados</h3>
+
+<p>Para mensagens, usamos campos discriminadores para identificar o tipo:</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">de_tipo</code> e <code class="language-plaintext highlighter-rouge">para_tipo</code> em <code class="language-plaintext highlighter-rouge">messages</code> (pode ser “nutricionista” ou “paciente”)</li>
+</ul>
+
+<h2 id="vantagens-do-modelo-de-documentos">Vantagens do Modelo de Documentos</h2>
+
+<ul>
+  <li><strong>Esquema flexível</strong>: Facilidade para evoluir o modelo sem migrações complexas</li>
+  <li><strong>Documentos auto-contidos</strong>: Redução de JOINs para operações comuns</li>
+  <li><strong>Estruturas aninhadas</strong>: Representação natural de dados hierárquicos</li>
+  <li><strong>Consultas poderosas</strong>: Framework de agregação para análises complexas</li>
+  <li><strong>Escalonamento horizontal</strong>: Facilidade para distribuir dados em clusters</li>
+</ul>
+
+<p>Este modelo de documentos nos permite armazenar e consultar eficientemente os dados do sistema de acompanhamento de dietas, especialmente quando precisamos:</p>
+
+<ul>
+  <li>Recuperar todas as informações de um paciente em uma única operação</li>
+  <li>Armazenar estruturas complexas como ingredientes de receitas</li>
+  <li>Realizar análises agregadas sobre medidas corporais ou consumo alimentar</li>
+  <li>Flexibilidade para adicionar novos campos ou tipos de dados no futuro</li>
+</ul>
+
+<p>A capacidade do MongoDB de consultar e agregar dados de forma eficiente o torna uma escolha excelente para esta aplicação.</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/sistema-acompanhamento-dietas/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sistema de Acompanhamento de Dietas</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Sistema de Acompanhamento de Dietas</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

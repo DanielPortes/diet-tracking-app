@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Consultas Neo4j (Cypher) | Sistema de Acompanhamento de Dietas</title>
+<meta name="generator" content="Jekyll v3.10.0" />
+<meta property="og:title" content="Consultas Neo4j (Cypher)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos)." />
+<meta property="og:description" content="Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos)." />
+<link rel="canonical" href="/sistema-acompanhamento-dietas/consultas/neo4j.html" />
+<meta property="og:url" content="/sistema-acompanhamento-dietas/consultas/neo4j.html" />
+<meta property="og:site_name" content="Sistema de Acompanhamento de Dietas" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Consultas Neo4j (Cypher)" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","description":"Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).","headline":"Consultas Neo4j (Cypher)","url":"/sistema-acompanhamento-dietas/consultas/neo4j.html"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/sistema-acompanhamento-dietas/assets/main.css"><link type="application/atom+xml" rel="alternate" href="/sistema-acompanhamento-dietas/feed.xml" title="Sistema de Acompanhamento de Dietas" /></head>
+<body><header class="site-header" role="banner">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/sistema-acompanhamento-dietas/">Sistema de Acompanhamento de Dietas</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/sistema-acompanhamento-dietas/modelagem/documentos.html">Modelo de Documentos (MongoDB)</a><a class="page-link" href="/sistema-acompanhamento-dietas/modelagem/grafos.html">Modelo de Grafos (Neo4j)</a><a class="page-link" href="/sistema-acompanhamento-dietas/">Sistema de Acompanhamento de Dietas</a><a class="page-link" href="/sistema-acompanhamento-dietas/consultas/mongodb.html">Consultas MongoDB</a><a class="page-link" href="/sistema-acompanhamento-dietas/consultas/neo4j.html">Consultas Neo4j (Cypher)</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">Consultas Neo4j (Cypher)</h1>
+  </header>
+
+  <div class="post-content">
+    <h1 id="consultas-neo4j-cypher">Consultas Neo4j (Cypher)</h1>
+
+<p>Nesta seção, apresentamos as consultas implementadas utilizando a linguagem Cypher para o banco de dados Neo4j. Cada consulta é descrita com seu objetivo, o código Cypher e uma explicação de como a consulta funciona.</p>
+
+<h2 id="1-encontrar-todos-os-pacientes-de-um-nutricionista-específico">1. Encontrar todos os pacientes de um nutricionista específico</h2>
+
+<p><strong>Objetivo</strong>: Listar todos os pacientes atendidos por um determinado nutricionista, incluindo o objetivo do paciente.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">p:</span><span class="n">Paciente</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:SEGUE</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">pa:</span><span class="n">PlanoAlimentar</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:RECOMENDA</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">r:</span><span class="n">Receita</span><span class="ss">)</span>
+<span class="k">WHERE</span> <span class="s2">"Glúten"</span> <span class="ow">IN</span> <span class="n">p.restricoes</span>
+<span class="k">RETURN</span> <span class="n">p.nome</span> <span class="k">AS</span> <span class="n">Paciente</span><span class="ss">,</span> <span class="n">r.nome</span> <span class="k">AS</span> <span class="n">ReceitaAdequada</span><span class="ss">,</span> <span class="n">r.calorias</span> <span class="k">AS</span> <span class="n">Calorias</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta encontra todos os pacientes que têm “Glúten” como uma de suas restrições alimentares, depois localiza os planos alimentares que eles seguem e, finalmente, identifica as receitas recomendadas nesses planos.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_4.png">Veja a imagem do resultado</a></p>
+
+<h2 id="5-identificar-pacientes-com-baixa-adesão-ao-plano-alimentar">5. Identificar pacientes com baixa adesão ao plano alimentar</h2>
+
+<p><strong>Objetivo</strong>: Encontrar pacientes que têm baixa adesão (menos de 80%) ao plano alimentar, com base nos registros de refeições.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">p:</span><span class="n">Paciente</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:CONSOME</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">r:</span><span class="n">Refeicao</span><span class="ss">)</span>
+<span class="k">WITH</span> <span class="n">p</span><span class="ss">,</span> <span class="nf">COUNT</span><span class="ss">(</span><span class="n">r</span><span class="ss">)</span> <span class="k">AS</span> <span class="n">totalRefeicoes</span><span class="ss">,</span>
+     <span class="nf">SUM</span><span class="ss">(</span><span class="k">CASE</span> <span class="k">WHEN</span> <span class="n">r.adesao</span> <span class="o">=</span> <span class="s2">"Completa"</span> <span class="k">THEN</span> <span class="mi">1</span> <span class="k">ELSE</span> <span class="mi">0</span> <span class="k">END</span><span class="ss">)</span> <span class="k">AS</span> <span class="n">refeicoesCompletas</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="ss">(</span><span class="n">refeicoesCompletas</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="err">/</span> <span class="n">totalRefeicoes</span><span class="ss">)</span> <span class="o">&lt;</span> <span class="mf">0.8</span>
+<span class="k">RETURN</span> <span class="n">p.nome</span> <span class="k">AS</span> <span class="n">Paciente</span><span class="ss">,</span> <span class="n">totalRefeicoes</span><span class="ss">,</span> <span class="n">refeicoesCompletas</span><span class="ss">,</span>
+       <span class="ss">(</span><span class="n">refeicoesCompletas</span> <span class="o">*</span> <span class="mf">1.0</span> <span class="err">/</span> <span class="n">totalRefeicoes</span><span class="ss">)</span> <span class="k">AS</span> <span class="n">TaxaAdesao</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">TaxaAdesao</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta conta o número total de refeições para cada paciente e quantas dessas refeições foram marcadas como “Completa”. Depois, calcula a taxa de adesão (refeições completas dividido pelo total de refeições) e filtra apenas os pacientes com taxa menor que 0,8 (80%).</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_5.png">Veja a imagem do resultado</a></p>
+
+<h2 id="6-rastrear-o-progresso-de-um-paciente-analisando-medidas-corporais">6. Rastrear o progresso de um paciente analisando medidas corporais</h2>
+
+<p><strong>Objetivo</strong>: Analisar a evolução das medidas corporais de um paciente ao longo do tempo.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">p:</span><span class="n">Paciente</span> <span class="ss">{</span><span class="py">nome:</span> <span class="s2">"João Pereira"</span><span class="ss">})</span><span class="o">-</span><span class="ss">[</span><span class="nc">:POSSUI</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">m:</span><span class="n">MedidaCorporal</span><span class="ss">)</span>
+<span class="k">RETURN</span> <span class="n">p.nome</span> <span class="k">AS</span> <span class="n">Paciente</span><span class="ss">,</span> <span class="n">m.data</span> <span class="k">AS</span> <span class="n">Data</span><span class="ss">,</span> <span class="n">m.peso</span> <span class="k">AS</span> <span class="n">Peso</span><span class="ss">,</span> <span class="n">m.imc</span> <span class="k">AS</span> <span class="n">IMC</span><span class="ss">,</span>
+       <span class="n">m.gordura_corporal</span> <span class="k">AS</span> <span class="n">GorduraCorporal</span><span class="ss">,</span> <span class="n">m.cintura</span> <span class="k">AS</span> <span class="n">Cintura</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">m.data</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta recupera todas as medidas corporais registradas para o paciente “João Pereira” e as ordena por data, permitindo visualizar seu progresso ao longo do tempo.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_6.png">Veja a imagem do resultado</a></p>
+
+<h2 id="7-encontrar-os-alimentos-mais-recomendados-nos-planos-alimentares">7. Encontrar os alimentos mais recomendados nos planos alimentares</h2>
+
+<p><strong>Objetivo</strong>: Identificar quais alimentos são mais frequentemente recomendados nos planos alimentares, agrupados por grupo alimentar.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">pa:</span><span class="n">PlanoAlimentar</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:INCLUI</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">a:</span><span class="n">Alimento</span><span class="ss">)</span>
+<span class="k">RETURN</span> <span class="n">a.nome</span> <span class="k">AS</span> <span class="n">Alimento</span><span class="ss">,</span> <span class="n">a.grupo</span> <span class="k">AS</span> <span class="n">Grupo</span><span class="ss">,</span> <span class="nf">COUNT</span><span class="ss">(</span><span class="n">pa</span><span class="ss">)</span> <span class="k">AS</span> <span class="n">NumeroDeRecomendacoes</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">NumeroDeRecomendacoes</span> <span class="k">DESC</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta conta quantas vezes cada alimento aparece como recomendado em planos alimentares. Os resultados são agrupados por alimento e ordenados pelo número de recomendações em ordem decrescente.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_7.png">Veja a imagem do resultado</a></p>
+
+<h2 id="8-analisar-a-comunicação-entre-nutricionistas-e-pacientes">8. Analisar a comunicação entre nutricionistas e pacientes</h2>
+
+<p><strong>Objetivo</strong>: Visualizar todas as mensagens trocadas entre nutricionistas e pacientes, ordenadas cronologicamente.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="n">origem</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:ENVIA</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">m:</span><span class="n">Mensagem</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:PARA</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="n">destino</span><span class="ss">)</span>
+<span class="k">WHERE</span> <span class="py">origem:</span><span class="n">Nutricionista</span> <span class="ow">OR</span> <span class="py">destino:</span><span class="n">Nutricionista</span>
+<span class="k">RETURN</span>
+  <span class="k">CASE</span>
+    <span class="k">WHEN</span> <span class="py">origem:</span><span class="n">Nutricionista</span> <span class="k">THEN</span> <span class="n">origem.nome</span>
+    <span class="k">ELSE</span> <span class="n">origem.nome</span>
+  <span class="k">END</span> <span class="k">AS</span> <span class="n">Remetente</span><span class="ss">,</span>
+  <span class="k">CASE</span>
+    <span class="k">WHEN</span> <span class="py">destino:</span><span class="n">Nutricionista</span> <span class="k">THEN</span> <span class="n">destino.nome</span>
+    <span class="k">ELSE</span> <span class="n">destino.nome</span>
+  <span class="k">END</span> <span class="k">AS</span> <span class="n">Destinatario</span><span class="ss">,</span>
+  <span class="n">m.data</span> <span class="k">AS</span> <span class="n">Data</span><span class="ss">,</span> <span class="n">m.hora</span> <span class="k">AS</span> <span class="n">Hora</span><span class="ss">,</span> <span class="n">m.conteudo</span> <span class="k">AS</span> <span class="n">Mensagem</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">m.data</span><span class="ss">,</span> <span class="n">m.hora</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta recupera todas as mensagens onde o remetente ou o destinatário é um nutricionista. Utiliza expressões CASE para formatar adequadamente os nomes dos remetentes e destinatários, independentemente se são nutricionistas ou pacientes.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_8.png">Veja a imagem do resultado</a></p>
+
+<h2 id="9-encontrar-receitas-que-contêm-determinado-alimento">9. Encontrar receitas que contêm determinado alimento</h2>
+
+<p><strong>Objetivo</strong>: Listar todas as receitas que contêm um alimento específico.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">r:</span><span class="n">Receita</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:CONTEM</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">a:</span><span class="n">Alimento</span> <span class="ss">{</span><span class="py">nome:</span> <span class="s2">"Brócolis"</span><span class="ss">})</span>
+<span class="k">RETURN</span> <span class="n">r.nome</span> <span class="k">AS</span> <span class="n">Receita</span><span class="ss">,</span> <span class="n">r.calorias</span> <span class="k">AS</span> <span class="n">Calorias</span><span class="ss">,</span> <span class="n">r.dificuldade</span> <span class="k">AS</span> <span class="n">Dificuldade</span><span class="ss">,</span>
+       <span class="n">r.tempo_preparo</span> <span class="k">AS</span> <span class="n">TempoPreparo</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta busca todas as receitas que contêm “Brócolis” como um de seus ingredientes, exibindo detalhes como calorias, nível de dificuldade e tempo de preparo.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_9.png">Veja a imagem do resultado</a></p>
+
+<h2 id="10-visualizar-próximas-consultas-agendadas">10. Visualizar próximas consultas agendadas</h2>
+
+<p><strong>Objetivo</strong>: Listar todas as consultas futuras agendadas entre pacientes e nutricionistas.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">p:</span><span class="n">Paciente</span><span class="ss">)</span><span class="o">-</span><span class="ss">[</span><span class="nc">:AGENDA</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">c:</span><span class="n">Consulta</span> <span class="ss">{</span><span class="py">status:</span> <span class="s2">"Agendada"</span><span class="ss">})</span><span class="o">-</span><span class="ss">[</span><span class="nc">:COM</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">n:</span><span class="n">Nutricionista</span><span class="ss">)</span>
+<span class="k">RETURN</span> <span class="n">p.nome</span> <span class="k">AS</span> <span class="n">Paciente</span><span class="ss">,</span> <span class="n">n.nome</span> <span class="k">AS</span> <span class="n">Nutricionista</span><span class="ss">,</span> <span class="n">c.data</span> <span class="k">AS</span> <span class="n">Data</span><span class="ss">,</span> <span class="n">c.hora</span> <span class="k">AS</span> <span class="n">Hora</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="n">c.data</span><span class="ss">,</span> <span class="n">c.hora</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta encontra todas as consultas com status “Agendada”, mostrando o paciente, o nutricionista, a data e a hora da consulta. Os resultados são ordenados cronologicamente.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_10.png">Veja a imagem do resultado</a> (n:Nutricionista {nome: “Ana Silva”})-[:ATENDE]-&gt;(p:Paciente)
+RETURN n.nome AS Nutricionista, p.nome AS Paciente, p.objetivo AS Objetivo</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+**Explicação**: Esta consulta encontra o nutricionista "Ana Silva" e percorre o relacionamento `ATENDE` para encontrar todos os seus pacientes. Para cada paciente, retornamos o nome do nutricionista, o nome do paciente e seu objetivo de tratamento.
+
+**Resultado**: [Veja a imagem do resultado](../resultados/neo4j_consulta_1.png)
+
+## 2. Encontrar todas as refeições de um paciente em um período específico
+
+**Objetivo**: Listar todas as refeições de um paciente em um intervalo de datas específico.
+
+```cypher
+MATCH (p:Paciente {nome: "João Pereira"})-[:CONSOME]-&gt;(r:Refeicao)
+WHERE r.data &gt;= "2023-10-18" AND r.data &lt;= "2023-10-19"
+RETURN p.nome AS Paciente, r.tipo AS TipoRefeicao, r.data AS Data,
+       r.calorias AS Calorias, r.adesao AS Adesao
+ORDER BY r.data, r.hora
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta localiza o paciente “João Pereira” e todas as refeições que ele consumiu. Filtramos apenas as refeições que ocorreram entre 18/10/2023 e 19/10/2023. Os resultados são ordenados por data e hora.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_2.png">Veja a imagem do resultado</a></p>
+
+<h2 id="3-calcular-a-soma-de-calorias-consumidas-por-um-paciente-em-um-dia">3. Calcular a soma de calorias consumidas por um paciente em um dia</h2>
+
+<p><strong>Objetivo</strong>: Calcular o total de calorias consumidas por um paciente em um dia específico.</p>
+
+<div class="language-cypher highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">MATCH</span><span class="w"> </span><span class="ss">(</span><span class="py">p:</span><span class="n">Paciente</span> <span class="ss">{</span><span class="py">nome:</span> <span class="s2">"João Pereira"</span><span class="ss">})</span><span class="o">-</span><span class="ss">[</span><span class="nc">:CONSOME</span><span class="ss">]</span><span class="o">-&gt;</span><span class="ss">(</span><span class="py">r:</span><span class="n">Refeicao</span><span class="ss">)</span>
+<span class="k">WHERE</span> <span class="n">r.data</span> <span class="o">=</span> <span class="s2">"2023-10-18"</span>
+<span class="k">RETURN</span> <span class="n">p.nome</span> <span class="k">AS</span> <span class="n">Paciente</span><span class="ss">,</span> <span class="n">r.data</span> <span class="k">AS</span> <span class="n">Data</span><span class="ss">,</span> <span class="nf">SUM</span><span class="ss">(</span><span class="n">r.calorias</span><span class="ss">)</span> <span class="k">AS</span> <span class="n">TotalCalorias</span>
+</code></pre></div></div>
+
+<p><strong>Explicação</strong>: Esta consulta encontra todas as refeições consumidas pelo paciente “João Pereira” na data 18/10/2023 e soma o valor de calorias para calcular o total consumido nesse dia.</p>
+
+<p><strong>Resultado</strong>: <a href="../resultados/neo4j_consulta_3.png">Veja a imagem do resultado</a></p>
+
+<h2 id="4-encontrar-receitas-adequadas-para-pacientes-com-restrições-alimentares">4. Encontrar receitas adequadas para pacientes com restrições alimentares</h2>
+
+<p><strong>Objetivo</strong>: Identificar receitas recomendadas em planos alimentares para pacientes com restrições específicas.</p>
+
+<p>```cypher
+MATCH</p>
+
+  </div>
+
+</article>
+
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/sistema-acompanhamento-dietas/"></data>
+
+  <div class="wrapper">
+
+    <h2 class="footer-heading">Sistema de Acompanhamento de Dietas</h2>
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <ul class="contact-list">
+          <li class="p-name">Sistema de Acompanhamento de Dietas</li></ul>
+      </div>
+
+      <div class="footer-col footer-col-2"><ul class="social-media-list"></ul>
+</div>
+
+      <div class="footer-col footer-col-3">
+        <p>Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes, utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).</p>
+      </div>
+    </div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

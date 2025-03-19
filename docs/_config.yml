@@ -1,0 +1,45 @@
+title: Sistema de Acompanhamento de Dietas
+description: >-
+  Sistema NoSQL para nutricionistas acompanharem a dieta dos seus pacientes,
+  utilizando Neo4j (banco de grafos) e MongoDB (banco de documentos).
+baseurl: "/sistema-acompanhamento-dietas" # Substitua pelo nome do seu repositório
+url: "" # URL do site (deixe em branco para GitHub Pages)
+
+# Build settings
+markdown: kramdown
+theme: minima
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - .gitignore
+
+# Collections
+collections:
+  modelagem:
+    output: true
+    permalink: /:collection/:name/
+  consultas:
+    output: true
+    permalink: /:collection/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+  - scope:
+      path: "_modelagem"
+    values:
+      layout: "page"
+  - scope:
+      path: "_consultas"
+    values:
+      layout: "page"

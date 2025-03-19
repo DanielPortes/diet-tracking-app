@@ -19,19 +19,13 @@ jobs:
         with:
           ruby-version: '3.0'
           bundler-cache: true
-
-      - name: Install dependencies
-        run: |
-          gem install jekyll bundler
-          cd docs
-          bundle install
+          working-directory: 'docs'
 
       - name: Build
         run: |
           cd docs
           bundle exec jekyll build
           touch _site/.nojekyll
-          cp ../.nojekyll _site/
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4

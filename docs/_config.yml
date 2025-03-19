@@ -20,14 +20,14 @@ exclude:
   - vendor
   - .gitignore
 
-# Collections
+# Collections (ajustado para usar diretórios sem underscore)
 collections:
   modelagem:
     output: true
-    permalink: /:collection/:name/
+    permalink: /modelagem/:name/
   consultas:
     output: true
-    permalink: /:collection/:name/
+    permalink: /consultas/:name/
 
 # Defaults
 defaults:

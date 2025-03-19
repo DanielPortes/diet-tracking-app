@@ -1,8 +1,3 @@
----
-layout: page
-title: Consultas MongoDB
----
-
 # Consultas MongoDB
 
 Nesta seção, apresentamos as consultas implementadas no MongoDB. Cada consulta é descrita com seu objetivo, o código em JavaScript e uma explicação de como a consulta funciona.
@@ -20,7 +15,7 @@ db.patients.find(
 
 **Explicação**: Esta consulta busca todos os documentos na coleção `patients` onde o campo `nutricionista_id` é igual a 1. O segundo parâmetro especifica os campos a serem retornados (`nome`, `idade`, e `objetivo`), excluindo o `_id`.
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_1.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/11.png)
 
 ## 2. Buscar todas as refeições de um paciente em um período específico
 
@@ -41,7 +36,7 @@ db.meals.find(
 
 **Explicação**: Esta consulta busca documentos na coleção `meals` onde o `paciente_id` é 1 e a data está entre 18/10/2023 e 19/10/2023. Retorna os campos especificados e ordena os resultados por data e hora.
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_2.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/22.png)
 
 ## 3. Calcular total de calorias consumidas por dia
 
@@ -66,7 +61,7 @@ db.meals.aggregate([
 3. Calcular a soma das calorias para cada dia
 4. Ordenar os resultados por data
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_3.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/33.png)
 
 ## 4. Encontrar receitas adequadas para pacientes com restrições
 
@@ -112,7 +107,7 @@ db.patients.aggregate([
 5. Desempacotar o array de receitas
 6. Projetar apenas os campos desejados
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_4.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/44.png)
 
 ## 5. Identificar pacientes com baixa adesão ao plano alimentar
 
@@ -167,7 +162,7 @@ db.meals.aggregate([
 4. Busca os dados do paciente na coleção `patients`
 5. Projeta os campos desejados e ordena por taxa de adesão
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_5.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/55.png)
 
 ## 6. Rastrear progresso corporal de um paciente
 
@@ -182,7 +177,7 @@ db.measurements.find(
 
 **Explicação**: Esta consulta recupera todas as medidas corporais do paciente com ID 1, incluindo a medida de cintura que está aninhada no objeto `medidas`. Os resultados são ordenados por data.
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_6.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/66.png)
 
 ## 7. Encontrar alimentos mais recomendados nos planos alimentares
 
@@ -224,7 +219,7 @@ db.dietPlans.aggregate([
 3. Busca os detalhes de cada alimento na coleção `foods`
 4. Projeta os campos desejados e ordena por número de recomendações em ordem decrescente
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_7.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/77.png)
 
 ## 8. Analisar comunicação entre nutricionistas e pacientes
 
@@ -295,7 +290,7 @@ db.messages.aggregate([
 2. Usa condições para determinar se o remetente/destinatário é um nutricionista ou paciente
 3. Projeta os campos desejados e ordena cronologicamente
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_8.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/88.png)
 
 ## 9. Encontrar receitas que contêm determinado ingrediente
 
@@ -331,7 +326,7 @@ db.recipes.aggregate([
 3. Filtra novamente para garantir que o alimento seja "Brócolis"
 4. Projeta os campos desejados
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_9.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/99.png)
 
 ## 10. Visualizar próximas consultas agendadas
 
@@ -377,4 +372,4 @@ db.appointments.aggregate([
 3. Desempacota os arrays resultantes
 4. Projeta os campos desejados e ordena cronologicamente
 
-**Resultado**: [Veja a imagem do resultado](../resultados/mongo_consulta_10.png)
+**Resultado**: [Veja a imagem do resultado](../resultados/100.png)

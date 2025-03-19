@@ -44,3 +44,4 @@ graph TD
     Paciente -.-> |troca mensagens| Nutricionista
     Paciente --> |agenda| Consulta
     Consulta --> |com| Nutricionista
+```

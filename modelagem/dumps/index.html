@@ -13,25 +13,21 @@
       
       
       
-        <link rel="prev" href="..">
       
       
-        <link rel="next" href="grafos/">
-      
-      
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.9">
     
     
       
-        <title>Modelagem de Dados - Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes</title>
+        <title>Dumps - Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.4af4bdda.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -50,7 +46,7 @@
       
     
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +70,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#modelagem-de-dados" class="md-skip">
+        <a href="#5-crie-um-arquivo-para-documentar-dumps" class="md-skip">
           Pular para conteúdo
         </a>
       
@@ -88,7 +84,7 @@
 
 <header class="md-header" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
-    <a href=".." title="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" class="md-header__button md-logo" aria-label="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" data-md-component="logo">
+    <a href="../.." title="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" class="md-header__button md-logo" aria-label="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +104,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Modelagem de Dados
+              Dumps
             
           </span>
         </div>
@@ -191,7 +187,7 @@
   
   
     <li class="md-tabs__item">
-      <a href=".." class="md-tabs__link">
+      <a href="../.." class="md-tabs__link">
         
   
     
@@ -206,13 +202,11 @@
         
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="./" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../" class="md-tabs__link">
           
   
   Modelagem de Dados
@@ -230,7 +224,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../consultas/neo4j/" class="md-tabs__link">
+        <a href="../../consultas/neo4j/" class="md-tabs__link">
           
   
   Consultas
@@ -248,7 +242,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../instalacao/" class="md-tabs__link">
+        <a href="../../instalacao/" class="md-tabs__link">
           
   
   Configuração
@@ -283,7 +277,7 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted md-nav--integrated" aria-label="Navegação" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" class="md-nav__button md-logo" aria-label="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" data-md-component="logo">
+    <a href="../.." title="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" class="md-nav__button md-logo" aria-label="Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -313,7 +307,7 @@
   
   
     <li class="md-nav__item">
-      <a href=".." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -331,30 +325,25 @@
       
   
   
-    
   
   
-  
     
     
     
-      
-        
-        
       
       
         
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   <span class="md-ellipsis">
@@ -366,7 +355,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             Modelagem de Dados
@@ -377,31 +366,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Visão Geral
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -411,53 +379,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Índice">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Índice
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#bancos-de-dados-utilizados" class="md-nav__link">
-    <span class="md-ellipsis">
-      Bancos de Dados Utilizados
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#modelos-implementados" class="md-nav__link">
-    <span class="md-ellipsis">
-      Modelos Implementados
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#diagrama-conceitual" class="md-nav__link">
-    <span class="md-ellipsis">
-      Diagrama Conceitual
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -470,7 +391,7 @@
   
   
     <li class="md-nav__item">
-      <a href="grafos/" class="md-nav__link">
+      <a href="../grafos/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -492,7 +413,7 @@
   
   
     <li class="md-nav__item">
-      <a href="documentos/" class="md-nav__link">
+      <a href="../documentos/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -562,7 +483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../consultas/neo4j/" class="md-nav__link">
+      <a href="../../consultas/neo4j/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -584,7 +505,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../consultas/mongodb/" class="md-nav__link">
+      <a href="../../consultas/mongodb/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -654,7 +575,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../instalacao/" class="md-nav__link">
+      <a href="../../instalacao/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -676,7 +597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dumps.md" class="md-nav__link">
+      <a href="../../dumps.md" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -717,54 +638,26 @@
   
 
 
-<h1 id="modelagem-de-dados">Modelagem de Dados</h1>
-<p>O Sistema de Acompanhamento de Dietas utiliza dois tipos diferentes de bancos de dados NoSQL para demonstrar as capacidades e características específicas de cada um:</p>
-<h2 id="bancos-de-dados-utilizados">Bancos de Dados Utilizados</h2>
-<ol>
-<li><strong>Neo4j (Banco de Dados de Grafos)</strong></li>
-<li>Utilizado para modelar relacionamentos complexos entre entidades</li>
-<li>Permite consultas baseadas em padrões de grafos</li>
-<li>
-<p>Ideal para dados altamente conectados</p>
-</li>
-<li>
-<p><strong>MongoDB (Banco de Dados de Documentos)</strong></p>
-</li>
-<li>Utilizado para armazenar documentos complexos com estrutura flexível</li>
-<li>Permite consultas e agregações poderosas</li>
-<li>Ideal para dados aninhados e esquema flexível</li>
-</ol>
-<h2 id="modelos-implementados">Modelos Implementados</h2>
-<p>Clique nos links abaixo para ver os detalhes de cada modelo:</p>
-<ul>
-<li><a href="grafos/"><strong>Modelo de Grafos (Neo4j)</strong></a> - Representa entidades como nós e relacionamentos como arestas</li>
-<li><a href="documentos/"><strong>Modelo de Documentos (MongoDB)</strong></a> - Organiza os dados em coleções de documentos JSON</li>
-</ul>
-<h2 id="diagrama-conceitual">Diagrama Conceitual</h2>
-<p>O diagrama abaixo mostra uma visão conceitual das principais entidades do sistema:</p>
-<pre class="mermaid"><code>graph TD
-    Nutricionista --&gt; |atende| Paciente
-    Nutricionista --&gt; |cria| PlanoAlimentar
-    Paciente --&gt; |segue| PlanoAlimentar
-    PlanoAlimentar --&gt; |inclui| Alimento
-    PlanoAlimentar --&gt; |recomenda| Receita
-    Receita --&gt; |contém| Alimento
-    Paciente --&gt; |consome| Refeicao
-    Refeicao --&gt; |inclui| Alimento
-    Refeicao --&gt; |inclui| Receita
-    Paciente --&gt; |possui| MedidaCorporal
-    Paciente -.-&gt; |troca mensagens| Nutricionista
-    Paciente --&gt; |agenda| Consulta
-    Consulta --&gt; |com| Nutricionista</code></pre>
+<h3 id="5-crie-um-arquivo-para-documentar-dumps">5. Crie um Arquivo para Documentar Dumps</h3>
+<h1 id="dumps-do-banco">Dumps do Banco</h1>
+<p>O sistema oferece funcionalidades para criar dumps (backups) dos bancos de dados Neo4j e MongoDB.</p>
+<h2 id="usando-o-makefile">Usando o Makefile</h2>
+<p>A maneira mais simples é usar os comandos disponíveis no Makefile:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Gerar dumps de ambos os bancos</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>make<span class="w"> </span>dump
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Gerar apenas dump do Neo4j</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>make<span class="w"> </span>dump-neo4j
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Gerar apenas dump do MongoDB</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>make<span class="w"> </span>dump-mongodb
+</code></pre></div>
 
 
 
 
 
 
-
-  
-  
 
 
 
@@ -813,10 +706,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": "..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "toc.integrate", "navigation.top", "search.suggest", "search.highlight", "content.tabs.link", "content.code.annotation", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.c8b220af.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
       
     
   </body>

@@ -31,6 +31,7 @@ jobs:
           cd docs
           bundle exec jekyll build
           touch _site/.nojekyll
+          cp ../.nojekyll _site/
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4

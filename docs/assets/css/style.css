@@ -1,0 +1,56 @@
+---
+---
+
+@import "minima";
+
+// Personalizações adicionais
+
+.site-header {
+  border-top: 5px solid #4CAF50;
+}
+
+.site-title {
+  color: #388E3C !important;
+}
+
+a {
+  color: #1976D2;
+
+  &:visited {
+    color: #0D47A1;
+  }
+
+  &:hover {
+    color: #2196F3;
+  }
+}
+
+.post-content {
+  h2 {
+    color: #388E3C;
+  }
+
+  h3 {
+    color: #1976D2;
+  }
+
+  pre, code {
+    border: 1px solid #E0E0E0;
+    background-color: #F5F5F5;
+  }
+}
+
+// Suporte para diagramas Mermaid
+.mermaid {
+  text-align: center;
+  margin: 2em 0;
+}
+
+// Componentes específicos
+.card {
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}

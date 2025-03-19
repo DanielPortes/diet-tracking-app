@@ -36,10 +36,10 @@ defaults:
     values:
       layout: "default"
   - scope:
-      path: "_modelagem"
+      path: "modelagem"
     values:
       layout: "page"
   - scope:
-      path: "_consultas"
+      path: "consultas"
     values:
       layout: "page"

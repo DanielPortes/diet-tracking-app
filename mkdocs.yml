@@ -1,8 +1,8 @@
-site_name: Sistema de Acompanhamento de Dietas - NoSQL
+site_name: Sistema de Acompanhamento de Dietas - NoSQL - Daniel Fagundes
 site_description: Sistema de banco de dados NoSQL para nutricionistas acompanharem a dieta dos seus pacientes
-site_author: Seu Nome
-repo_url: https://github.com/seu-usuario/sistema-acompanhamento-dietas
-repo_name: sistema-acompanhamento-dietas
+site_author: Daniel Fagundes
+repo_url: https://github.com/DanielPortes/diet-tracking-app
+repo_name: diet-tracking-app
 
 theme:
   name: material

@@ -40,7 +40,7 @@ O sistema utiliza dois tipos de SGBDs NoSQL:
 ## Estrutura do Projeto
 
 ```
-sistema-acompanhamento-dietas/
+diet-tracking-app/
 ├── .github/workflows/                 # Workflows CI/CD e GitHub Pages
 ├── docs/                              # Documentação
 ├── dumps/                             # Diretório para dumps
